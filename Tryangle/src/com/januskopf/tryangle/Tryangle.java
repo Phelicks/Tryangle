@@ -13,6 +13,8 @@ public class Tryangle implements Runnable{
 	
 	private boolean running;
 	
+	private Triangle[][] triangleArray = new Triangle[25][19];
+	
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
 		t.start();
@@ -60,13 +62,12 @@ public class Tryangle implements Runnable{
 		}
 	}
 	
-	private Triangle[][] triangleArray = new Triangle[25][19];
-	
+		
 	private void createTriArray() {
 		
 		float xPos = 0.0f;
-		float yPos = -50.0f;
-		float l = 50.0f;
+		float yPos = 0.0f; //-50
+		float l = 30.0f; //50
 		float h = ((float)Math.sqrt((l*l) - ((l/2)*(l/2))));
 		
 		float x = xPos;
@@ -75,9 +76,12 @@ public class Tryangle implements Runnable{
 		for(int j = 0; j < 25; j++){
 			for(int i = 0; i < 19; i++){
 				
-				triangleArray[j][i] = new Triangle(x, y, l, 1.0f, 1.0f, 1.0f);
+				if(i % 2 == 0)
+					triangleArray[j][i] = new Triangle(x, y, l, 0.85f, 0.48f, 0.13f);
+				else
+					triangleArray[j][i] = new Triangle(x, y, l, 0.71f, 0.20f, 0.13f, true);
 				
-				x = x + 2*h;
+				x = x + h;
 			}
 			if(j%2 == 0)
 				x = xPos + h;
@@ -89,36 +93,10 @@ public class Tryangle implements Runnable{
 	}
 
 	public void render(){
-		float xPos = 0.0f;
-		float yPos = -50.0f;
-		float l = 50.0f;
-		float h = ((float)Math.sqrt((l*l) - ((l/2)*(l/2))));
-		
-		float x = xPos;
-		float y = yPos;
-		
-		for(int j = 0; j < 26; j++){
-			for(int i = 0; i < 10; i++){
-				GL11.glColor3f(0.85f, 0.48f, 0.13f);
-				GL11.glBegin(GL11.GL_TRIANGLES);
-					GL11.glVertex2f(x, y);
-					GL11.glVertex2f(x, y+l);
-					GL11.glVertex2f(x+((float)Math.sqrt((l*l) - ((l/2)*(l/2)))), y+l/2f);
-				GL11.glEnd();
-				
-				GL11.glColor3f(0.71f, 0.20f, 0.13f);
-				GL11.glBegin(GL11.GL_TRIANGLES);
-					GL11.glVertex2f(x, y);
-					GL11.glVertex2f(x, y+l);
-					GL11.glVertex2f(x-((float)Math.sqrt((l*l) - ((l/2)*(l/2)))), y+l/2f);
-				GL11.glEnd();
-				x = x + 2*h;
+		for(int j = 0; j < 25; j++){
+			for(int i = 0; i < 19; i++){
+				triangleArray[j][i].render();
 			}
-			if(j%2 == 0)
-				x = xPos + h;
-			else
-				x = xPos;
-			y = y + l/2;
 		}
 	}
 	
