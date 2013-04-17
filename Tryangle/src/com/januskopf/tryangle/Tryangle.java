@@ -12,8 +12,10 @@ public class Tryangle implements Runnable{
 	public final int FPS = 60;
 	
 	private boolean running;
+	private final int xTriCount = 20;
+	private final int yTriCount = 26;
 	
-	private Triangle[][] triangleArray = new Triangle[25][19];
+	private Triangle[][] triangleArray = new Triangle[yTriCount][xTriCount];
 	
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
@@ -66,35 +68,35 @@ public class Tryangle implements Runnable{
 	private void createTriArray() {
 		
 		float xPos = 0.0f;
-		float yPos = 0.0f; //-50
-		float l = 30.0f; //50
+		float yPos = -50.0f; //-50
+		float l = 50.0f; //50
 		float h = ((float)Math.sqrt((l*l) - ((l/2)*(l/2))));
 		
 		float x = xPos;
 		float y = yPos;
 		
-		for(int j = 0; j < 25; j++){
-			for(int i = 0; i < 19; i++){
+		for(int j = 0; j < yTriCount; j++){
+			for(int i = 0; i < xTriCount; i++){
 				
 				if(i % 2 == 0)
 					triangleArray[j][i] = new Triangle(x, y, l, 0.85f, 0.48f, 0.13f);
 				else
-					triangleArray[j][i] = new Triangle(x, y, l, 0.71f, 0.20f, 0.13f, true);
+					triangleArray[j][i] = new Triangle(x + h, y, l, 0.71f, 0.20f, 0.13f, true);
 				
 				x = x + h;
 			}
 			if(j%2 == 0)
-				x = xPos + h;
-			else
 				x = xPos;
+			else
+				x = xPos -h;
 			y = y + l/2;
 		}
 		
 	}
 
 	public void render(){
-		for(int j = 0; j < 25; j++){
-			for(int i = 0; i < 19; i++){
+		for(int j = 0; j < yTriCount; j++){
+			for(int i = 0; i < xTriCount; i++){
 				triangleArray[j][i].render();
 			}
 		}
