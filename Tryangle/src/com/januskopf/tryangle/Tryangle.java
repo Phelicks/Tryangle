@@ -1,5 +1,7 @@
 package com.januskopf.tryangle;
 
+import java.util.Random;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 
@@ -16,6 +18,7 @@ public class Tryangle implements Runnable{
 	private final int yTriCount = 26;
 	
 	private Triangle[][] triangleArray = new Triangle[yTriCount][xTriCount];
+	private Random random = new Random();
 	
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
@@ -34,8 +37,8 @@ public class Tryangle implements Runnable{
 		try{
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setResizable(false);
-			//PixelFormat p = new PixelFormat().withSamples(8);
-			Display.create();
+			PixelFormat p = new PixelFormat().withSamples(8);
+			Display.create(p);
 		}
 		catch (LWJGLException e){
 			e.printStackTrace();
@@ -78,10 +81,13 @@ public class Tryangle implements Runnable{
 		for(int j = 0; j < yTriCount; j++){
 			for(int i = 0; i < xTriCount; i++){
 				
+				float c = (float)(1.0 - Math.random()/2.0);
+				
 				if(i % 2 == 0)
-					triangleArray[j][i] = new Triangle(x, y, l, 0.85f, 0.48f, 0.13f);
+					//triangleArray[j][i] = new Triangle(x, y, l, 0.85f, 0.48f, 0.13f);
+					triangleArray[j][i] = new Triangle(x, y, l, 1.0f*c, 0.47f*c, 0.0f*c);
 				else
-					triangleArray[j][i] = new Triangle(x + h, y, l, 0.71f, 0.20f, 0.13f, true);
+					triangleArray[j][i] = new Triangle(x + h, y, l, 1.0f*c, 0.47f*c, 0.0f*c, true);
 				
 				x = x + h;
 			}
@@ -103,7 +109,16 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void tick(){
-		
+		if(random.nextInt(10) == 0){
+			Triangle t = triangleArray[random.nextInt(yTriCount)][random.nextInt(xTriCount)];
+			float cB = t.getColorB();
+			float cR = t.getColorR();
+			float cG = t.getColorG();
+			
+			float c = 0.01f;
+			
+			t.setColor(cR + c, cG + c, cB + c);
+		}
 	}
  
 }

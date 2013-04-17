@@ -40,6 +40,14 @@ public class Triangle {
 		GL11.glEnd();		
 	}
 	
+	public void setColor(float colorR, float colorG, float colorB){
+		
+		this.colorB = colorB;
+		this.colorG = colorG;
+		this.colorR = colorR;
+		
+	}
+	
 	public float getColorR() {
 		return colorR;
 	}
