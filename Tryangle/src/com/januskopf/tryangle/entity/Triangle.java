@@ -8,7 +8,10 @@ public class Triangle {
 	private float colorG;
 	private float colorB;
 	private float length;
-	
+	private boolean changeColor = false;
+	private float[] newColor = new float[3];
+	private int colorChangeTicks;
+
 	private Vertex vertiecs[] = new Vertex[3];
 	
 	public Triangle(float xPos, float yPos, float length, float colorR, float colorG, float colorB){
@@ -31,6 +34,12 @@ public class Triangle {
 		
 	}
 	
+	public void tick(){
+		
+		if(changeColor)colorChange();
+		
+	}
+	
 	public void render(){
 		GL11.glColor3f(colorR, colorG, colorB);
 		GL11.glBegin(GL11.GL_TRIANGLES);
@@ -38,6 +47,28 @@ public class Triangle {
 			GL11.glVertex2f(vertiecs[1].getxPos(), vertiecs[1].getyPos());
 			GL11.glVertex2f(vertiecs[2].getxPos(), vertiecs[2].getyPos());
 		GL11.glEnd();		
+	}
+	
+	public void startColorChange(float colorR, float colorG, float colorB, int ticks){
+		changeColor = true;
+		newColor[0] = colorR;
+		newColor[1] = colorG;
+		newColor[2] = colorB;
+		this.colorChangeTicks = ticks;
+	}
+	
+	public void colorChange(){
+		
+		
+		
+	}
+	
+	public void setColor(float colorR, float colorG, float colorB){
+		
+		this.colorB = colorB;
+		this.colorG = colorG;
+		this.colorR = colorR;
+		
 	}
 	
 	public float getColorR() {

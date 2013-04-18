@@ -1,5 +1,7 @@
 package com.januskopf.tryangle;
 
+import java.util.Random;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 
@@ -16,6 +18,7 @@ public class Tryangle implements Runnable{
 	private final int yTriCount = 26;
 	
 	private Triangle[][] triangleArray = new Triangle[yTriCount][xTriCount];
+	private Random random = new Random();
 	
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
@@ -107,6 +110,22 @@ public class Tryangle implements Runnable{
 	
 	public void tick(){
 		
+		for(int j = 0; j < yTriCount; j++){
+			for(int i = 0; i < xTriCount; i++){
+				triangleArray[j][i].tick();
+			}
+		}
+		
+		if(random.nextInt(1) == 0){
+			Triangle t = triangleArray[random.nextInt(yTriCount)][random.nextInt(xTriCount)];
+			float cB = t.getColorB();
+			float cR = t.getColorR();
+			float cG = t.getColorG();
+			
+			float c = 0.1f;
+			
+			t.setColor(cR + c, cG + c, cB + c);
+		}
 	}
  
 }
