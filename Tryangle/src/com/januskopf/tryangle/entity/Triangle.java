@@ -51,16 +51,20 @@ public class Triangle {
 	
 	public void startColorChange(float colorR, float colorG, float colorB, int ticks){
 		changeColor = true;
-		newColor[0] = colorR;
-		newColor[1] = colorG;
-		newColor[2] = colorB;
+		newColor[0] = (colorR - this.colorR) / ticks;
+		newColor[1] = (colorG - this.colorG) / ticks;
+		newColor[2] = (colorB - this.colorB) / ticks;
 		this.colorChangeTicks = ticks;
 	}
 	
 	private void colorChange(){
+		if(colorChangeTicks == 0) changeColor = false;
+
+		this.colorR += newColor[0];
+		this.colorG += newColor[1];
+		this.colorB += newColor[2];
 		
-		
-		
+		colorChangeTicks--;
 	}
 	
 	public void setColor(float colorR, float colorG, float colorB){
