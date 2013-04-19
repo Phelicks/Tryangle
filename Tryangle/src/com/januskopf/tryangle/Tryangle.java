@@ -37,7 +37,7 @@ public class Tryangle implements Runnable{
 		try{
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setResizable(false);
-			PixelFormat p = new PixelFormat().withSamples(8);
+			PixelFormat p = new PixelFormat().withSamples(4);
 			Display.create(p);
 		}
 		catch (LWJGLException e){
@@ -109,13 +109,20 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void tick(){
+		
+		for(int j = 0; j < yTriCount; j++){
+			for(int i = 0; i < xTriCount; i++){
+				triangleArray[j][i].tick();
+			}
+		}
+		
 		if(random.nextInt(10) == 0){
 			Triangle t = triangleArray[random.nextInt(yTriCount)][random.nextInt(xTriCount)];
 			float cB = t.getColorB();
 			float cR = t.getColorR();
 			float cG = t.getColorG();
 			
-			float c = 0.01f;
+			float c = 0.1f;
 			
 			t.setColor(cR + c, cG + c, cB + c);
 		}
