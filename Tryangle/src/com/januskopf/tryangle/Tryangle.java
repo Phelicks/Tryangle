@@ -37,7 +37,7 @@ public class Tryangle implements Runnable{
 		try{
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setResizable(false);
-			PixelFormat p = new PixelFormat().withSamples(8);
+			PixelFormat p = new PixelFormat().withSamples(4);
 			Display.create(p);
 		}
 		catch (LWJGLException e){
