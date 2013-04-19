@@ -57,7 +57,7 @@ public class Triangle {
 		this.colorChangeTicks = ticks;
 	}
 	
-	public void colorChange(){
+	private void colorChange(){
 		
 		
 		
