@@ -116,7 +116,7 @@ public class Tryangle implements Runnable{
 			}
 		}
 		
-		if(random.nextInt(1) == 0){
+		if(random.nextInt(10) == 0){
 			Triangle t = triangleArray[random.nextInt(yTriCount)][random.nextInt(xTriCount)];
 			float cB = t.getColorB();
 			float cR = t.getColorR();
