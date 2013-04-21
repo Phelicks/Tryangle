@@ -8,9 +8,15 @@ public class Triangle {
 	private float colorG;
 	private float colorB;
 	private float length;
+	//ColorTransition
 	private boolean changeColor = false;
 	private float[] newColor = new float[3];
 	private int colorChangeTicks;
+	//ColorFlash
+	private boolean colorFlash = false;
+	private float[] flashColor = new float[3];
+	private int initFlashTicks;
+	private int flashTicks;
 
 	private Vertex vertices[] = new Vertex[3];
 	
@@ -35,8 +41,9 @@ public class Triangle {
 	}
 	
 	public void tick(){
-		
+
 		if(changeColor)colorChange();
+		if(colorFlash)flashColor();
 		
 	}
 	
@@ -49,29 +56,69 @@ public class Triangle {
 		GL11.glEnd();		
 	}
 	
+	//ColorTransition
 	public void startColorChange(float colorR, float colorG, float colorB, int ticks){
-		changeColor = true;
-		newColor[0] = (colorR - this.colorR) / ticks;
-		newColor[1] = (colorG - this.colorG) / ticks;
-		newColor[2] = (colorB - this.colorB) / ticks;
-		this.colorChangeTicks = ticks;
+		if(changeColor == false){
+			changeColor = true;
+			newColor[0] = (colorR - this.colorR) / ticks;
+			newColor[1] = (colorG - this.colorG) / ticks;
+			newColor[2] = (colorB - this.colorB) / ticks;
+			this.colorChangeTicks = ticks;
+		}
 	}
 	
 	private void colorChange(){
-		if(colorChangeTicks == 0) changeColor = false;
 
 		this.colorR += newColor[0];
 		this.colorG += newColor[1];
 		this.colorB += newColor[2];
 		
-		colorChangeTicks--;
+		if(colorChangeTicks == 0) 
+			changeColor = false;
+		else
+			colorChangeTicks--;
+	}
+	
+	//ColorFlash
+	public void startColorFlash(int ticks){
+		if(colorFlash == false){
+			this.colorFlash = true;
+			this.initFlashTicks = ticks;
+			this.flashTicks = 0;
+			flashColor[0] = (1.0f - this.colorR) / ticks/2;
+			flashColor[1] = (1.0f - this.colorG) / ticks/2;
+			flashColor[2] = (1.0f - this.colorB) / ticks/2;
+		}
+	}
+	
+	private void flashColor(){
+		
+		if(flashTicks < initFlashTicks/2){
+			
+			this.colorR += flashColor[0];
+			this.colorG += flashColor[1];
+			this.colorB += flashColor[2];
+			
+		}else{
+
+			this.colorR -= flashColor[0];
+			this.colorG -= flashColor[1];
+			this.colorB -= flashColor[2];
+			
+		}
+		
+		if(flashTicks == initFlashTicks){
+			this.colorFlash = false;			
+		}else
+			flashTicks++;
+		
 	}
 	
 	public void setColor(float colorR, float colorG, float colorB){
 		
-		this.colorB = colorB;
-		this.colorG = colorG;
 		this.colorR = colorR;
+		this.colorG = colorG;
+		this.colorB = colorB;
 		
 	}
 	
