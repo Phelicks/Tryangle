@@ -2,12 +2,17 @@ package com.januskopf.tryangle.canvas;
 
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
 import com.januskopf.tryangle.entity.Triangle;
+import com.januskopf.tryangle.input.*;
 
 public class Canvas {
 
-	private final int xTriCount = 20;
-	private final int yTriCount = 26;
+	private final int xTriCount = 19;
+	private final int yTriCount = 25;
+	private final float triLength = 50.0f;
 	private int rowAni = 0;
 	private int colAni = 0;
 	private boolean introAni = true;
@@ -17,7 +22,7 @@ public class Canvas {
 	
 	public Canvas() {
 		
-		this.createTriArray(0.0f, -50.0f, 50.0f);
+		this.createTriArray(0.0f, -(triLength/2), triLength);
 		
 	}
 	
@@ -33,6 +38,15 @@ public class Canvas {
 			this.animateTriangle();
 		else
 			this.randomFlashing();
+		
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_SPACE)){						
+			this.animateTriangle2();			
+		}
+		
+		if(Mouse.isButtonDown(0)){			
+			this.animateTriangle2();
+		}
+		
 	}
 	
 	public void render(){
@@ -55,24 +69,33 @@ public class Canvas {
 		
 		for(int j = 0; j < yTriCount; j++){
 			for(int i = 0; i < xTriCount; i++){				
-				if(i % 2 == 0)
-					triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
-				else
-					triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+				if(j%2 == 0){
+					
+					if(i%2 == 0)
+						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
+					else
+						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+					
+				}else{
+					
+					if(i%2 == 0)
+						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+					else
+						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
+					
+				}
 				
 				x = x + h;
 			}
-			if(j%2 == 0)
-				x = xPos;
-			else
-				x = xPos -h;
+			
+			x = xPos;
 			y = y + length/2;
 		}
 		
 	}
 	
 	private void randomFlashing(){
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 2; i++){
 			Triangle t = triangleArray[random.nextInt(yTriCount)][random.nextInt(xTriCount)];
 			float c = (float)(1.0 - Math.random()/2.0);
 			t.startColorChange(1.0f*c, 0.47f*c, 0.0f*c, 100);
@@ -98,6 +121,24 @@ public class Canvas {
 					introAni = false;
 			}
 			
+		}
+		
+	}
+	
+	private void animateTriangle2(){
+		
+		for(int i = 0; i < yTriCount; i++){
+			
+			Triangle t = triangleArray[i][rowAni];
+			
+			t.startColorChange(1.0f, 1.0f, 1.0f, 150);
+			
+		}
+		
+		if(rowAni < xTriCount-1) 
+			rowAni++;
+		else{
+			rowAni = 0;
 		}
 		
 	}

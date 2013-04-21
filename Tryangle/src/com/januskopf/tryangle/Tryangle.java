@@ -4,6 +4,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 
 import com.januskopf.tryangle.canvas.Canvas;
+import com.januskopf.tryangle.input.*;
  
 public class Tryangle implements Runnable{
 	
@@ -14,6 +15,7 @@ public class Tryangle implements Runnable{
 	private boolean running;
 	
 	private Canvas canvas;
+	private KeyboardListener keyboard;
 	
 		
 	public static void main(String[] args)	{
@@ -53,7 +55,10 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
+		
+		this.keyboard = new KeyboardListener();
 		this.canvas = new Canvas();
+		
 		while(running){
 			if(Display.isCloseRequested()) stop();
 			
@@ -73,6 +78,7 @@ public class Tryangle implements Runnable{
 	
 	public void tick(){
 		
+		keyboard.tick();
 		canvas.tick();
 		
 	}
