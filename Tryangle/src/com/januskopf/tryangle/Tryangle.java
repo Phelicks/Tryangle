@@ -3,7 +3,8 @@ package com.januskopf.tryangle;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 
-import com.januskopf.tryangle.entity.*;
+import com.januskopf.tryangle.canvas.Canvas;
+import com.januskopf.tryangle.input.*;
  
 public class Tryangle implements Runnable{
 	
@@ -13,6 +14,10 @@ public class Tryangle implements Runnable{
 	
 	private boolean running;
 	
+	private Canvas canvas;
+	private KeyboardListener keyboard;
+	
+		
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
 		t.start();
@@ -22,6 +27,7 @@ public class Tryangle implements Runnable{
 		this.running = true;
 		new Thread(this).start();
 	}
+	
 	public void stop()	{
 		this.running = false;
 	}
@@ -30,8 +36,8 @@ public class Tryangle implements Runnable{
 		try{
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setResizable(false);
-			//PixelFormat p = new PixelFormat().withSamples(8);
-			Display.create();
+			PixelFormat p = new PixelFormat().withSamples(4);
+			Display.create(p);
 		}
 		catch (LWJGLException e){
 			e.printStackTrace();
@@ -49,7 +55,10 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
-		this.createTriArray();
+		
+		this.keyboard = new KeyboardListener();
+		this.canvas = new Canvas();
+		
 		while(running){
 			if(Display.isCloseRequested()) stop();
 			
@@ -60,69 +69,17 @@ public class Tryangle implements Runnable{
 		}
 	}
 	
-	private Triangle[][] triangleArray = new Triangle[25][19];
-	
-	private void createTriArray() {
-		
-		float xPos = 0.0f;
-		float yPos = -50.0f;
-		float l = 50.0f;
-		float h = ((float)Math.sqrt((l*l) - ((l/2)*(l/2))));
-		
-		float x = xPos;
-		float y = yPos;
-		
-		for(int j = 0; j < 25; j++){
-			for(int i = 0; i < 19; i++){
-				
-				triangleArray[j][i] = new Triangle(x, y, l, 1.0f, 1.0f, 1.0f);
-				
-				x = x + 2*h;
-			}
-			if(j%2 == 0)
-				x = xPos + h;
-			else
-				x = xPos;
-			y = y + l/2;
-		}
-		
-	}
 
 	public void render(){
-		float xPos = 0.0f;
-		float yPos = -50.0f;
-		float l = 50.0f;
-		float h = ((float)Math.sqrt((l*l) - ((l/2)*(l/2))));
 		
-		float x = xPos;
-		float y = yPos;
+		canvas.render();
 		
-		for(int j = 0; j < 26; j++){
-			for(int i = 0; i < 10; i++){
-				GL11.glColor3f(0.85f, 0.48f, 0.13f);
-				GL11.glBegin(GL11.GL_TRIANGLES);
-					GL11.glVertex2f(x, y);
-					GL11.glVertex2f(x, y+l);
-					GL11.glVertex2f(x+((float)Math.sqrt((l*l) - ((l/2)*(l/2)))), y+l/2f);
-				GL11.glEnd();
-				
-				GL11.glColor3f(0.71f, 0.20f, 0.13f);
-				GL11.glBegin(GL11.GL_TRIANGLES);
-					GL11.glVertex2f(x, y);
-					GL11.glVertex2f(x, y+l);
-					GL11.glVertex2f(x-((float)Math.sqrt((l*l) - ((l/2)*(l/2)))), y+l/2f);
-				GL11.glEnd();
-				x = x + 2*h;
-			}
-			if(j%2 == 0)
-				x = xPos + h;
-			else
-				x = xPos;
-			y = y + l/2;
-		}
 	}
 	
 	public void tick(){
+		
+		keyboard.tick();
+		canvas.tick();
 		
 	}
  
