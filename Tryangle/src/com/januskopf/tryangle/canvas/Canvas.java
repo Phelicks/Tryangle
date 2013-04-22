@@ -14,7 +14,7 @@ public class Canvas {
 	private int yTriNumber = 25;
 	private int rowAni = 0;
 	private int colAni = 0;
-	private boolean introAni = true;
+	private boolean introAni = false;
 	
 	TriangleArray triangles;
 	private Random random = new Random();
@@ -37,13 +37,13 @@ public class Canvas {
 		}
 		
 		if(Mouse.isButtonDown(0)){			
-			this.animateTriangle2();
+			System.out.println("Maus: " + Mouse.getX() + ", " + Mouse.getY());
 		}
 		
 	}
 	
 	public void render(){
-		triangles.render();				
+		triangles.render();
 	}
 	
 	private void randomFlashing(){
@@ -84,8 +84,8 @@ public class Canvas {
 			
 			Triangle t = triangles.getTriangle(rowAni, i);
 			
-			//t.startColorChange(1.0f, 1.0f, 1.0f, 50);
-			t.startColorFlash(100);
+			t.startColorChange(1.0f, 1.0f, 1.0f, 50);
+			//t.startColorFlash(100);
 			
 		}
 		
