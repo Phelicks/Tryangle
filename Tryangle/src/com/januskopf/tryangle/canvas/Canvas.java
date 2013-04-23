@@ -15,6 +15,8 @@ public class Canvas {
 	private int rowAni = 0;
 	private int colAni = 0;
 	private boolean introAni = false;
+	private int xPos = 10;
+	private int yPos = 10;
 	
 	TriangleArray triangles;
 	private Random random = new Random();
@@ -39,6 +41,22 @@ public class Canvas {
 		if(Mouse.isButtonDown(0)){			
 			System.out.println("Maus: " + Mouse.getX() + ", " + Mouse.getY());
 		}
+		
+		
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_UP) && yPos > 0) {
+        	yPos -= 1;
+        }
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && yPos < yTriNumber-1) {
+        	yPos += 1;
+        }
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && xPos < xTriNumber-1) {
+        	xPos += 1;
+        }
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT) && xPos > 0) {
+        	xPos -= 1;
+        }
+        
+		triangles.getTriangle(xPos, yPos).setColor(0.27f ,0.57f ,0.80f);
 		
 	}
 	
