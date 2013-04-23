@@ -14,7 +14,7 @@ public class Canvas {
 	private int yTriNumber = 25;
 	private int rowAni = 0;
 	private int colAni = 0;
-	private boolean introAni = true;
+	private boolean introAni = false;
 	
 	TriangleArray triangles;
 	private Random random = new Random();
