@@ -15,8 +15,8 @@ public class Canvas {
 	private int rowAni = 0;
 	private int colAni = 0;
 	private boolean introAni = false;
-	private int xPos = 10;
-	private int yPos = 10;
+	private float xPos = 10;
+	private float yPos = 10;
 	
 	TriangleArray triangles;
 	private Random random = new Random();
@@ -44,19 +44,19 @@ public class Canvas {
 		
 		
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_UP) && yPos > 0) {
-        	yPos -= 1;
+        	yPos -= 0.2;
         }
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && yPos < yTriNumber-1) {
-        	yPos += 1;
+        	yPos += 0.2;
         }
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && xPos < xTriNumber-1) {
-        	xPos += 1;
+        	xPos += 0.2;
         }
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT) && xPos > 0) {
-        	xPos -= 1;
+        	xPos -= 0.2;
         }
         
-		triangles.getTriangle(xPos, yPos).setColor(0.27f ,0.57f ,0.80f);
+		triangles.getTriangle((int)xPos, (int)yPos).setColor(0.27f ,0.57f ,0.80f);
 		
 	}
 	
@@ -65,7 +65,7 @@ public class Canvas {
 	}
 	
 	private void randomFlashing(){
-		for(int i = 0; i < 2; i++){
+		for(int i = 0; i < 100; i++){
 			Triangle t = triangles.getTriangle(random.nextInt(xTriNumber), random.nextInt(yTriNumber));
 			float c = (float)(1.0 - Math.random()/2.0);
 			//t.startColorFlash(50);
