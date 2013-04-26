@@ -134,7 +134,7 @@ public class Triangle {
 		return colorB;
 	}
 		
-	public float length() {
+	public float getLength() {
 		return length;
 	}	
 }
