@@ -18,16 +18,19 @@ public class Canvas {
 	private float xPos = 10;
 	private float yPos = 10;
 	
-	TriangleArray triangles;
+	private TriangleArray triangles;
+	private IntroScreen intro;
 	private Random random = new Random();
 	
 	public Canvas() {
 		
 		triangles = new TriangleArray(xTriNumber, yTriNumber, 50.0f);
+		intro = new IntroScreen();
 		
 	}
 	
 	public void tick(){
+		intro.tick();
 		triangles.tick();
 		if(introAni) 
 			this.animateTriangle();
@@ -62,6 +65,7 @@ public class Canvas {
 	
 	public void render(){
 		triangles.render();
+		//intro.render();
 	}
 	
 	private void randomFlashing(){
