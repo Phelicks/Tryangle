@@ -1,6 +1,7 @@
 package com.januskopf.tryangle.canvas;
 
 import com.januskopf.tryangle.*;
+import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.GridVertex;
 import com.januskopf.tryangle.input.KeyboardListener;
@@ -10,6 +11,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.Math;
+import java.util.ArrayList;
 
 
 
@@ -28,6 +30,7 @@ public class TriangleArray {
 	
 	private Triangle[][] triangleArray;
 	private GridVertex gridVertices[][];
+	private ArrayList<GridVertex> staticCubes = new ArrayList<GridVertex>();
 	
 		
 	
@@ -113,13 +116,17 @@ public class TriangleArray {
 			}
 		}
 		
-		for(int x = 0; x < xNumber+1; x++){
-			for(int y = yNumber; y >=0; y--){
-				if(gridVertices[y][x].hasCube()){
-					drawCube(gridVertices[y][x]);					
-				}
-			}
-		}	
+//		for(int x = 0; x < xNumber+1; x++){
+//			for(int y = yNumber; y >=0; y--){
+//				if(gridVertices[y][x].hasCube()){
+//					drawCube(gridVertices[y][x]);					
+//				}
+//			}
+//		}	
+		
+		for(int i=0; i < staticCubes.size(); i++){
+			drawCube(staticCubes.get(i));
+		}
 		
 		//if(Mouse.isClipMouseCoordinatesToWindow() == true){
 		//	getTrianglePx(Mouse.getX(),Mouse.getY()).setColor(0.19f, 0.41f, 0.82f);
@@ -138,15 +145,22 @@ public class TriangleArray {
         }
         
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_E)) {
-	        for(int x = 0; x < xNumber+1; x++){
-				for(int y = yNumber; y >=0; y--){
-					if(gridVertices[y][x].hasCube()){
-						gridVertices[y][x].eraseCube();					
-					}
-				}
-	        }
+//	        for(int x = 0; x < xNumber+1; x++){
+//				for(int y = yNumber; y >=0; y--){
+//					if(gridVertices[y][x].hasCube()){
+//						gridVertices[y][x].eraseCube();					
+//					}
+//				}
+//	        }
+        	staticCubes.clear();
 		}
 		
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_R)) {
+        	if(staticCubes.size()>0){
+        		staticCubes.remove(staticCubes.size()-1);
+        	}
+        }
+        
 //		if(Mouse.isClipMouseCoordinatesToWindow() == true){
 //			int ix = getCubeX(Mouse.getX(),Mouse.getY());
 //			int iy = getCubeY(Mouse.getX(),Mouse.getY());
@@ -185,7 +199,13 @@ public class TriangleArray {
 				GridVertex vertex = getClosestVertex(mouseX,mouseY);
 				drawCube(vertex);
 				if(Mouse.isButtonDown(0) == true){
-					vertex.setCube();
+					//vertex.setCube();
+					for(int i=0; i < staticCubes.size(); i++){
+						if(staticCubes.get(i)==vertex){
+							staticCubes.remove(i);
+						}
+					}
+					staticCubes.add(vertex);
 				}
 				if (shieldActivated){
 					getTriangle(vertex.getix()-1 + shieldX[(int)shield], vertex.getiy()-2 + shieldY[(int)shield]).setColor(0.37f ,0.87f ,0.90f); //shield dreieck um cube
