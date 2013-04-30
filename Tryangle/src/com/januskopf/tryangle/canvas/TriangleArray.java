@@ -239,11 +239,11 @@ public class TriangleArray {
 		double difX = (x2-mouseX)*(x2-mouseX);
 		double difY = (y2-mouseY)*(y2-mouseY);
 		distance = Math.sqrt(difX+difY);
-//		GL11.glColor3f(1, 1, 1);
-//		GL11.glBegin(GL11.GL_LINES);
-//			GL11.glVertex2f(mouseX, mouseY);
-//			GL11.glVertex2f(x2, y2);	
-//		GL11.glEnd();
+		GL11.glColor3f(1, 1, 1);
+		GL11.glBegin(GL11.GL_LINES);
+			GL11.glVertex2f(mouseX, mouseY);
+			GL11.glVertex2f(x2, y2);	
+		GL11.glEnd();
 		return distance;
 	}
 	

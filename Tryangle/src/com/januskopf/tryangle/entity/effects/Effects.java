@@ -12,9 +12,15 @@ public abstract class Effects {
 	private float curColorG;
 	private float curColorB;
 	
-	Triangle triangle;
+	private float newColorR;
+	private float newColorG;
+	private float newColorB;
 	
-	public Effects(Triangle triangle) {
+	public boolean isActive = true;
+
+	private Triangle triangle;
+	
+	public Effects(float r, float g, float b, Triangle triangle) {
 		this.triangle = triangle;
 
 		this.startColorR = triangle.getColorR();
@@ -24,8 +30,20 @@ public abstract class Effects {
 		this.curColorR = startColorR;
 		this.curColorG = startColorG;
 		this.curColorB = startColorB;
+
+		this.newColorR = r;
+		this.newColorG = g;
+		this.newColorB = b;
 	}
 	
-	public abstract void startEffect();
+	public abstract void runEffect();
+	
+	public void setNewColor(){		
+		triangle.setColor(curColorR, curColorG, curColorB);
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
 
 }
