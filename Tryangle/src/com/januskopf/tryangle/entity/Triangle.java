@@ -1,6 +1,7 @@
 package com.januskopf.tryangle.entity;
 
 import org.lwjgl.opengl.GL11;
+import com.januskopf.tryangle.entity.Vertex;
 
 public class Triangle {
 	

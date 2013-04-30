@@ -15,6 +15,8 @@ public class Canvas {
 	private int rowAni = 0;
 	private int colAni = 0;
 	private boolean introAni = true;
+	private float xPos = 0;
+	private float yPos = 0;
 	
 	TriangleArray triangles;
 	private Random random = new Random();
@@ -24,6 +26,7 @@ public class Canvas {
 		triangles = new TriangleArray(xTriNumber, yTriNumber, 50.0f);
 		
 	}
+	
 	
 	public void tick(){
 		triangles.tick();
@@ -36,18 +39,35 @@ public class Canvas {
 			this.animateTriangle2();			
 		}
 		
+		
 		if(Mouse.isButtonDown(0)){			
-			this.animateTriangle2();
+			System.out.println("Maus: " + Mouse.getX() + ", " + Mouse.getY());
 		}
+		
+		
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_UP) && yPos > 0) {
+        	yPos -= 0.2;
+        }
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && yPos < yTriNumber-1) {
+        	yPos += 0.2;
+        }
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && xPos < xTriNumber-1) {
+        	xPos += 0.2;
+        }
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT) && xPos > 0) {
+        	xPos -= 0.2;
+        }
+		
+		triangles.getTriangle((int)xPos, (int)yPos).setColor(0.27f ,0.57f ,0.80f);
 		
 	}
 	
 	public void render(){
-		triangles.render();				
+		triangles.render();
 	}
 	
 	private void randomFlashing(){
-		for(int i = 0; i < 2; i++){
+		for(int i = 0; i < 100; i++){
 			Triangle t = triangles.getTriangle(random.nextInt(xTriNumber), random.nextInt(yTriNumber));
 			float c = (float)(1.0 - Math.random()/2.0);
 			//t.startColorFlash(50);
@@ -84,8 +104,8 @@ public class Canvas {
 			
 			Triangle t = triangles.getTriangle(rowAni, i);
 			
-			//t.startColorChange(1.0f, 1.0f, 1.0f, 50);
-			t.startColorFlash(100);
+			t.startColorChange(1.0f, 1.0f, 1.0f, 50);
+			//t.startColorFlash(100);
 			
 		}
 		
