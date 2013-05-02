@@ -1,7 +1,6 @@
 package com.januskopf.tryangle.canvas;
 
 import com.januskopf.tryangle.*;
-import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.GridVertex;
 import com.januskopf.tryangle.input.KeyboardListener;
@@ -12,7 +11,6 @@ import org.lwjgl.opengl.GL11;
 
 import java.lang.Math;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 
@@ -36,13 +34,10 @@ public class TriangleArray {
 	private Triangle[][] triangleArray;
 	private GridVertex gridVertices[][];
 	private ArrayList<GridVertex> staticCubes = new ArrayList<GridVertex>();
-	private Random random;
 		
 	
 	public TriangleArray(int xTriCount, int yTriCount, float length) {
-		
-		random = new Random();
-		
+				
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;
 		this.length = length;
@@ -55,38 +50,7 @@ public class TriangleArray {
 		float x = 0;
 		float y = -(length/2);		
 		
-		for(int j = 0; j < yTriCount; j++){
-			for(int i = 0; i < xTriCount; i++){				
-				if(j%2 == 0){					
-					if(i%2 == 0){
-						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
-						//System.out.println(j +"." + i + " x:" + x + "\ty:" + y);
-					}
-					else{
-						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
-						//System.out.println(j +"." + i + " x:" + (x+h) + "\ty:" + y);
-					}
-				}else{					
-					if(i%2 == 0){
-						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
-						//System.out.println(j +"." + i + " x:" + (x+h) + "\ty:" + y);
-					}
-					else{
-						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
-						//System.out.println(j +"." + i + " x:" + x + "\ty:" + y);
-					}
-				}				
-				x = x + h;
-			}			
-			x = 0;
-			y = y + length/2;
-		}
-		
-		
 		//Erstellung des Punkterasters:
-		x = 0;
-		y = -(length/2);	
-		
 		for(int j = 0; j < yTriCount+2; j++){
 			for(int i = 0; i < xTriCount+1; i++){				
 				if(j%2 == 0){					
@@ -113,8 +77,40 @@ public class TriangleArray {
 			x = 0;
 			y = y + length/2;
 		}
+
 		
+		//Erstellen der Dreiecke
+		x = 0;
+		y = -(length/2);	
 		
+		for(int j = 0; j < yTriCount; j++){
+			for(int i = 0; i < xTriCount; i++){				
+				if(j%2 == 0){					
+					if(i%2 == 0){
+						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
+						//System.out.println(j +"." + i + " x:" + x + "\ty:" + y);
+					}
+					else{
+						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+						//System.out.println(j +"." + i + " x:" + (x+h) + "\ty:" + y);
+					}
+				}else{					
+					if(i%2 == 0){
+						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+						//System.out.println(j +"." + i + " x:" + (x+h) + "\ty:" + y);
+					}
+					else{
+						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
+						//System.out.println(j +"." + i + " x:" + x + "\ty:" + y);
+					}
+				}				
+				x = x + h;
+			}			
+			x = 0;
+			y = y + length/2;
+		}	
+		
+			
 	}
 	
 	public void tick(){
@@ -224,7 +220,7 @@ public class TriangleArray {
 			}
 			else{
 				GridVertex vertex = getClosestVertex(mouseX,mouseY);
-				drawCube(vertex);
+				//drawCube(vertex);
 				if(Mouse.isButtonDown(0) == true){
 					//vertex.setCube();
 					for(int i=0; i < staticCubes.size(); i++){
@@ -252,6 +248,12 @@ public class TriangleArray {
 			}
 		}
 		
+		for(int j = 0; j < gridVertices.length; j++){
+			for(int i = 0; i < gridVertices[j].length; i++){
+				gridVertices[j][i].render();
+			}
+		}
+		
 	}
 	
 	
@@ -270,6 +272,7 @@ public class TriangleArray {
 			vertex2 = gridVertices[gridY+1][gridX];
 		}
 		
+		//GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		double distance1 = getDistance(mouseX,mouseY, vertex1.getxPos(), vertex1.getyPos());
 		double distance2 = getDistance(mouseX,mouseY, vertex2.getxPos(), vertex2.getyPos());
 		
@@ -286,11 +289,13 @@ public class TriangleArray {
 		double difX = (x2-mouseX)*(x2-mouseX);
 		double difY = (y2-mouseY)*(y2-mouseY);
 		distance = Math.sqrt(difX+difY);
+		
 		GL11.glColor3f(1, 1, 1);
 		GL11.glBegin(GL11.GL_LINES);
 			GL11.glVertex2f(mouseX, mouseY);
 			GL11.glVertex2f(x2, y2);	
 		GL11.glEnd();
+		
 		return distance;
 	}
 	

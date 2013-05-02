@@ -75,7 +75,7 @@ public class Canvas {
 			Triangle t = triangles.getTriangle(random.nextInt(xTriNumber), random.nextInt(yTriNumber));
 			float c = (float)(1.0 - Math.random()/2.0);
 			//t.startColorFlash(50);
-			t.startColorChange(0.87f*c, 0.97f*c, 0.7f*c, 100);
+			t.startColorChange(0.27f*c, 0.27f*c, 0.2f*c, 100);
 			//t.startColorChange((float)Math.random()*c, (float)Math.random()*c, (float)Math.random()*c, 150);
 		}
 	}
@@ -86,7 +86,7 @@ public class Canvas {
 			
 			Triangle t = triangles.getTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.startColorChange(0.87f*c, 0.77f*c, 0.7f*c, 150);
+			t.startColorChange(0.27f*c, 0.27f*c, 0.2f*c, 150);
 	
 			if(rowAni < xTriNumber-1)
 				rowAni++;
