@@ -10,8 +10,8 @@ import com.januskopf.tryangle.input.*;
 
 public class Canvas {
 	
-	private int xTriNumber = 19;
-	private int yTriNumber = 25;
+	private int xTriNumber = 30;
+	private int yTriNumber = 30;
 	private int rowAni = 0;
 	private int colAni = 0;
 	private boolean introAni = true;
@@ -40,9 +40,9 @@ public class Canvas {
 		}
 		
 		
-		if(Mouse.isButtonDown(0)){			
-			System.out.println("Maus: " + Mouse.getX() + ", " + Mouse.getY());
-		}
+//		if(Mouse.isButtonDown(0)){			
+//			System.out.println("Maus: " + Mouse.getX() + ", " + Mouse.getY());
+//		}
 		
 		
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_UP) && yPos > 0) {
@@ -71,7 +71,7 @@ public class Canvas {
 			Triangle t = triangles.getTriangle(random.nextInt(xTriNumber), random.nextInt(yTriNumber));
 			float c = (float)(1.0 - Math.random()/2.0);
 			//t.startColorFlash(50);
-			t.startColorChange(1.0f*c, 0.47f*c, 0.0f*c, 100);
+			t.startColorChange(0.87f*c, 0.97f*c, 0.7f*c, 100);
 			//t.startColorChange((float)Math.random()*c, (float)Math.random()*c, (float)Math.random()*c, 150);
 		}
 	}
@@ -82,7 +82,7 @@ public class Canvas {
 			
 			Triangle t = triangles.getTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.startColorChange(1.0f*c, 0.47f*c, 0.0f*c, 150);
+			t.startColorChange(0.87f*c, 0.77f*c, 0.7f*c, 150);
 	
 			if(rowAni < xTriNumber-1)
 				rowAni++;

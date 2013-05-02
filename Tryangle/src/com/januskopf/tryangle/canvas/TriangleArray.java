@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 
@@ -27,14 +28,20 @@ public class TriangleArray {
 	private int[] shieldY = {-2,-1,-1,0,1,2,3,3,4,4,3,3,2,1,0,-1,-1,-2};
 	private boolean shieldActivated;
 	
+	private float randomColorR;
+	private float randomColorG = 0.21f;
+	private float randomColorB = 0.62f;
+	
 	
 	private Triangle[][] triangleArray;
 	private GridVertex gridVertices[][];
 	private ArrayList<GridVertex> staticCubes = new ArrayList<GridVertex>();
-	
+	private Random random;
 		
 	
 	public TriangleArray(int xTriCount, int yTriCount, float length) {
+		
+		random = new Random();
 		
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;
@@ -75,6 +82,8 @@ public class TriangleArray {
 			y = y + length/2;
 		}
 		
+		
+		//Erstellung des Punkterasters:
 		x = 0;
 		y = -(length/2);	
 		
@@ -142,6 +151,24 @@ public class TriangleArray {
         	shieldActivated = true;
         	shield -= 0.2f;
         	if (shield < 0) shield = 17;
+        }
+        
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_C)) {
+        	randomColorR = (float)Math.random();
+        	if(randomColorR>=0.2f){
+        		randomColorR -= 0.2f;
+        	}
+        	randomColorG = (float)Math.random();
+        	if(randomColorG>=0.2f){
+        		randomColorG -= 0.2f;
+        	}
+        	randomColorB = (float)Math.random();
+        	if(randomColorB>=0.2f){
+        		randomColorB -= 0.2f;
+        	}
+        	
+        	System.out.println("R:"+ randomColorR + " G:" + randomColorG + " B:" + randomColorB);
+        	
         }
         
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_E)) {
@@ -300,12 +327,12 @@ public class TriangleArray {
 	}
 	
 	public void drawCube(GridVertex vertex){
-			getTriangle(vertex.getix(),vertex.getiy()-1).setColor(0.0f, 0.21f, 0.62f);
-			getTriangle(vertex.getix(),vertex.getiy()).setColor(0.0f, 0.21f, 0.62f);
-			getTriangle(vertex.getix()-1,vertex.getiy()).setColor(0.09f, 0.31f, 0.72f);
-			getTriangle(vertex.getix()-1,vertex.getiy()-1).setColor(0.09f, 0.31f, 0.72f);
-			getTriangle(vertex.getix()-1,vertex.getiy()-2).setColor(0.19f, 0.41f, 0.82f);
-			getTriangle(vertex.getix(),vertex.getiy()-2).setColor(0.19f, 0.41f, 0.82f);
+			getTriangle(vertex.getix(),vertex.getiy()-1).setColor(randomColorR, randomColorG, randomColorB);
+			getTriangle(vertex.getix(),vertex.getiy()).setColor(randomColorR, randomColorG, randomColorB);
+			getTriangle(vertex.getix()-1,vertex.getiy()).setColor(randomColorR + 0.1f, randomColorG + 0.1f, randomColorB + 0.1f);
+			getTriangle(vertex.getix()-1,vertex.getiy()-1).setColor(randomColorR + 0.1f, randomColorG + 0.1f, randomColorB + 0.1f);
+			getTriangle(vertex.getix()-1,vertex.getiy()-2).setColor(randomColorR + 0.2f, randomColorG + 0.2f, randomColorB + 0.2f);
+			getTriangle(vertex.getix(),vertex.getiy()-2).setColor(randomColorR + 0.2f, randomColorG + 0.2f, randomColorB + 0.2f);
 	}
 	
 	/**
