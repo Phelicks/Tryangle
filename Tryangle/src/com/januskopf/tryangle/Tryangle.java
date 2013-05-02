@@ -8,8 +8,8 @@ import com.januskopf.tryangle.input.*;
  
 public class Tryangle implements Runnable{
 	
-	public final static int WIDTH = 800;
-	public final static int HEIGHT = 600;
+	public final static int WIDTH = 1280;
+	public final static int HEIGHT = 720;
 	public final static int FPS = 60;
 	private boolean running;
 	
