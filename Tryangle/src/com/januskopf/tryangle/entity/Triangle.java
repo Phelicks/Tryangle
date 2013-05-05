@@ -1,7 +1,8 @@
 package com.januskopf.tryangle.entity;
 
 import org.lwjgl.opengl.GL11;
-import com.januskopf.tryangle.entity.Vertex;
+
+import com.januskopf.tryangle.canvas.VerticeGrid;
 
 public class Triangle {
 	
@@ -19,7 +20,7 @@ public class Triangle {
 	private int initFlashTicks;
 	private int flashTicks;
 
-	private Vertex vertices[] = new Vertex[3];
+	private GridVertex vertices[] = new GridVertex[3];
 	
 	public Triangle(float xPos, float yPos, float length, float colorR, float colorG, float colorB){
 		this(xPos, yPos, length, colorR, colorG, colorB, false);
@@ -31,13 +32,16 @@ public class Triangle {
 		this.colorB = colorB;
 		this.length = length;
 
-		vertices[0] = new Vertex(xPos, yPos);
-		vertices[1] = new Vertex(xPos, yPos + length);
+		vertices[0] = VerticeGrid.getClosestVertex(xPos, yPos);
+		vertices[1] = VerticeGrid.getClosestVertex(xPos, yPos + length);
+		
+		//float height = ((float)Math.sqrt(3)*(length/2));
+		float height = (float)Math.sqrt((length * length) - ((length/2)*(length/2)));
 		
 		if (!left)
-			vertices[2] = new Vertex(xPos+((float)Math.sqrt((length * length) - ((length/2)*(length/2)))), yPos + length/2f);
+			vertices[2] = VerticeGrid.getClosestVertex(xPos+height, yPos + length/2f);
 		else
-			vertices[2] = new Vertex(xPos-((float)Math.sqrt((length * length) - ((length/2)*(length/2)))), yPos + length/2f);
+			vertices[2] = VerticeGrid.getClosestVertex(xPos-height, yPos + length/2f);
 		
 	}
 	

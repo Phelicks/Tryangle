@@ -3,7 +3,6 @@ package com.januskopf.tryangle.canvas;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.input.*;
