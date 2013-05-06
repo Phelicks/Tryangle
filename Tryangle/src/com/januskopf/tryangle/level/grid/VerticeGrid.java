@@ -1,8 +1,7 @@
-package com.januskopf.tryangle.canvas;
+package com.januskopf.tryangle.level.grid;
 
 import org.lwjgl.opengl.GL11;
 
-import com.januskopf.tryangle.entity.GridVertex;
 
 public class VerticeGrid {
 	

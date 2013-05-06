@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.canvas;
+package com.januskopf.tryangle.level.screens;
 
 import java.util.Random;
 

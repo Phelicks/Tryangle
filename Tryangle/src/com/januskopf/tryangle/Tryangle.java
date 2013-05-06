@@ -3,8 +3,8 @@ package com.januskopf.tryangle;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 
-import com.januskopf.tryangle.canvas.Canvas;
 import com.januskopf.tryangle.input.*;
+import com.januskopf.tryangle.level.Level;
  
 public class Tryangle implements Runnable{
 	
@@ -13,7 +13,7 @@ public class Tryangle implements Runnable{
 	public final static int FPS = 60;
 	private boolean running;
 	
-	private Canvas canvas;
+	private Level level;
 	private KeyboardListener keyboard;
 	
 		
@@ -56,7 +56,7 @@ public class Tryangle implements Runnable{
 		this.initOpenGL();
 		
 		this.keyboard = new KeyboardListener();
-		this.canvas = new Canvas();
+		this.level = new Level();
 		
 		while(running){
 			if(Display.isCloseRequested()) stop();
@@ -71,14 +71,14 @@ public class Tryangle implements Runnable{
 
 	public void render(){
 		
-		canvas.render();
+		level.render();
 		
 	}
 	
 	public void tick(){
 		
 		keyboard.tick();
-		canvas.tick();
+		level.tick();
 		
 	}
  

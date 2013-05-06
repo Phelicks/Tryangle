@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.entity;
+package com.januskopf.tryangle.level.grid;
 
 import org.lwjgl.opengl.GL11;
 
@@ -40,11 +40,11 @@ public class GridVertex {
 		return yPos;
 	}
 	
-	public int getindexX() {
+	public int getIndexX() {
 		return indexX;
 	}
 	
-	public int getindexY(){
+	public int getIndexY(){
 		return indexY;
 	}
 	
