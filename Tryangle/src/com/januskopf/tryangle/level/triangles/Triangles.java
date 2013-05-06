@@ -13,15 +13,17 @@ public class Triangles {
 	
 	private int xNumber;
 	private int yNumber;
-	
-	private Triangle[][] triangleArray;		
+
+	private Triangle[][] triangleArray;
+	private Triangle[][] foreground;
 	
 	public Triangles(int xTriCount, int yTriCount, float length) {
 				
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;
-		
+
 		triangleArray = new Triangle[yTriCount][xTriCount];
+		foreground = new Triangle[yTriCount][xTriCount];
 		
 		float h = ((float)Math.sqrt(3)*(length/2));
 		float x = 0;
@@ -37,7 +39,8 @@ public class Triangles {
 					else{
 						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
 					}
-				}else{					
+				}
+				else{					
 					if(i%2 == 0){
 						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
 					}
@@ -49,26 +52,46 @@ public class Triangles {
 			}			
 			x = 0;
 			y = y + length/2;
-		}	
-		
-			
+		}			
 	}
 	
 	public void tick(){
-		
 		for(int j = 0; j < yNumber; j++){
 			for(int i = 0; i < xNumber; i++){
-				triangleArray[j][i].tick();
+				if(foreground[j][i] == null)
+					triangleArray[j][i].tick();
+				else
+					foreground[j][i].tick();
 			}
-		}			
+		}
 	}
 	
 	public void render(){
 		for(int j = 0; j < yNumber; j++){
 			for(int i = 0; i < xNumber; i++){
-				triangleArray[j][i].render();
+				if(foreground[j][i] == null)
+					triangleArray[j][i].render();
+				else
+					foreground[j][i].render();
 			}
 		}		
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void setForegroundTriangle(Triangle triangle, int x, int y){
+		foreground[y][x] = triangle;
+	}
+	
+	public void removeForegroundTriangle(int x, int y){
+		foreground[y][x] = null;
+	}
+	
+	public boolean isForegroundTriangle(int x, int y){
+		if(foreground[y][x] == null)
+			return false;
+		else
+			return true;
 	}
 	
 	public Triangle getExactTriangle(int mouseX, int mouseY){
@@ -109,9 +132,22 @@ public class Triangles {
 	 * @param y
 	 * @return Single Triangle Object
 	 */
-	public Triangle getTriangle(int x, int y){
+
+	public Triangle getBackgroundTriangle(int x, int y){
 		if((x >= 0 && x < xNumber)&&(y >= 0 && y < yNumber)){
 			return triangleArray[y][x];
+		}
+		else{
+			return triangleArray[0][0];
+		}
+	}
+	
+	public Triangle getTriangle(int x, int y){
+		if((x >= 0 && x < xNumber)&&(y >= 0 && y < yNumber)){
+			if(foreground[y][x] == null)
+				return triangleArray[y][x];
+			else
+				return foreground[y][x];
 		}
 		else{
 			return triangleArray[0][0];

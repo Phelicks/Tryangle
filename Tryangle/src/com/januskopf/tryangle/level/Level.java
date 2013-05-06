@@ -58,7 +58,7 @@ public class Level {
 
 	public void render(){
 		triangles.render();
-		verticeGrid.render();
+		//verticeGrid.render();
 	}
 	
 	

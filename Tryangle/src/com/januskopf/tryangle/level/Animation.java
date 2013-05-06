@@ -28,8 +28,7 @@ public class Animation {
 		this.triangles = triangles;
 		this.xTriNumber = xTriNumber;
 		this.yTriNumber = yTriNumber;
-	}
-	
+	}	
 	
 	public void tick(){
 		intro.tick();
@@ -40,9 +39,11 @@ public class Animation {
 			this.randomFlashing();
 		
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_SPACE)){						
-			this.animateTriangle2();			
+			this.animateTriangle2();
 		}		
 	}
+	
+	
 	
 	private void randomFlashing(){
 		for(int i = 0; i < 100; i++){
@@ -66,24 +67,20 @@ public class Animation {
 					colAni++;
 				else
 					introAni = false;
-			}
-			
-		}
-		
+			}			
+		}		
 	}
 	
 	private void animateTriangle2(){		
 		for(int i = 0; i < yTriNumber; i++){			
 			Triangle t = triangles.getTriangle(rowAni, i);			
 			t.startColorChange(1.0f, 1.0f, 1.0f, 50);			
-		}
-		
+		}		
 		if(rowAni < xTriNumber-1) 
 			rowAni++;
 		else{
 			rowAni = 0;
-		}
-		
+		}		
 	}
 
 }
