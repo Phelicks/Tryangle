@@ -68,18 +68,12 @@ public class Tryangle implements Runnable{
 		}
 	}
 	
-
-	public void render(){
-		
-		level.render();
-		
-	}
-	
-	public void tick(){
-		
+	public void tick(){		
 		keyboard.tick();
-		level.tick();
-		
+		level.tick();		
 	}
  
+	public void render(){		
+		level.render();		
+	}
 }

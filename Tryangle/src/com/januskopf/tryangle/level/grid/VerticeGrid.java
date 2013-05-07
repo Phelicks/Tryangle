@@ -45,8 +45,7 @@ public class VerticeGrid {
 		}
 	}
 	
-	public void render(){
-		
+	public void render(){		
 		for(int j = 0; j < gridVertices.length; j++){
 			for(int i = 0; i < gridVertices[j].length; i++){
 				gridVertices[j][i].render();
@@ -94,11 +93,11 @@ public class VerticeGrid {
 		double difY = (y2-posY)*(y2-posY);
 		distance = Math.sqrt(difX+difY);
 		
-		GL11.glColor3f(1, 1, 1);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(posX, posY);
-			GL11.glVertex2f(x2, y2);	
-		GL11.glEnd();
+//		GL11.glColor3f(1, 1, 1);
+//		GL11.glBegin(GL11.GL_LINES);
+//			GL11.glVertex2f(posX, posY);
+//			GL11.glVertex2f(x2, y2);	
+//		GL11.glEnd();
 		
 		return distance;
 	}

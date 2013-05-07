@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.januskopf.tryangle.Tryangle;
+import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
@@ -58,7 +59,7 @@ public class Level {
 
 	public void render(){
 		triangles.render();
-		//verticeGrid.render();
+		verticeGrid.render();
 	}
 	
 	
@@ -86,6 +87,7 @@ public class Level {
 		if(Mouse.isClipMouseCoordinatesToWindow() == true){
 			if (KeyboardListener.isKeyPressed(Keyboard.KEY_Y)) {
 				triangles.getExactTriangle(mouseX,mouseY).setColor(0.09f, 0.31f, 0.72f);
+				//triangles.setForegroundTriangle(triangle, x, y);
 			}else{
 				GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
 				//drawCube(vertex);

@@ -27,6 +27,7 @@ public class GridVertex {
 		else
 			GL11.glColor3f(0.5f, 0.5f, 0.6f);
 		
+		GL11.glPointSize(1.0f);
 		GL11.glBegin(GL11.GL_POINTS);
 			GL11.glVertex2f(xPos, yPos);
 		GL11.glEnd();	
