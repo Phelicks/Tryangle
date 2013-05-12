@@ -12,7 +12,7 @@ public class VerticeGrid {
 	public VerticeGrid(int xTriCount, int yTriCount, float length) {
 		
 		VerticeGrid.length = length;
-		gridVertices = new GridVertex[yTriCount+3][xTriCount+2];
+		gridVertices = new GridVertex[yTriCount+2][xTriCount+1];
 		
 		float height = ((float)Math.sqrt(3)*(length/2));
 		float startX = 0;
@@ -24,18 +24,18 @@ public class VerticeGrid {
 			for(int i = 0; i < gridVertices[j].length; i++){				
 				if(j%2 == 0){					
 					if(i%2 == 0){
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, true);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, false, false);
 					}
 					else{
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, false);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, false, true);
 					}
 				}
 				else{					
 					if(i%2 == 0){
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, false);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, false, true);
 					}
 					else{
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, true);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, false, false);
 					}
 				}				
 				x += height;
@@ -102,7 +102,7 @@ public class VerticeGrid {
 		return distance;
 	}
 	
-	public GridVertex getGridVertex(int x, int y){
+	public static GridVertex getGridVertex(int x, int y){
 		return gridVertices[y][x];		
 	}
 }

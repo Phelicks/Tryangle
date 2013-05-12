@@ -7,9 +7,7 @@ public class ColorFlash extends Effects{
 
 	public ColorFlash(int ticks, Triangle triangle) {
 		super(1.0f , 1.0f, 1.0f, triangle);
-	}
-	
-	
+	}	
 
 	@Override
 	public void runEffect() {

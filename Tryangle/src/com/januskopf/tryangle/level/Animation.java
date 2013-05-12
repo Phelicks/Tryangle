@@ -39,7 +39,7 @@ public class Animation {
 			this.randomFlashing();
 		
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_SPACE)){						
-			this.animateTriangle2();
+			this.animationSwipe();
 		}		
 	}
 	
@@ -71,7 +71,7 @@ public class Animation {
 		}		
 	}
 	
-	private void animateTriangle2(){		
+	private void animationSwipe(){		
 		for(int i = 0; i < yTriNumber; i++){			
 			Triangle t = triangles.getTriangle(rowAni, i);			
 			t.startColorChange(1.0f, 1.0f, 1.0f, 50);			

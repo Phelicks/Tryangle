@@ -15,6 +15,7 @@ public class Tryangle implements Runnable{
 	
 	private Level level;
 	private KeyboardListener keyboard;
+	private MouseListener mouse;
 	
 		
 	public static void main(String[] args)	{
@@ -54,8 +55,9 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
-		
+
 		this.keyboard = new KeyboardListener();
+		this.mouse = new MouseListener();
 		this.level = new Level();
 		
 		while(running){
@@ -69,7 +71,8 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void tick(){		
-		keyboard.tick();
+		keyboard.tick();	
+		mouse.tick();
 		level.tick();		
 	}
  

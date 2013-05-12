@@ -6,8 +6,9 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.januskopf.tryangle.Tryangle;
-import com.januskopf.tryangle.entity.Triangle;
+import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
+import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
 import com.januskopf.tryangle.level.triangles.Triangles;
@@ -18,9 +19,6 @@ public class Level {
 	private int yTriNumber = 30;
 	private float length = 50.0f;
 	
-	private int mouseX;
-	private int mouseY;
-	
 	private float shield = 0;
 	private int[] shieldX = {1,1,2,2,2,2,2,1,1,0,0,-1,-1,-1,-1,-1,0,0};	//X Positionen um den Cube herum beginnend oben rechts
 	private int[] shieldY = {-2,-1,-1,0,1,2,3,3,4,4,3,3,2,1,0,-1,-1,-2};
@@ -28,15 +26,14 @@ public class Level {
 	private float keyboardX = 10;
 	private float keyboardY = 10;
 	
-	private float randomColorR;
-	private float randomColorG = 0.21f;
-	private float randomColorB = 0.62f;
+	private float cR, cG, cB;
 	
 	private Animation animation;
 	private VerticeGrid verticeGrid;
 	private Triangles triangles;
-	private ArrayList<GridVertex> staticCubes = new ArrayList<GridVertex>();
-		
+	private ArrayList<Cube> staticCubes = new ArrayList<Cube>();
+	private Cube mouseCube;
+	
 	public Level() {
 		verticeGrid = new VerticeGrid(xTriNumber, yTriNumber, length);
 		triangles = new Triangles(xTriNumber, yTriNumber, length);
@@ -44,67 +41,69 @@ public class Level {
 	}
 		
 	public void tick(){
-		this.mousePos();
 		this.cube();
 		this.drawShield();
 		this.keyboardTriangle();
 		triangles.tick();
 		animation.tick();
-		
-		if (KeyboardListener.isKeyPressed(Keyboard.KEY_C)) {
-			randomizeCubeColor();
-		}
 	}
 	
 
 	public void render(){
 		triangles.render();
-		verticeGrid.render();
+		//verticeGrid.render();
 	}
 	
-	
 	//////////////////////////////////////////////////////////////////////////////////////////
-	
-	private void mousePos(){
-        this.mouseX = Mouse.getX();
-        this.mouseY = Tryangle.HEIGHT - Mouse.getY();
-	}	
-	
-	private void cube(){		
-		for(int i=0; i < staticCubes.size(); i++){
-			drawCube(staticCubes.get(i));
-		}
-				
+		
+	private void cube(){
+		int mouseX = MouseListener.getMouseX();
+		int mouseY = MouseListener.getMouseY();
 		if (KeyboardListener.isKeyPressed(Keyboard.KEY_E)) {
-        	staticCubes.clear();
+			for(int i=0; i < staticCubes.size(); i++){
+    			staticCubes.get(i).removeCube();
+    		}
+			staticCubes.clear();
 		}
 		
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_R)) {
         	if(staticCubes.size()>0){
+        		staticCubes.get(staticCubes.size()-1).removeCube();
         		staticCubes.remove(staticCubes.size()-1);
         	}
         }
-		if(Mouse.isClipMouseCoordinatesToWindow() == true){
-			if (KeyboardListener.isKeyPressed(Keyboard.KEY_Y)) {
-				triangles.getExactTriangle(mouseX,mouseY).setColor(0.09f, 0.31f, 0.72f);
-				//triangles.setForegroundTriangle(triangle, x, y);
-			}else{
-				GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
-				//drawCube(vertex);
-				if(Mouse.isButtonDown(0) == true){
-					//vertex.setCube();
-					for(int i=0; i < staticCubes.size(); i++){
-						if(staticCubes.get(i)==vertex){
-							staticCubes.remove(i);
-						}
-					}
-					staticCubes.add(vertex);
-				}				
-			}
-		}
+        
+        for(int i=0; i < staticCubes.size(); i++){
+        	staticCubes.get(i).setCube();
+        }
+        
+        if(Mouse.isClipMouseCoordinatesToWindow() == true){
+        	if (KeyboardListener.isKeyPressed(Keyboard.KEY_Y)) {
+        		triangles.getExactTriangle(mouseX,mouseY).setColor(0.09f, 0.31f, 0.72f);
+        	}
+        	else{
+        		if(mouseCube != null)mouseCube.removeCube();
+        		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
+        		
+        		if (KeyboardListener.isKeyPressed(Keyboard.KEY_C)){
+        			cR = (float)Math.random();
+        			cG = (float)Math.random();
+        			cB = (float)Math.random();
+        		}
+        			
+        		mouseCube = new Cube(triangles, vertex, cR, cG, cB);
+        			
+        		if(MouseListener.isButtonClicked(0)){
+        			staticCubes.add(mouseCube);
+        		}
+        	}
+        }
 	}
 	
 	private void drawShield(){
+		int mouseX = MouseListener.getMouseX();
+		int mouseY = MouseListener.getMouseY();
+		
 		boolean shieldActivated = false;
 		if (KeyboardListener.isKeyPressed(Keyboard.KEY_S)) {
         	shieldActivated = true;
@@ -138,33 +137,7 @@ public class Level {
         	keyboardX -= 0.2;
         }
         
-		triangles.getTriangle((int)keyboardX, (int)keyboardY).setColor(0.27f ,0.57f ,0.80f);		
+		triangles.getBackgroundTriangle((int)keyboardX, (int)keyboardY).setColor(0.27f ,0.57f ,0.80f);		
 	}
-	
-	public void randomizeCubeColor(){
-    	randomColorR = (float)Math.random();
-    	if(randomColorR>=0.2f){
-    		randomColorR -= 0.2f;
-    	}
-    	randomColorG = (float)Math.random();
-    	if(randomColorG>=0.2f){
-    		randomColorG -= 0.2f;
-    	}
-    	randomColorB = (float)Math.random();
-    	if(randomColorB>=0.2f){
-    		randomColorB -= 0.2f;
-    	}        	
-    	//System.out.println("R:"+ randomColorR + " G:" + randomColorG + " B:" + randomColorB);	
-	}
-	
-	public void drawCube(GridVertex vertex){
-		Triangles t = triangles;
-		t.getTriangle(vertex.getIndexX(),vertex.getIndexY()-1).setColor(randomColorR, randomColorG, randomColorB);
-		t.getTriangle(vertex.getIndexX(),vertex.getIndexY()).setColor(randomColorR, randomColorG, randomColorB);
-		t.getTriangle(vertex.getIndexX()-1,vertex.getIndexY()).setColor(randomColorR + 0.1f, randomColorG + 0.1f, randomColorB + 0.1f);
-		t.getTriangle(vertex.getIndexX()-1,vertex.getIndexY()-1).setColor(randomColorR + 0.1f, randomColorG + 0.1f, randomColorB + 0.1f);
-		t.getTriangle(vertex.getIndexX()-1,vertex.getIndexY()-2).setColor(randomColorR + 0.2f, randomColorG + 0.2f, randomColorB + 0.2f);
-		t.getTriangle(vertex.getIndexX(),vertex.getIndexY()-2).setColor(randomColorR + 0.2f, randomColorG + 0.2f, randomColorB + 0.2f);
-}
 
 }

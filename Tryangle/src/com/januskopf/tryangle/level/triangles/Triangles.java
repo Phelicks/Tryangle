@@ -8,11 +8,11 @@ import com.januskopf.tryangle.level.grid.VerticeGrid;
 import java.lang.Math;
 
 
-
 public class Triangles {
 	
 	private int xNumber;
 	private int yNumber;
+	private float length;
 
 	private Triangle[][] triangleArray;
 	private Triangle[][] foreground;
@@ -21,47 +21,54 @@ public class Triangles {
 				
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;
-
+		this.length = length;
+		
 		triangleArray = new Triangle[yTriCount][xTriCount];
 		foreground = new Triangle[yTriCount][xTriCount];
 		
-		float h = ((float)Math.sqrt(3)*(length/2));
-		float x = 0;
-		float y = -(length/2);	
-		
-		//Erstellen der Dreiecke		
-		for(int j = 0; j < yTriCount; j++){
-			for(int i = 0; i < xTriCount; i++){				
-				if(j%2 == 0){					
-					if(i%2 == 0){
-						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
+		//Erstellen der Dreiecke
+		int x = 1;
+		int y = 0;	
+		for(int j = 0; j < yTriCount; j ++){
+			for(int i = 0; i < xTriCount; i ++){		
+				//System.out.println(x + ", " + y + " - " + i + ", " + j);				
+				GridVertex vertex = VerticeGrid.getGridVertex(x, y);
+				if(j%2 == 0){			
+					if(i%2 != 0){
+						x += 2;
+						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f);
 					}
 					else{
-						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f, true);
 					}
 				}
-				else{					
-					if(i%2 == 0){
-						triangleArray[j][i] = new Triangle(x + h, y, length, 0.0f, 0.0f, 0.0f, true);
+				else{			
+					if(i%2 != 0){
+						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f, true);
 					}
 					else{
-						triangleArray[j][i] = new Triangle(x, y, length, 0.0f, 0.0f, 0.0f);
+						x += 2;
+						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f);
 					}
-				}				
-				x = x + h;
-			}			
-			x = 0;
-			y = y + length/2;
-		}			
+				}
+			}
+			if(j%2 == 0){
+				x = 0;
+			}
+			else
+				x = 1;
+			y += 1;
+		}
+		//Ende
 	}
 	
 	public void tick(){
 		for(int j = 0; j < yNumber; j++){
 			for(int i = 0; i < xNumber; i++){
-				if(foreground[j][i] == null)
-					triangleArray[j][i].tick();
-				else
+				if(foreground[j][i] != null){
 					foreground[j][i].tick();
+				}
+				triangleArray[j][i].tick();
 			}
 		}
 	}
@@ -79,11 +86,21 @@ public class Triangles {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void setForegroundTriangle(Triangle triangle, int x, int y){
+	public void setForegroundTriangle(Triangle triangle){
+		int x;
+		if(triangle.isLeft())
+			x = triangle.getVertex(0).getIndexX()-1;
+		else
+			x = triangle.getVertex(0).getIndexX();
+			
+		int y = triangle.getVertex(0).getIndexY();
 		foreground[y][x] = triangle;
+		triangle.setForeground(true);
 	}
 	
-	public void removeForegroundTriangle(int x, int y){
+	public void removeForegroundTriangle(int x, int y, boolean isLeft){
+		if(isLeft)
+			x -= 1;
 		foreground[y][x] = null;
 	}
 	
@@ -132,7 +149,11 @@ public class Triangles {
 	 * @param y
 	 * @return Single Triangle Object
 	 */
-
+	
+	public float getLength(){
+		return length;		
+	}
+	
 	public Triangle getBackgroundTriangle(int x, int y){
 		if((x >= 0 && x < xNumber)&&(y >= 0 && y < yNumber)){
 			return triangleArray[y][x];

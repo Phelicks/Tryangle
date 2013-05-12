@@ -11,6 +11,7 @@ public class Triangle {
 	private float colorG;
 	private float colorB;
 	private float length;
+	private boolean left;
 	//ColorTransition
 	private boolean changeColor = false;
 	private float[] newColor = new float[3];
@@ -20,37 +21,36 @@ public class Triangle {
 	private float[] flashColor = new float[3];
 	private int initFlashTicks;
 	private int flashTicks;
+	
+	private boolean foreground = false;
 
 	private GridVertex vertices[] = new GridVertex[3];
 	
-	public Triangle(float xPos, float yPos, float length, float colorR, float colorG, float colorB){
-		this(xPos, yPos, length, colorR, colorG, colorB, false);
+	public Triangle(GridVertex vertex, float length, float colorR, float colorG, float colorB){
+		this(vertex, length, colorR, colorG, colorB, false);
 	}
 
-	public Triangle(float xPos, float yPos, float length, float colorR, float colorG, float colorB, boolean left){
+	public Triangle(GridVertex vertex, float length, float colorR, float colorG, float colorB, boolean left){
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
 		this.length = length;
-
-		vertices[0] = VerticeGrid.getClosestVertex(xPos, yPos);
-		vertices[1] = VerticeGrid.getClosestVertex(xPos, yPos + length);
+		this.left = left;
 		
-		//float height = ((float)Math.sqrt(3)*(length/2));
-		float height = (float)Math.sqrt((length * length) - ((length/2)*(length/2)));
+		vertices[0] = vertex;
+		vertices[1] = VerticeGrid.getGridVertex(vertex.getIndexX(), vertex.getIndexY()+2);
 		
 		if (!left)
-			vertices[2] = VerticeGrid.getClosestVertex(xPos+height, yPos + length/2f);
+			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()+1, vertex.getIndexY()+1);//Nach rechts
 		else
-			vertices[2] = VerticeGrid.getClosestVertex(xPos-height, yPos + length/2f);
-		
+			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links		
 	}
 	
 	public void tick(){
-
-		if(changeColor)colorChange();
-		if(colorFlash)flashColor();
-		
+		if(!foreground){
+			if(changeColor)colorChange();
+			if(colorFlash)flashColor();			
+		}
 	}
 	
 	public void render(){
@@ -139,8 +139,24 @@ public class Triangle {
 	public float getColorB() {
 		return colorB;
 	}
-		
+	
+	public GridVertex getVertex(int i){
+		return vertices[i];
+	}
+	
 	public float getLength() {
 		return length;
-	}	
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public boolean isForeground() {
+		return foreground;
+	}
+
+	public void setForeground(boolean foreground) {
+		this.foreground = foreground;
+	}
 }
