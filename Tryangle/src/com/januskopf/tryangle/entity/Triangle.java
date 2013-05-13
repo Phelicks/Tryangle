@@ -15,11 +15,6 @@ public class Triangle {
 	private float colorB;
 	private float length;
 	private boolean left;
-	//ColorFlash
-	private boolean colorFlash = false;
-	private float[] flashColor = new float[3];
-	private int initFlashTicks;
-	private int flashTicks;
 	
 	private boolean foreground = false;
 
@@ -48,8 +43,7 @@ public class Triangle {
 	
 	public void tick(){
 		if(!foreground){
-			runEffects();
-			if(colorFlash)flashColor();			
+			runEffects();		
 		}
 	}
 	
@@ -70,41 +64,6 @@ public class Triangle {
 		for(int i = 0; i < effects.size(); i++){
 			effects.get(i).tick();
 		}
-	}
-	
-	//ColorFlash
-	public void startColorFlash(int ticks){
-		if(colorFlash == false){
-			this.colorFlash = true;
-			this.initFlashTicks = ticks;
-			this.flashTicks = 0;
-			flashColor[0] = (1.0f - this.colorR) / ticks/2;
-			flashColor[1] = (1.0f - this.colorG) / ticks/2;
-			flashColor[2] = (1.0f - this.colorB) / ticks/2;
-		}
-	}
-	
-	private void flashColor(){
-		
-		if(flashTicks < initFlashTicks/2){
-			
-			this.colorR += flashColor[0];
-			this.colorG += flashColor[1];
-			this.colorB += flashColor[2];
-			
-		}else{
-
-			this.colorR -= flashColor[0];
-			this.colorG -= flashColor[1];
-			this.colorB -= flashColor[2];
-			
-		}
-		
-		if(flashTicks == initFlashTicks){
-			this.colorFlash = false;			
-		}else
-			flashTicks++;
-		
 	}
 	
 	public void setColor(float colorR, float colorG, float colorB){

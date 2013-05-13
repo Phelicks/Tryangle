@@ -44,9 +44,9 @@ public class Level {
 	public void tick(){
 		this.cube();
 		this.drawShield();
-		this.keyboardTriangle();
 		triangles.tick();
 		animation.tick();
+		this.keyboardTriangle();
 	}
 	
 
