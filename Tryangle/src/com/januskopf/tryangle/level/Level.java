@@ -7,6 +7,7 @@ import org.lwjgl.input.Mouse;
 
 import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.entity.Cube;
+import com.januskopf.tryangle.entity.effects.Effects;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.grid.GridVertex;

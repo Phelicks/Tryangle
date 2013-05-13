@@ -1,7 +1,10 @@
 package com.januskopf.tryangle.entity;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
+import com.januskopf.tryangle.entity.effects.Effects;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
 
@@ -12,10 +15,6 @@ public class Triangle {
 	private float colorB;
 	private float length;
 	private boolean left;
-	//ColorTransition
-	private boolean changeColor = false;
-	private float[] newColor = new float[3];
-	private int colorChangeTicks;
 	//ColorFlash
 	private boolean colorFlash = false;
 	private float[] flashColor = new float[3];
@@ -25,6 +24,7 @@ public class Triangle {
 	private boolean foreground = false;
 
 	private GridVertex vertices[] = new GridVertex[3];
+	private ArrayList<Effects> effects = new ArrayList<Effects>();
 	
 	public Triangle(GridVertex vertex, float length, float colorR, float colorG, float colorB){
 		this(vertex, length, colorR, colorG, colorB, false);
@@ -48,7 +48,7 @@ public class Triangle {
 	
 	public void tick(){
 		if(!foreground){
-			if(changeColor)colorChange();
+			runEffects();
 			if(colorFlash)flashColor();			
 		}
 	}
@@ -62,27 +62,14 @@ public class Triangle {
 		GL11.glEnd();		
 	}
 	
-	//ColorTransition
-	public void startColorChange(float colorR, float colorG, float colorB, int ticks){
-		if(changeColor == false){
-			changeColor = true;
-			newColor[0] = (colorR - this.colorR) / ticks;
-			newColor[1] = (colorG - this.colorG) / ticks;
-			newColor[2] = (colorB - this.colorB) / ticks;
-			this.colorChangeTicks = ticks;
-		}
+	public void addEffect(Effects effect){
+		effects.add(effect);
 	}
 	
-	private void colorChange(){
-
-		this.colorR += newColor[0];
-		this.colorG += newColor[1];
-		this.colorB += newColor[2];
-		
-		if(colorChangeTicks == 0) 
-			changeColor = false;
-		else
-			colorChangeTicks--;
+	private void runEffects(){
+		for(int i = 0; i < effects.size(); i++){
+			effects.get(i).tick();
+		}
 	}
 	
 	//ColorFlash

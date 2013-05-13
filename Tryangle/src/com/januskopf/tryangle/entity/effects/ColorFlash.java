@@ -5,13 +5,32 @@ import com.januskopf.tryangle.entity.Triangle;
 public class ColorFlash extends Effects{
 	
 
-	public ColorFlash(int ticks, Triangle triangle) {
-		super(1.0f , 1.0f, 1.0f, triangle);
-	}	
+	public ColorFlash(Triangle triangle, int ticks) {
+		super();
+	}
 
 	@Override
-	public void runEffect() {
+	protected void startEffect() {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected void runEffect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void endEffect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean isActive() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -32,7 +32,7 @@ public class Cube {
 		//oben
 		cubeTriangles[4] = new Triangle(VerticeGrid.getGridVertex(xInx, yInx-2), length, colorR+0.2f, colorG+0.2f, colorB+0.2f);
 		cubeTriangles[5] = new Triangle(VerticeGrid.getGridVertex(xInx, yInx-2), length, colorR+0.2f, colorG+0.2f, colorB+0.2f, true);
-			
+		
 		this.setCube();
 	}	
 	
