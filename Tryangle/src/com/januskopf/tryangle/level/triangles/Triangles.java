@@ -87,11 +87,10 @@ public class Triangles {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void setForegroundTriangle(Triangle triangle){
-		int x;
-		if(triangle.isLeft())
-			x = triangle.getVertex(0).getIndexX()-1;
-		else
-			x = triangle.getVertex(0).getIndexX();
+		int x = triangle.getVertex(0).getIndexX();
+		
+		if(triangle.isLeft() && x > 0)
+			x -= 1;
 			
 		int y = triangle.getVertex(0).getIndexY();
 		foreground[y][x] = triangle;
@@ -99,7 +98,7 @@ public class Triangles {
 	}
 	
 	public void removeForegroundTriangle(int x, int y, boolean isLeft){
-		if(isLeft)
+		if(isLeft && x > 0)
 			x -= 1;
 		foreground[y][x] = null;
 	}

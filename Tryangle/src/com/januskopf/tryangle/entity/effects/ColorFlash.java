@@ -3,10 +3,14 @@ package com.januskopf.tryangle.entity.effects;
 import com.januskopf.tryangle.entity.Triangle;
 
 public class ColorFlash extends Effects{
-	
+
 	private float startColorR;
 	private float startColorG;
 	private float startColorB;
+	
+	private float flashColorR;
+	private float flashColorG;
+	private float flashColorB;
 		
 	private float stepColorR;
 	private float stepColorG;
@@ -20,8 +24,8 @@ public class ColorFlash extends Effects{
 	private int ticks;
 	
 	private Triangle triangle;
-
-	public ColorFlash(Triangle triangle, int ticks) {
+	
+	public  ColorFlash(float newColorR, float newColorG, float newColorB, Triangle triangle, int ticks){
 		super();
 		
 		this.ticks = ticks;
@@ -36,9 +40,18 @@ public class ColorFlash extends Effects{
 		this.setColorG = triangle.getColorG();
 		this.setColorB = triangle.getColorB();
 		
-		this.stepColorR = (1.0f - this.startColorR) / ticks/2;
-		this.stepColorG = (1.0f - this.startColorG) / ticks/2;
-		this.stepColorB = (1.0f - this.startColorB) / ticks/2;
+
+		this.flashColorR = newColorR;
+		this.flashColorG = newColorG;
+		this.flashColorB = newColorB;
+		
+		this.stepColorR = (flashColorR - this.startColorR) / ticks*2;
+		this.stepColorG = (flashColorG - this.startColorG) / ticks*2;
+		this.stepColorB = (flashColorB - this.startColorB) / ticks*2;
+	}
+	
+	public ColorFlash(Triangle triangle, int ticks) {
+		this(1.0f, 1.0f, 1.0f, triangle, ticks);		
 	}
 
 	@Override
@@ -52,13 +65,12 @@ public class ColorFlash extends Effects{
 		if(ticks > tickCount/2){			
 			this.setColorR += stepColorR;
 			this.setColorG += stepColorG;
-			this.setColorB += stepColorB;
-			
-		}else{
+			this.setColorB += stepColorB;			
+		}
+		else{
 			this.setColorR -= stepColorR;
 			this.setColorG -= stepColorG;
-			this.setColorB -= stepColorB;
-			
+			this.setColorB -= stepColorB;			
 		}		
 		ticks--;
 		setNewColor();

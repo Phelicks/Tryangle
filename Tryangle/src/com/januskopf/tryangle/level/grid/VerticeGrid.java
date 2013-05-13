@@ -103,6 +103,11 @@ public class VerticeGrid {
 	}
 	
 	public static GridVertex getGridVertex(int x, int y){
-		return gridVertices[y][x];		
+		try {
+			return gridVertices[y][x];
+		} catch (Exception e) {
+			e.printStackTrace();
+			return gridVertices[0][0];
+		}
 	}
 }

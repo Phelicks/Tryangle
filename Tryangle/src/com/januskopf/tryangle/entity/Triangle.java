@@ -38,7 +38,7 @@ public class Triangle {
 		if (!left)
 			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()+1, vertex.getIndexY()+1);//Nach rechts
 		else
-			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links		
+			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links	
 	}
 	
 	public void tick(){

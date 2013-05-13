@@ -96,6 +96,7 @@ public class Level {
         			
         		if(MouseListener.isButtonClicked(0)){
         			staticCubes.add(mouseCube);
+        			animation.startRadAni(mouseX, mouseY);
         		}
         	}
         }
