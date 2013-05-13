@@ -62,7 +62,7 @@ public class Animation {
 	}
 	
 	private void radialAnimation(){
-		int radius = 200;
+		int radius = 300;
 		for(int i = 0; i < 45; i++){
 			float a = (float)Math.sin(i)*radialAnimation;
 			float b = (float)Math.cos(i)*radialAnimation;
@@ -100,7 +100,7 @@ public class Animation {
 		for(int i = 0; i < 3; i++){
 			Triangle t = triangles.getTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.addEffect(new ColorTransition(0.27f*c, 0.27f*c, 0.2f*c, t, 20));
+			t.addEffect(new ColorTransition(0.27f*c, 0.27f*c, 0.2f*c, t, 100));
 			if(rowAni < xTriNumber-1)
 				rowAni++;
 			else{
