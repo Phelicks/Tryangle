@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.triangles;
+package com.januskopf.tryangle.level.shapeContainer;
 
 import com.januskopf.tryangle.*;
 import com.januskopf.tryangle.entity.Triangle;
@@ -8,7 +8,7 @@ import com.januskopf.tryangle.level.grid.VerticeGrid;
 import java.lang.Math;
 
 
-public class Triangles {
+public class TriangleContainer {
 	
 	private int xNumber;
 	private int yNumber;
@@ -17,7 +17,7 @@ public class Triangles {
 	private Triangle[][] triangleArray;
 	private Triangle[][] foreground;
 	
-	public Triangles(int xTriCount, int yTriCount, float length) {
+	public TriangleContainer(int xTriCount, int yTriCount, float length) {
 				
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;

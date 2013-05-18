@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.triangles;
+package com.januskopf.tryangle.level.shapeContainer;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import com.januskopf.tryangle.level.animations.Animation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
 
-public class Cubes {
+public class CubeContainer {
 	
 	private int mouseX;
 	private int mouseY;
@@ -26,10 +26,10 @@ public class Cubes {
 
 	private ArrayList<Cube> staticCubes = new ArrayList<Cube>();
 	private Cube mouseCube;
-	private Triangles triangles;
+	private TriangleContainer triangles;
 	private Animation animation;
 
-	public Cubes(Triangles triangles, Animation animation) {
+	public CubeContainer(TriangleContainer triangles, Animation animation) {
 		this.triangles = triangles;
 		this.animation = animation;
 	}

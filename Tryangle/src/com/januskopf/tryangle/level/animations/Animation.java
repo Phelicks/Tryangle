@@ -10,7 +10,7 @@ import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.entity.effects.ColorTransition;
 import com.januskopf.tryangle.input.*;
 import com.januskopf.tryangle.level.screens.IntroScreen;
-import com.januskopf.tryangle.level.triangles.Triangles;
+import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Animation {
 	
@@ -29,20 +29,16 @@ public class Animation {
 	
 	private int radialAnimation = 50;
 	
-	private Triangles triangles;
-	private IntroScreen intro;
+	private TriangleContainer triangles;
 	private Random random = new Random();
 	
-	public Animation(Triangles triangles, int xTriNumber, int yTriNumber) {		
-		intro = new IntroScreen();
+	public Animation(TriangleContainer triangles, int xTriNumber, int yTriNumber) {
 		this.triangles = triangles;
 		this.xTriNumber = xTriNumber;
 		this.yTriNumber = yTriNumber;
 	}	
 	
-	public void tick(){
-		intro.tick();
-		
+	public void tick(){		
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
 			this.swipeAni = true;			
 		}
@@ -96,7 +92,7 @@ public class Animation {
 		}
 	}
 	
-	private void animateTriangle(){		
+	private void animateTriangle(){	
 		for(int i = 0; i < 3; i++){
 			Triangle t = triangles.getBackgroundTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);

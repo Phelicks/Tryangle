@@ -1,20 +1,15 @@
 package com.januskopf.tryangle.level;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
-import com.januskopf.tryangle.Tryangle;
-import com.januskopf.tryangle.entity.Cube;
-import com.januskopf.tryangle.entity.effects.Effects;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.Animation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
-import com.januskopf.tryangle.level.triangles.Cubes;
-import com.januskopf.tryangle.level.triangles.Triangles;
+import com.januskopf.tryangle.level.screens.IntroScreen;
+import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
+import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level {
 	
@@ -28,20 +23,23 @@ public class Level {
 	
 	private float keyboardX = 0;
 	private float keyboardY = 0;
-	
+
+	private IntroScreen intro;
 	private Animation animation;
 	private VerticeGrid verticeGrid;
-	private Triangles triangles;
-	private Cubes cubes;
+	private TriangleContainer triangles;
+	private CubeContainer cubes;
 	
-	public Level() {
+	public Level() {		
+		intro = new IntroScreen();
 		verticeGrid = new VerticeGrid(xTriNumber, yTriNumber, length);
-		triangles = new Triangles(xTriNumber, yTriNumber, length);
+		triangles = new TriangleContainer(xTriNumber, yTriNumber, length);
 		animation = new Animation(triangles, xTriNumber, yTriNumber);
-		cubes = new Cubes(triangles, animation);
+		cubes = new CubeContainer(triangles, animation);
 	}
 		
 	public void tick(){
+		//intro.tick();
 		triangles.tick();
 		animation.tick();
 		cubes.tick();
@@ -51,6 +49,7 @@ public class Level {
 	
 
 	public void render(){
+		//intro.render();
 		triangles.render();
 		//verticeGrid.render();
 	}

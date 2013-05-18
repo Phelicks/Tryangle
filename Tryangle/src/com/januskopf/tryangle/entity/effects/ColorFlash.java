@@ -57,7 +57,6 @@ public class ColorFlash extends Effects{
 	@Override
 	protected void startEffect() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

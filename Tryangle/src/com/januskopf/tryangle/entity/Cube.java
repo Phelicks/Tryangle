@@ -2,21 +2,21 @@ package com.januskopf.tryangle.entity;
 
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
-import com.januskopf.tryangle.level.triangles.Triangles;
+import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 
 public class Cube {
 	
-	private Triangles triangles;
+	private TriangleContainer triangles;
 	private GridVertex vertex;
 	
 	private Triangle[] cubeTriangles = new Triangle[6];
 	
-	public Cube(Triangles triangles, GridVertex vertex){
+	public Cube(TriangleContainer triangles, GridVertex vertex){
 		this(triangles, vertex, 0f, 0.21f, 0.62f);
 	}
 	
-	public Cube(Triangles triangles, GridVertex vertex, float colorR, float colorG, float colorB){
+	public Cube(TriangleContainer triangles, GridVertex vertex, float colorR, float colorG, float colorB){
 		this.triangles = triangles;
 		this.vertex = vertex;
 		
