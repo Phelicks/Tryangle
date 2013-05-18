@@ -24,14 +24,21 @@ public class Cube {
 		int xInx = vertex.getIndexX();
 		int yInx = vertex.getIndexY();
 		//rechts
+		try {
 		cubeTriangles[0] = new Triangle(vertex, length, colorR, colorG, colorB);
 		cubeTriangles[1] = new Triangle(VerticeGrid.getGridVertex(xInx+1, yInx-1), length, colorR, colorG, colorB, true);
+		
 		//links
 		cubeTriangles[2] = new Triangle(vertex, length, colorR+0.1f, colorG+0.1f, colorB+0.1f, true);
 		cubeTriangles[3] = new Triangle(VerticeGrid.getGridVertex(xInx-1, yInx-1), length, colorR+0.1f, colorG+0.1f, colorB+0.1f);
 		//oben
 		cubeTriangles[4] = new Triangle(VerticeGrid.getGridVertex(xInx, yInx-2), length, colorR+0.2f, colorG+0.2f, colorB+0.2f);
 		cubeTriangles[5] = new Triangle(VerticeGrid.getGridVertex(xInx, yInx-2), length, colorR+0.2f, colorG+0.2f, colorB+0.2f, true);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 		
 		this.setCube();
 	}	
@@ -42,7 +49,12 @@ public class Cube {
 	
 	public void setCube() {
 		for(int i=0; i<cubeTriangles.length;i++){
-			triangles.setForegroundTriangle(cubeTriangles[i]);
+			try {
+				triangles.setForegroundTriangle(cubeTriangles[i]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
 		}
 	}
 	

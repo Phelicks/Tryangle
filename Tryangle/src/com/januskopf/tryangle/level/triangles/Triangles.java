@@ -100,7 +100,11 @@ public class Triangles {
 	public void removeForegroundTriangle(int x, int y, boolean isLeft){
 		if(isLeft && x > 0)
 			x -= 1;
-		foreground[y][x] = null;
+		try {
+			foreground[y][x] = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean isForegroundTriangle(int x, int y){

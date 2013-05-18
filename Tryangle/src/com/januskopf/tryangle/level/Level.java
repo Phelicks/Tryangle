@@ -10,8 +10,10 @@ import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.entity.effects.Effects;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
+import com.januskopf.tryangle.level.animations.Animation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
+import com.januskopf.tryangle.level.triangles.Cubes;
 import com.januskopf.tryangle.level.triangles.Triangles;
 
 public class Level {
@@ -24,29 +26,27 @@ public class Level {
 	private int[] shieldX = {1,1,2,2,2,2,2,1,1,0,0,-1,-1,-1,-1,-1,0,0};	//X Positionen um den Cube herum beginnend oben rechts
 	private int[] shieldY = {-2,-1,-1,0,1,2,3,3,4,4,3,3,2,1,0,-1,-1,-2};
 	
-	private float keyboardX = 10;
-	private float keyboardY = 10;
-	
-	private float cR, cG, cB;
+	private float keyboardX = 0;
+	private float keyboardY = 0;
 	
 	private Animation animation;
 	private VerticeGrid verticeGrid;
 	private Triangles triangles;
-	private ArrayList<Cube> staticCubes = new ArrayList<Cube>();
-	private Cube mouseCube;
+	private Cubes cubes;
 	
 	public Level() {
 		verticeGrid = new VerticeGrid(xTriNumber, yTriNumber, length);
 		triangles = new Triangles(xTriNumber, yTriNumber, length);
 		animation = new Animation(triangles, xTriNumber, yTriNumber);
+		cubes = new Cubes(triangles, animation);
 	}
 		
 	public void tick(){
-		this.cube();
-		this.drawShield();
 		triangles.tick();
 		animation.tick();
+		cubes.tick();
 		this.keyboardTriangle();
+		this.drawShield();
 	}
 	
 
@@ -57,51 +57,6 @@ public class Level {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 		
-	private void cube(){
-		int mouseX = MouseListener.getMouseX();
-		int mouseY = MouseListener.getMouseY();
-		if (KeyboardListener.isKeyPressed(Keyboard.KEY_E)) {
-			for(int i=0; i < staticCubes.size(); i++){
-    			staticCubes.get(i).removeCube();
-    		}
-			staticCubes.clear();
-		}
-		
-        if (KeyboardListener.isKeyPressed(Keyboard.KEY_R)) {
-        	if(staticCubes.size()>0){
-        		staticCubes.get(staticCubes.size()-1).removeCube();
-        		staticCubes.remove(staticCubes.size()-1);
-        	}
-        }
-        
-        for(int i=0; i < staticCubes.size(); i++){
-        	staticCubes.get(i).setCube();
-        }
-        
-        if(Mouse.isClipMouseCoordinatesToWindow() == true){
-        	if (KeyboardListener.isKeyPressed(Keyboard.KEY_Y)) {
-        		triangles.getExactTriangle(mouseX,mouseY).setColor(0.09f, 0.31f, 0.72f);
-        	}
-        	else{
-        		if(mouseCube != null)mouseCube.removeCube();
-        		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
-        		
-        		if (KeyboardListener.isKeyPressed(Keyboard.KEY_C)){
-        			cR = (float)Math.random();
-        			cG = (float)Math.random();
-        			cB = (float)Math.random();
-        		}
-        			
-        		mouseCube = new Cube(triangles, vertex, cR, cG, cB);
-        			
-        		if(MouseListener.isButtonClicked(0)){
-        			staticCubes.add(mouseCube);
-        			animation.startRadAni(mouseX, mouseY);
-        		}
-        	}
-        }
-	}
-	
 	private void drawShield(){
 		int mouseX = MouseListener.getMouseX();
 		int mouseY = MouseListener.getMouseY();

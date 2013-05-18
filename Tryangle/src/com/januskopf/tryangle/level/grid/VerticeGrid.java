@@ -24,18 +24,18 @@ public class VerticeGrid {
 			for(int i = 0; i < gridVertices[j].length; i++){				
 				if(j%2 == 0){					
 					if(i%2 == 0){
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, false);
+						gridVertices[j][i] = new GridVertex(x, y, i, j,  false);
 					}
 					else{
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, true);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, true);
 					}
 				}
 				else{					
 					if(i%2 == 0){
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, true);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, true);
 					}
 					else{
-						gridVertices[j][i] = new GridVertex(x, y, i, j, false, false);
+						gridVertices[j][i] = new GridVertex(x, y, i, j, false);
 					}
 				}				
 				x += height;
@@ -107,7 +107,7 @@ public class VerticeGrid {
 			return gridVertices[y][x];
 		} catch (Exception e) {
 			e.printStackTrace();
-			return gridVertices[0][0];
+			return null;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level;
+package com.januskopf.tryangle.level.animations;
 
 import java.util.Random;
 
@@ -27,7 +27,7 @@ public class Animation {
 	private boolean introAni = true;
 	private boolean swipeAni = false;
 	
-	private int radialAnimation = 0;
+	private int radialAnimation = 50;
 	
 	private Triangles triangles;
 	private IntroScreen intro;
@@ -83,7 +83,7 @@ public class Animation {
 		if(radialAnimation <= radius)
 			radialAnimation += 4;
 		else{
-			radialAnimation = 0;
+			radialAnimation = 50;
 			radAni = false;
 		}
 	}
@@ -92,15 +92,15 @@ public class Animation {
 		for(int i = 0; i < 10; i++){
 			Triangle t = triangles.getTriangle(random.nextInt(xTriNumber), random.nextInt(yTriNumber));
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.addEffect(new ColorTransition(0.27f*c, 0.27f*c, 0.2f*c, t, 100));
+			t.addEffect(new ColorTransition(0.0f*c, 0.69f*c, 0.39f*c, t, 100));
 		}
 	}
 	
 	private void animateTriangle(){		
 		for(int i = 0; i < 3; i++){
-			Triangle t = triangles.getTriangle(rowAni, colAni);
+			Triangle t = triangles.getBackgroundTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.addEffect(new ColorTransition(0.27f*c, 0.27f*c, 0.2f*c, t, 100));
+			t.addEffect(new ColorTransition(0.0f*c, 0.69f*c, 0.39f*c, t, 100));
 			if(rowAni < xTriNumber-1)
 				rowAni++;
 			else{

@@ -8,15 +8,13 @@ public class GridVertex {
 	private float yPos;
 	private int indexX;
 	private int indexY;
-	private boolean cube;
 	private boolean grid;
 	
-	public GridVertex(float xPos, float yPos, int ix, int iy, boolean cube, boolean grid){
+	public GridVertex(float xPos, float yPos, int ix, int iy, boolean grid){
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.indexX = ix;
 		this.indexY = iy;
-		this.cube = cube;
 		this.grid = grid;
 		
 	}
@@ -47,18 +45,6 @@ public class GridVertex {
 	
 	public int getIndexY(){
 		return indexY;
-	}
-	
-	public boolean hasCube(){
-		return cube;
-	}
-	
-	public void setCube(){
-		this.cube = true;
-	}
-	
-	public void eraseCube(){
-		this.cube = false;
 	}
 	
 	public boolean insideGrid(){
