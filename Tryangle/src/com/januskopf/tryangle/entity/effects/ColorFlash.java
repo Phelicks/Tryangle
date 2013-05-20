@@ -95,4 +95,9 @@ public class ColorFlash extends Effects{
 		triangle.setColor(setColorR, setColorG, setColorB);
 	}
 
+	@Override
+	public int getPriority() {
+		return 10;
+	}
+
 }

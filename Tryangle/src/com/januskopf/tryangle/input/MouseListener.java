@@ -13,6 +13,8 @@ public class MouseListener {
 	private static boolean[] isFirst = new boolean[3];
 	
 	public void tick(){
+		
+		//System.out.println(Mouse.getDX() + ", " + Mouse.getEventDY());
 
         MouseListener.mouseX = Mouse.getX();
         MouseListener.mouseY = Tryangle.HEIGHT - Mouse.getY();

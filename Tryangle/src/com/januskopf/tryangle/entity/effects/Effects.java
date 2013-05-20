@@ -21,6 +21,10 @@ public abstract class Effects {
 		}
 	}
 	
+	public boolean isRunning(){
+		return running;		
+	}
+	
 	protected abstract void startEffect();
 
 	protected abstract void runEffect();
@@ -28,5 +32,7 @@ public abstract class Effects {
 	protected abstract void endEffect();
 	
 	protected abstract boolean isActive();
+	
+	public abstract int getPriority();
 
 }

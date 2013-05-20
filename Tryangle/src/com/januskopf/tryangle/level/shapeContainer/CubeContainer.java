@@ -8,7 +8,8 @@ import org.lwjgl.input.Mouse;
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.animations.Animation;
+import com.januskopf.tryangle.level.Level;
+import com.januskopf.tryangle.level.animations.RadialAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
 
@@ -17,9 +18,6 @@ public class CubeContainer {
 	private int mouseX;
 	private int mouseY;
 	
-	private int mouseCubeX;
-	private int mouseCubeY;
-	
 	private float cR = 1.0f;
 	private float cG = 0.29f;
 	private float cB = 0.0f;
@@ -27,11 +25,9 @@ public class CubeContainer {
 	private ArrayList<Cube> staticCubes = new ArrayList<Cube>();
 	private Cube mouseCube;
 	private TriangleContainer triangles;
-	private Animation animation;
 
-	public CubeContainer(TriangleContainer triangles, Animation animation) {
+	public CubeContainer(TriangleContainer triangles) {
 		this.triangles = triangles;
-		this.animation = animation;
 	}
 	
 	public void tick(){		
@@ -76,7 +72,8 @@ public class CubeContainer {
         if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonClicked(0)){
     		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
 			staticCubes.add(new Cube(triangles, vertex, cR, cG, cB));
-			animation.startRadAni(mouseX, mouseY);
+			Level.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+			//animation.startRadAni(mouseX, mouseY);
     	} 
         
         //Set all Cubes

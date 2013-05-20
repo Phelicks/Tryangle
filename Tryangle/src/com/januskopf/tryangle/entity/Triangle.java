@@ -62,7 +62,10 @@ public class Triangle {
 	
 	private void runEffects(){
 		for(int i = 0; i < effects.size(); i++){
-			effects.get(i).tick();
+			if(effects.get(i).isRunning())
+				effects.get(i).tick();
+			else
+				effects.remove(i);
 		}
 	}
 	

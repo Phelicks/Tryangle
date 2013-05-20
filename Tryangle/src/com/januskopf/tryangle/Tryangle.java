@@ -63,8 +63,8 @@ public class Tryangle implements Runnable{
 		while(running){
 			if(Display.isCloseRequested()) stop();
 			
-			this.render();
 			this.tick();
+			this.render();
 			Display.sync(FPS);
 			Display.update();
 		}

@@ -80,4 +80,9 @@ public class ColorTransition extends Effects{
 		triangle.setColor(curColorR, curColorG, curColorB);
 	}
 
+	@Override
+	public int getPriority() {
+		return 100;
+	}
+
 }

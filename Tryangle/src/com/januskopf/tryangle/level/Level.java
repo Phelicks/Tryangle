@@ -1,10 +1,12 @@
 package com.januskopf.tryangle.level;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.animations.Animation;
+import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
 import com.januskopf.tryangle.level.screens.IntroScreen;
@@ -13,8 +15,8 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level {
 	
-	private int xTriNumber = 30;
-	private int yTriNumber = 30;
+	public static final int X_TRIANGLES = 30;
+	public static final int Y_TRIANGLES = 30;
 	private float length = 50.0f;
 	
 	private float shield = 0;
@@ -25,28 +27,30 @@ public class Level {
 	private float keyboardY = 0;
 
 	private IntroScreen intro;
-	private Animation animation;
+	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private VerticeGrid verticeGrid;
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	
 	public Level() {		
 		intro = new IntroScreen();
-		verticeGrid = new VerticeGrid(xTriNumber, yTriNumber, length);
-		triangles = new TriangleContainer(xTriNumber, yTriNumber, length);
-		animation = new Animation(triangles, xTriNumber, yTriNumber);
-		cubes = new CubeContainer(triangles, animation);
+		verticeGrid = new VerticeGrid(X_TRIANGLES, Y_TRIANGLES, length);
+		triangles = new TriangleContainer(X_TRIANGLES, Y_TRIANGLES, length);
+		cubes = new CubeContainer(triangles);
+
+		animations.add(new FadeAnimation(triangles));
+		animations.add(new RandomFlashing(triangles));
 	}
 		
 	public void tick(){
 		//intro.tick();
 		triangles.tick();
-		animation.tick();
+		//animation.tick();
 		cubes.tick();
+		this.runAnimations();
 		this.keyboardTriangle();
 		this.drawShield();
 	}
-	
 
 	public void render(){
 		//intro.render();
@@ -55,6 +59,23 @@ public class Level {
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
+
+	public static void addAnimation(Animations animation){
+		animations.add(animation);
+	}
+	
+	private void runAnimations() {
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
+			animations.add(new SwipeAnimation(triangles));			
+		}
+		
+		for(int i = 0; i < animations.size(); i++){
+			if(animations.get(i).isRunning())
+				animations.get(i).tick();
+			else
+				animations.remove(i);
+		}
+	}
 		
 	private void drawShield(){
 		int mouseX = MouseListener.getMouseX();
@@ -83,10 +104,10 @@ public class Level {
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_UP) && keyboardY > 0) {
         	keyboardY -= 0.2;
         }
-        if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && keyboardY < yTriNumber-1) {
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && keyboardY < Y_TRIANGLES-1) {
         	keyboardY += 0.2;
         }
-        if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && keyboardX < xTriNumber-1) {
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && keyboardX < X_TRIANGLES-1) {
         	keyboardX += 0.2;
         }
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT) && keyboardX > 0) {
