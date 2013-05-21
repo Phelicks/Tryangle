@@ -38,6 +38,7 @@ public class Cube {
 				cubeTriangles[2] = new Triangle(vertex, length, colorR + 0.1f, colorG + 0.1f, colorB + 0.1f, true);
 			cubeTriangles[3] = new Triangle(VerticeGrid.getGridVertex(xInx - 1, yInx - 1), length, colorR + 0.1f, colorG + 0.1f, colorB + 0.1f);
 		}
+		
 		//oben
 		if(yInx > 1){
 			if(xInx < Level.X_TRIANGLES)
@@ -45,8 +46,6 @@ public class Cube {
 			if(xInx > 0)
 				cubeTriangles[5] = new Triangle(VerticeGrid.getGridVertex(xInx, yInx-2), length, colorR+0.2f, colorG+0.2f, colorB+0.2f, true);
 		}
-		
-		this.setCube();
 	}	
 	
 	public void tick(){

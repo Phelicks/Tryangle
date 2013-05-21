@@ -40,7 +40,9 @@ public class CubeContainer {
 			cB = (float)Math.random();
 		}
 		this.cubeSetter();
-		this.drawMouseCube();          
+		this.drawMouseCube();
+		this.cubeDrawer();
+		this.mouseCube.setCube();
 	}
 	
 	private void drawMouseCube(){
@@ -75,12 +77,15 @@ public class CubeContainer {
 			Level.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
 			//animation.startRadAni(mouseX, mouseY);
     	} 
-        
+	}
+	
+	private void cubeDrawer(){        
         //Set all Cubes
         //TODO verbessern??
         for(int i=0; i < staticCubes.size(); i++){
         	staticCubes.get(i).setCube();
         } 
+		
 	}
 	
 }

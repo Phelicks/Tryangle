@@ -17,7 +17,7 @@ public class Level {
 	
 	public static final int X_TRIANGLES = 30;
 	public static final int Y_TRIANGLES = 30;
-	private float length = 50.0f;
+	private float triangleLength = 50.0f;
 	
 	private float shield = 0;
 	private int[] shieldX = {1,1,2,2,2,2,2,1,1,0,0,-1,-1,-1,-1,-1,0,0};	//X Positionen um den Cube herum beginnend oben rechts
@@ -34,12 +34,12 @@ public class Level {
 	
 	public Level() {		
 		intro = new IntroScreen();
-		verticeGrid = new VerticeGrid(X_TRIANGLES, Y_TRIANGLES, length);
-		triangles = new TriangleContainer(X_TRIANGLES, Y_TRIANGLES, length);
+		verticeGrid = new VerticeGrid(X_TRIANGLES, Y_TRIANGLES, triangleLength);
+		triangles = new TriangleContainer(X_TRIANGLES, Y_TRIANGLES, triangleLength);
 		cubes = new CubeContainer(triangles);
 
 		animations.add(new FadeAnimation(triangles));
-		animations.add(new RandomFlashing(triangles));
+		//animations.add(new RandomFlashing(triangles));
 	}
 		
 	public void tick(){
