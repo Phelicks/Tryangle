@@ -57,7 +57,7 @@ public class Triangle {
 	}
 	
 	public void addEffect(Effects effect){
-		effects.add(effect);
+		if(effects.size() < 1)effects.add(effect);
 	}
 	
 	private void runEffects(){

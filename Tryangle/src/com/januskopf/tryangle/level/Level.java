@@ -39,7 +39,7 @@ public class Level {
 		cubes = new CubeContainer(triangles);
 
 		animations.add(new FadeAnimation(triangles));
-		//animations.add(new RandomFlashing(triangles));
+		animations.add(new RandomFlashing(triangles));
 	}
 		
 	public void tick(){

@@ -162,7 +162,7 @@ public class TriangleContainer {
 			return triangleArray[y][x];
 		}
 		else{
-			return triangleArray[0][0];
+			return null;
 		}
 	}
 	
@@ -174,7 +174,7 @@ public class TriangleContainer {
 				return foreground[y][x];
 		}
 		else{
-			return triangleArray[0][0];
+			return null;
 		}
 	}
 }
