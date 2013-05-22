@@ -41,7 +41,8 @@ public class Level2 {
 
 		int x = MouseListener.getMouseX(); 		
 		int y = MouseListener.getMouseY(); 
-		this.fireAnimation(x, y);
+		//this.fireAnimation(x, y);
+		this.waterAnimation();
 		
 		if(MouseListener.isButtonClicked(0)){
 			int pos[] = {x, y};
@@ -68,11 +69,11 @@ public class Level2 {
 	private void mouseTriangle() {
 		int x = MouseListener.getMouseX(); 		
 		int y = MouseListener.getMouseY(); 
-		
-		try {
-			Triangle t = triangles.getExactTriangle(x, y);
-			t.addEffect(new ColorFlash(1.0f, 0, 0, t, 30));
-		} catch (Exception e) {}
+//		
+//		try {
+//			Triangle t = triangles.getExactTriangle(x, y);
+//			t.addEffect(new ColorFlash(1.0f, 0, 0, t, 30));
+//		} catch (Exception e) {}
 	}
 
 	public static void addAnimation(Animations animation){
@@ -95,6 +96,16 @@ public class Level2 {
 	private void fireAnimation(int x, int y){		
 		if(random.nextInt(5) == 0)animations.add(new FireAnimation(triangles, x, y, random.nextInt(30)));
 		if(random.nextInt(20) == 0)animations.add(new FireAnimation(triangles, x, y, 50 + random.nextInt(50)));		
+	}
+	public void waterAnimation(){
+		if (MouseListener.isButtonPressed(1)) {
+			firePos.clear();
+			int x = MouseListener.getMouseX();
+			int y = MouseListener.getMouseY();
+			Animations animation = new WaterAnimation(triangles, x, y, 0f, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, 1000, 50);
+			this.animations.add(animation);
+		}
+
 	}
 	
 	private void circle(){
