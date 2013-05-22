@@ -6,6 +6,7 @@ import org.lwjgl.opengl.*;
 import com.januskopf.tryangle.input.*;
 import com.januskopf.tryangle.level.Level;
 import com.januskopf.tryangle.level.Level2;
+import com.januskopf.tryangle.level.Level3;
  
 public class Tryangle implements Runnable{
 	
