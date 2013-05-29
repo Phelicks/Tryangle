@@ -5,6 +5,8 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import com.januskopf.tryangle.Levels;
+import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.input.KeyboardListener;
@@ -14,11 +16,11 @@ import com.januskopf.tryangle.level.grid.VerticeGrid;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
-public class Level2 {
+public class Level2 extends Levels{
 	
-	public static final int X_TRIANGLES = 30;
-	public static final int Y_TRIANGLES = 30;
-	private float triangleLength = 50.0f;
+	public static final int X_TRIANGLES = 50;
+	public static final int Y_TRIANGLES = 50;
+	private float triangleLength = (float)Tryangle.HEIGHT/((float)Y_TRIANGLES-1)*2f;
 
 	private VerticeGrid verticeGrid;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();

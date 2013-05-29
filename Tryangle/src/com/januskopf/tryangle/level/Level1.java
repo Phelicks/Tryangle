@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
+import com.januskopf.tryangle.Levels;
+import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
@@ -13,11 +15,11 @@ import com.januskopf.tryangle.level.screens.IntroScreen;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
-public class Level {
+public class Level1 extends Levels{
 	
-	public static final int X_TRIANGLES = 30;
-	public static final int Y_TRIANGLES = 30;
-	private float triangleLength = 50.0f;
+	public static final int X_TRIANGLES = 50;
+	public static final int Y_TRIANGLES = 50;
+	private float triangleLength = (float)Tryangle.HEIGHT/((float)Y_TRIANGLES-1)*2f;
 	
 	private float shield = 0;
 	private int[] shieldX = {1,1,2,2,2,2,2,1,1,0,0,-1,-1,-1,-1,-1,0,0};	//X Positionen um den Cube herum beginnend oben rechts
@@ -32,7 +34,7 @@ public class Level {
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	
-	public Level() {		
+	public Level1() {		
 		intro = new IntroScreen();
 		verticeGrid = new VerticeGrid(X_TRIANGLES, Y_TRIANGLES, triangleLength);
 		triangles = new TriangleContainer(X_TRIANGLES, Y_TRIANGLES, triangleLength);

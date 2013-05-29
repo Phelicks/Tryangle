@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorTransition;
-import com.januskopf.tryangle.level.Level;
+import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class RandomFlashing extends Animations{	
@@ -19,8 +19,8 @@ public class RandomFlashing extends Animations{
 	
 	public RandomFlashing(TriangleContainer triangles) {
 		this.triangles = triangles;
-		this.xTriangles = Level.X_TRIANGLES;
-		this.yTriangles = Level.Y_TRIANGLES;
+		this.xTriangles = Level1.X_TRIANGLES;
+		this.yTriangles = Level1.Y_TRIANGLES;
 		this.random = new Random();
 	}
 

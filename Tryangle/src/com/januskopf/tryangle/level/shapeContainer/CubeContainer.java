@@ -8,7 +8,7 @@ import org.lwjgl.input.Mouse;
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.Level;
+import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.animations.RadialAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeGrid;
@@ -74,7 +74,7 @@ public class CubeContainer {
         if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonClicked(0)){
     		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
 			staticCubes.add(new Cube(triangles, vertex, cR, cG, cB));
-			Level.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+			Level1.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
 			//animation.startRadAni(mouseX, mouseY);
     	} 
 	}
