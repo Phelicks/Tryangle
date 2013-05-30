@@ -2,7 +2,7 @@ package com.januskopf.tryangle.level.animations;
 
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorFlash;
-import com.januskopf.tryangle.level.Level;
+import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class SwipeAnimation extends Animations{
@@ -18,8 +18,8 @@ public class SwipeAnimation extends Animations{
 	
 	public SwipeAnimation(TriangleContainer triangles) {
 		this.triangles = triangles;
-		this.xTriangles = Level.X_TRIANGLES;
-		this.yTriangles = Level.Y_TRIANGLES;
+		this.xTriangles = Level1.X_TRIANGLES;
+		this.yTriangles = Level1.Y_TRIANGLES;
 	}
 
 	@Override
