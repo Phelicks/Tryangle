@@ -7,6 +7,7 @@ import org.lwjgl.opengl.*;
 import com.januskopf.tryangle.input.*;
 import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.Level2;
+import com.januskopf.tryangle.level.Levels;
  
 public class Tryangle implements Runnable{
 	
@@ -15,8 +16,7 @@ public class Tryangle implements Runnable{
 	public final static int FPS = 60;
 	private boolean running;
 	
-	private Levels[] levels = {new Level1(), new Level2()};
-	private int activeLevel = 0;
+	private static Levels currentLevel;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
 	
@@ -61,6 +61,7 @@ public class Tryangle implements Runnable{
 
 		this.keyboard = new KeyboardListener();
 		this.mouse = new MouseListener();
+		Tryangle.currentLevel  = new Level1();
 		
 		while(running){
 			if(Display.isCloseRequested()) stop();
@@ -76,17 +77,21 @@ public class Tryangle implements Runnable{
 		keyboard.tick();	
 		mouse.tick();
 		this.setActiveLevel();
-		levels[activeLevel].tick();
+		currentLevel.tick();
 	}
  
 	public void render(){		
-		levels[activeLevel].render();	
+		currentLevel.render();	
 	}
 	
 	private void setActiveLevel(){
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_1))
-			activeLevel = 0;
+			currentLevel = new Level1();
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_2))
-			activeLevel = 1;
+			currentLevel = new Level2();
+	}
+	
+	public static Levels getCurrentLevel(){
+		return Tryangle.currentLevel;
 	}
 }

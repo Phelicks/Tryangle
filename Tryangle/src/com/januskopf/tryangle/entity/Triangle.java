@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.januskopf.tryangle.entity.effects.Effects;
 import com.januskopf.tryangle.level.grid.GridVertex;
-import com.januskopf.tryangle.level.grid.VerticeGrid;
+import com.januskopf.tryangle.level.grid.VerticeContainer;
 
 public class Triangle {
 	
@@ -33,12 +33,12 @@ public class Triangle {
 		this.left = left;
 		
 		vertices[0] = vertex;
-		vertices[1] = VerticeGrid.getGridVertex(vertex.getIndexX(), vertex.getIndexY()+2);
+		vertices[1] = VerticeContainer.getGridVertex(vertex.getIndexX(), vertex.getIndexY()+2);
 		
 		if (!left)
-			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()+1, vertex.getIndexY()+1);//Nach rechts
+			vertices[2] = VerticeContainer.getGridVertex(vertex.getIndexX()+1, vertex.getIndexY()+1);//Nach rechts
 		else
-			vertices[2] = VerticeGrid.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links	
+			vertices[2] = VerticeContainer.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links	
 	}
 	
 	public void tick(){

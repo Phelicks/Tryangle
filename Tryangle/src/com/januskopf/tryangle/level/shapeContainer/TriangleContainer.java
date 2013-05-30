@@ -3,7 +3,7 @@ package com.januskopf.tryangle.level.shapeContainer;
 import com.januskopf.tryangle.*;
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.level.grid.GridVertex;
-import com.januskopf.tryangle.level.grid.VerticeGrid;
+import com.januskopf.tryangle.level.grid.VerticeContainer;
 
 import java.lang.Math;
 
@@ -32,7 +32,7 @@ public class TriangleContainer {
 		for(int j = 0; j < yTriCount; j ++){
 			for(int i = 0; i < xTriCount; i ++){		
 				//System.out.println(x + ", " + y + " - " + i + ", " + j);				
-				GridVertex vertex = VerticeGrid.getGridVertex(x, y);
+				GridVertex vertex = VerticeContainer.getGridVertex(x, y);
 				if(j%2 == 0){			
 					if(i%2 != 0){
 						x += 2;
@@ -116,7 +116,7 @@ public class TriangleContainer {
 	
 	public Triangle getExactTriangle(int mouseX, int mouseY){
 		
-		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX, mouseY);
+		GridVertex vertex = VerticeContainer.getClosestVertex(mouseX, mouseY);
 		mouseY = Tryangle.HEIGHT - mouseY;
 		
 		float vX = vertex.getxPos();

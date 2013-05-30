@@ -4,22 +4,21 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
-import com.januskopf.tryangle.Levels;
 import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.level.grid.GridVertex;
-import com.januskopf.tryangle.level.grid.VerticeGrid;
+import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.screens.IntroScreen;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level1 extends Levels{
 	
-	public static final int X_TRIANGLES = 50;
-	public static final int Y_TRIANGLES = 50;
-	private float triangleLength = (float)Tryangle.HEIGHT/((float)Y_TRIANGLES-1)*2f;
+	private int yTriangles = 30;
+	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2f;
+	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	
 	private float shield = 0;
 	private int[] shieldX = {1,1,2,2,2,2,2,1,1,0,0,-1,-1,-1,-1,-1,0,0};	//X Positionen um den Cube herum beginnend oben rechts
@@ -30,18 +29,18 @@ public class Level1 extends Levels{
 
 	private IntroScreen intro;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
-	private VerticeGrid verticeGrid;
+	private VerticeContainer verticeContainer;
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	
-	public Level1() {		
+	public Level1() {
 		intro = new IntroScreen();
-		verticeGrid = new VerticeGrid(X_TRIANGLES, Y_TRIANGLES, triangleLength);
-		triangles = new TriangleContainer(X_TRIANGLES, Y_TRIANGLES, triangleLength);
+		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
+		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
 		cubes = new CubeContainer(triangles);
 
-		animations.add(new FadeAnimation(triangles));
-		animations.add(new RandomFlashing(triangles));
+		animations.add(new FadeAnimation(triangles, xTriangles, yTriangles));
+		animations.add(new RandomFlashing(triangles, xTriangles, yTriangles));
 	}
 		
 	public void tick(){
@@ -97,7 +96,7 @@ public class Level1 extends Levels{
         }
         
         if (shieldActivated){
-        	GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
+        	GridVertex vertex = VerticeContainer.getClosestVertex(mouseX,mouseY);
         	triangles.getTriangle(vertex.getIndexX()-1 + shieldX[(int)shield], vertex.getIndexY()-2 + shieldY[(int)shield]).setColor(0.37f ,0.87f ,0.90f); //shield dreieck um cube
 		}
 	}
@@ -106,10 +105,10 @@ public class Level1 extends Levels{
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_UP) && keyboardY > 0) {
         	keyboardY -= 0.2;
         }
-        if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && keyboardY < Y_TRIANGLES-1) {
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN) && keyboardY < yTriangles-1) {
         	keyboardY += 0.2;
         }
-        if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && keyboardX < X_TRIANGLES-1) {
+        if (KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT) && keyboardX < xTriangles-1) {
         	keyboardX += 0.2;
         }
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT) && keyboardX > 0) {
@@ -117,6 +116,16 @@ public class Level1 extends Levels{
         }
         
 		triangles.getBackgroundTriangle((int)keyboardX, (int)keyboardY).setColor(0.27f ,0.57f ,0.80f);		
+	}
+
+	@Override
+	public int getXTriangleCount() {
+		return this.xTriangles;
+	}
+
+	@Override
+	public int getYTriangleCount() {
+		return this.yTriangles;
 	}
 
 }

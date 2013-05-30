@@ -11,7 +11,7 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.animations.RadialAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
-import com.januskopf.tryangle.level.grid.VerticeGrid;
+import com.januskopf.tryangle.level.grid.VerticeContainer;
 
 public class CubeContainer {
 	
@@ -48,7 +48,7 @@ public class CubeContainer {
 	private void drawMouseCube(){
 		if(Mouse.isClipMouseCoordinatesToWindow()){
     		if(mouseCube != null)mouseCube.removeCube();
-    		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);    			
+    		GridVertex vertex = VerticeContainer.getClosestVertex(mouseX,mouseY);    			
     		mouseCube = new Cube(triangles, vertex, cR, cG, cB);  		
         }
 	}
@@ -72,7 +72,7 @@ public class CubeContainer {
         
         //Add new Cubes
         if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonClicked(0)){
-    		GridVertex vertex = VerticeGrid.getClosestVertex(mouseX,mouseY);
+    		GridVertex vertex = VerticeContainer.getClosestVertex(mouseX,mouseY);
 			staticCubes.add(new Cube(triangles, vertex, cR, cG, cB));
 			Level1.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
 			//animation.startRadAni(mouseX, mouseY);

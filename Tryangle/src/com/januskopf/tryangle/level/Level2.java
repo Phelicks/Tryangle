@@ -5,24 +5,23 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
-import com.januskopf.tryangle.Levels;
 import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
-import com.januskopf.tryangle.level.grid.VerticeGrid;
+import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level2 extends Levels{
-	
-	public static final int X_TRIANGLES = 50;
-	public static final int Y_TRIANGLES = 50;
-	private float triangleLength = (float)Tryangle.HEIGHT/((float)Y_TRIANGLES-1)*2f;
 
-	private VerticeGrid verticeGrid;
+	private int yTriangles = 100;
+	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2f;
+	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
+
+	private VerticeContainer verticeContainer;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
@@ -31,8 +30,8 @@ public class Level2 extends Levels{
 	
 	public Level2() {
 		random = new Random();
-		verticeGrid = new VerticeGrid(X_TRIANGLES, Y_TRIANGLES, triangleLength);
-		triangles = new TriangleContainer(X_TRIANGLES, Y_TRIANGLES, triangleLength);
+		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
+		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
 		cubes = new CubeContainer(triangles);
 	}
 		
@@ -130,6 +129,16 @@ public class Level2 extends Levels{
 			}
 		}
 		
+	}
+
+	@Override
+	public int getXTriangleCount() {
+		return this.xTriangles;
+	}
+
+	@Override
+	public int getYTriangleCount() {
+		return this.yTriangles;
 	}
 
 }

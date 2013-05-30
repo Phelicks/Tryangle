@@ -3,15 +3,15 @@ package com.januskopf.tryangle.level.grid;
 import org.lwjgl.opengl.GL11;
 
 
-public class VerticeGrid {
+public class VerticeContainer {
 	
 	private static float length;
 	
 	private static GridVertex[][] gridVertices;
 	
-	public VerticeGrid(int xTriCount, int yTriCount, float length) {
+	public VerticeContainer(int xTriCount, int yTriCount, float length) {
 		
-		VerticeGrid.length = length;
+		VerticeContainer.length = length;
 		gridVertices = new GridVertex[yTriCount+2][xTriCount+1];
 		
 		float height = ((float)Math.sqrt(3)*(length/2));
@@ -55,7 +55,7 @@ public class VerticeGrid {
 	}
 	
 	public static GridVertex getClosestVertex(float posX, float posY){
-		return VerticeGrid.getClosestVertex((int)posX, (int)posY);
+		return VerticeContainer.getClosestVertex((int)posX, (int)posY);
 	}
 	
 	public static GridVertex getClosestVertex(int posX, int posY){
