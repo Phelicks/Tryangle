@@ -15,7 +15,7 @@ public class Tryangle implements Runnable{
 	public final static int FPS = 60;
 	private boolean running;
 	
-	private Level2 level;
+	private Level3 level;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
 	
@@ -60,7 +60,7 @@ public class Tryangle implements Runnable{
 
 		this.keyboard = new KeyboardListener();
 		this.mouse = new MouseListener();
-		this.level = new Level2();
+		this.level = new Level3();
 		
 		while(running){
 			if(Display.isCloseRequested()) stop();
