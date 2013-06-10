@@ -1,0 +1,103 @@
+package com.januskopf.tryangle.level.shapeContainer;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.SocketException;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
+import com.januskopf.tryangle.Tryangle;
+import com.januskopf.tryangle.entity.Cube;
+import com.januskopf.tryangle.input.KeyboardListener;
+import com.januskopf.tryangle.input.MouseListener;
+import com.januskopf.tryangle.level.Level1;
+import com.januskopf.tryangle.level.animations.RadialAnimation;
+import com.januskopf.tryangle.level.grid.GridVertex;
+import com.januskopf.tryangle.level.grid.VerticeContainer;
+
+public class CubeSetterNet{
+
+	protected int mouseX;
+	protected int mouseY;
+
+	protected float cR = 1.0f;
+	protected float cG = 0.29f;
+	protected float cB = 0.0f;
+	
+	private CubeContainer container;
+	private VerticeContainer verticeContainer;
+	private TriangleContainer triangles;
+	private ObjectInputStream input;
+	private ObjectOutputStream output;
+
+	public CubeSetterNet(CubeContainer container, TriangleContainer triangles,VerticeContainer verticeContainer, ObjectInputStream in, ObjectOutputStream out){
+		this.container = container;
+		this.verticeContainer = verticeContainer;
+		this.triangles = triangles;
+		this.input = in;
+		this.output = out;
+		
+		Thread thread1 = new Thread(cubeReciver);
+		thread1.setPriority(1);
+		thread1.start();
+	}
+	
+	public void tick(){	
+		mouseX = MouseListener.getMouseX();
+		mouseY = MouseListener.getMouseY();
+		
+		if (KeyboardListener.isKeyPressed(Keyboard.KEY_C)){
+			cR = (float)Math.random();
+			cG = (float)Math.random();
+			cB = (float)Math.random();
+		}
+		this.cubeSetter();
+		this.drawMouseCube();
+	}
+	
+	protected void cubeSetter(){        
+        //Add new Cubes
+        if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonClicked(0)){
+    		GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);
+			Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
+    		//container.addCube(cube);
+			try {
+				output.writeObject(vertex);
+				System.out.println("Vertex gesendet");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Level1.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+			//animation.startRadAni(mouseX, mouseY);
+    	} 
+	}
+	
+	private Runnable cubeReciver = new Runnable(){
+		@Override
+		public void run(){
+			boolean isRunning = true;
+			while (isRunning) {
+				try {
+					GridVertex vertex = (GridVertex) input.readObject();
+					Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
+		    		container.addCube(cube);
+					System.out.println("Vertex empfangen");
+				}catch (IOException e) {
+					isRunning = false;
+					e.printStackTrace();
+				}catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	};
+		
+	private void drawMouseCube(){
+		if(Mouse.isClipMouseCoordinatesToWindow()){
+    		GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);	
+    		container.setMouseCube(new Cube(verticeContainer, triangles, vertex, cR, cG, cB));  		
+        }
+	}
+}
