@@ -1,22 +1,24 @@
 package com.januskopf.tryangle.level.grid;
 
+import java.io.Serializable;
+
 import org.lwjgl.opengl.GL11;
 
 
-public class VerticeContainer {
+public class VerticeContainer implements Serializable{
 	
-	private static float length;
+	private float length;
 	
-	private static GridVertex[][] gridVertices;
+	private GridVertex[][] gridVertices;
 	
 	public VerticeContainer(int xTriCount, int yTriCount, float length) {
 		
-		VerticeContainer.length = length;
-		gridVertices = new GridVertex[yTriCount+2][xTriCount+1];
+		this.length = length;
+		this.gridVertices = new GridVertex[yTriCount+2][xTriCount+1];
 		
 		float height = ((float)Math.sqrt(3)*(length/2));
 		float startX = 0;
-		float y = -(length/2);		
+		float y = -(length/2);
 		float x = startX; 
 	
 		//Erstellung des Punkterasters:
@@ -54,16 +56,16 @@ public class VerticeContainer {
 		
 	}
 	
-	public static GridVertex getClosestVertex(float posX, float posY){
-		return VerticeContainer.getClosestVertex((int)posX, (int)posY);
+	public GridVertex getClosestVertex(float posX, float posY){
+		return getClosestVertex((int)posX, (int)posY);
 	}
 	
-	public static GridVertex getClosestVertex(int posX, int posY){
+	public GridVertex getClosestVertex(int posX, int posY){
 		
 		float height = ((float)Math.sqrt(3)*(length/2));		
-		int gridX = posX/(int)height;
-		int gridY = posY/(int)(length/2)+1;
-		
+		int gridX = (int)(posX/height);
+		int gridY = (int)(posY/(length/2)+1);
+
 		GridVertex vertex1;
 		GridVertex vertex2;
 		
@@ -102,7 +104,7 @@ public class VerticeContainer {
 		return distance;
 	}
 	
-	public static GridVertex getGridVertex(int x, int y){
+	public GridVertex getGridVertex(int x, int y){
 		try {
 			return gridVertices[y][x];
 		} catch (Exception e) {

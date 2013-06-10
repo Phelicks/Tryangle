@@ -1,8 +1,10 @@
 package com.januskopf.tryangle.level.grid;
 
+import java.io.Serializable;
+
 import org.lwjgl.opengl.GL11;
 
-public class GridVertex {
+public class GridVertex implements Serializable{
 	
 	private float xPos;
 	private float yPos;

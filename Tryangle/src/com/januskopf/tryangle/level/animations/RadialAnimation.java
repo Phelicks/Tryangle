@@ -27,7 +27,7 @@ public class RadialAnimation extends Animations{
 	@Override
 	protected void runAnimation() {
 		int radius = 300;
-		for(int i = 0; i < 45; i++){
+		for(int i = 0; i < iRadius; i++){
 			float a = (float)Math.sin(i)*iRadius;
 			float b = (float)Math.cos(i)*iRadius;			
 			try {

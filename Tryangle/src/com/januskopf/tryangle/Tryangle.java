@@ -1,5 +1,7 @@
 package com.januskopf.tryangle;
 
+import java.io.File;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
@@ -7,6 +9,7 @@ import org.lwjgl.opengl.*;
 import com.januskopf.tryangle.input.*;
 import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.Level2;
+import com.januskopf.tryangle.level.Level3;
 import com.januskopf.tryangle.level.Levels;
  
 public class Tryangle implements Runnable{
@@ -89,6 +92,8 @@ public class Tryangle implements Runnable{
 			currentLevel = new Level1();
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_2))
 			currentLevel = new Level2();
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_3))
+			currentLevel = new Level3();
 	}
 	
 	public static Levels getCurrentLevel(){

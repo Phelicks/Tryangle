@@ -31,8 +31,8 @@ public class Level2 extends Levels{
 	public Level2() {
 		random = new Random();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
-		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
-		cubes = new CubeContainer(triangles);
+		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
+		cubes = new CubeContainer(verticeContainer, triangles);
 	}
 		
 	public void tick(){
@@ -98,8 +98,9 @@ public class Level2 extends Levels{
 		if(random.nextInt(5) == 0)animations.add(new FireAnimation(triangles, x, y, random.nextInt(30)));
 		if(random.nextInt(20) == 0)animations.add(new FireAnimation(triangles, x, y, 50 + random.nextInt(50)));		
 	}
+	
 	public void waterAnimation(){
-		if (MouseListener.isButtonPressed(1)) {
+		if (MouseListener.isButtonClicked(1)) {
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();

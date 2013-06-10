@@ -1,5 +1,6 @@
 package com.januskopf.tryangle.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -8,7 +9,7 @@ import com.januskopf.tryangle.entity.effects.Effects;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 
-public class Triangle {
+public class Triangle implements Serializable{
 	
 	private float colorR;
 	private float colorG;
@@ -18,14 +19,16 @@ public class Triangle {
 	
 	private boolean foreground = false;
 
+	private VerticeContainer verticeContainer;
 	private GridVertex vertices[] = new GridVertex[3];
 	private ArrayList<Effects> effects = new ArrayList<Effects>();
 	
-	public Triangle(GridVertex vertex, float length, float colorR, float colorG, float colorB){
-		this(vertex, length, colorR, colorG, colorB, false);
+	public Triangle(VerticeContainer verticeContainer, GridVertex vertex, float length, float colorR, float colorG, float colorB){
+		this(verticeContainer, vertex, length, colorR, colorG, colorB, false);
 	}
 
-	public Triangle(GridVertex vertex, float length, float colorR, float colorG, float colorB, boolean left){
+	public Triangle(VerticeContainer verticeContainer, GridVertex vertex, float length, float colorR, float colorG, float colorB, boolean left){
+		this.verticeContainer = verticeContainer;
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
@@ -33,12 +36,12 @@ public class Triangle {
 		this.left = left;
 		
 		vertices[0] = vertex;
-		vertices[1] = VerticeContainer.getGridVertex(vertex.getIndexX(), vertex.getIndexY()+2);
+		vertices[1] = verticeContainer.getGridVertex(vertex.getIndexX(), vertex.getIndexY()+2);
 		
 		if (!left)
-			vertices[2] = VerticeContainer.getGridVertex(vertex.getIndexX()+1, vertex.getIndexY()+1);//Nach rechts
+			vertices[2] = verticeContainer.getGridVertex(vertex.getIndexX()+1, vertex.getIndexY()+1);//Nach rechts
 		else
-			vertices[2] = VerticeContainer.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links	
+			vertices[2] = verticeContainer.getGridVertex(vertex.getIndexX()-1, vertex.getIndexY()+1);//Nach links	
 	}
 	
 	public void tick(){
@@ -57,15 +60,19 @@ public class Triangle {
 	}
 	
 	public void addEffect(Effects effect){
-		if(effects.size() < 1)effects.add(effect);
+		//if(effects.size() < 1)
+			effects.add(effect);
 	}
 	
 	private void runEffects(){
+		
 		for(int i = 0; i < effects.size(); i++){
-			if(effects.get(i).isRunning())
+			if(effects.get(i).isRunning()){				
 				effects.get(i).tick();
-			else
+			}
+			else{
 				effects.remove(i);
+			}
 		}
 	}
 	

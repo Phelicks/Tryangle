@@ -1,5 +1,7 @@
 package com.januskopf.tryangle.level.animations;
 
+import org.lwjgl.opengl.GL11;
+
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
@@ -40,9 +42,16 @@ public class WaterAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
-		for(int i = 0; i < 45; i++){
-			float a = (float)Math.sin(i)*iRadius;
-			float b = (float)Math.cos(i)*iRadius;			
+		for(int i = 0; i < 360; i++){
+			float a = (float)Math.sin(i*2)*iRadius;
+			float b = (float)Math.cos(i*2)*iRadius;	
+			
+			GL11.glColor3f(0.5f, 0.5f, 0.6f);
+			GL11.glPointSize(1.5f);
+			GL11.glBegin(GL11.GL_POINTS);
+				GL11.glVertex2i((int)a+xPos, (int)b+yPos);
+			GL11.glEnd();
+			
 			try {
 				Triangle t = triangles.getExactTriangle((int)a+xPos, (int)b+yPos);
 				float d = 0.10f - (0.04f - (0.04f/iRadius));
@@ -52,7 +61,7 @@ public class WaterAnimation extends Animations{
 			}
 		}
 		if(iRadius <= radius)
-			iRadius += 4;
+			iRadius += 5;
 		else{
 			iRadius = 50;
 			isActive = false;

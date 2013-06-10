@@ -12,12 +12,13 @@ import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.screens.IntroScreen;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
+import com.januskopf.tryangle.level.shapeContainer.CubeSetter;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level1 extends Levels{
 	
-	private int yTriangles = 30;
-	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2f;
+	private int yTriangles = 100;
+	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	
 	private float shield = 0;
@@ -32,13 +33,15 @@ public class Level1 extends Levels{
 	private VerticeContainer verticeContainer;
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
+	private CubeSetter cubeSetter;
 	
 	public Level1() {
 		intro = new IntroScreen();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
-		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
-		cubes = new CubeContainer(triangles);
-
+		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
+		cubes = new CubeContainer(verticeContainer, triangles);
+		cubeSetter = new CubeSetter(cubes, triangles, verticeContainer);
+		
 		animations.add(new FadeAnimation(triangles, xTriangles, yTriangles));
 		animations.add(new RandomFlashing(triangles, xTriangles, yTriangles));
 	}
@@ -47,6 +50,7 @@ public class Level1 extends Levels{
 		//intro.tick();
 		triangles.tick();
 		//animation.tick();
+		cubeSetter.tick();
 		cubes.tick();
 		this.runAnimations();
 		this.keyboardTriangle();
@@ -96,7 +100,7 @@ public class Level1 extends Levels{
         }
         
         if (shieldActivated){
-        	GridVertex vertex = VerticeContainer.getClosestVertex(mouseX,mouseY);
+        	GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);
         	triangles.getTriangle(vertex.getIndexX()-1 + shieldX[(int)shield], vertex.getIndexY()-2 + shieldY[(int)shield]).setColor(0.37f ,0.87f ,0.90f); //shield dreieck um cube
 		}
 	}

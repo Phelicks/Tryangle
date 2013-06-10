@@ -5,20 +5,23 @@ import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 
+import java.io.Serializable;
 import java.lang.Math;
 
 
-public class TriangleContainer {
+public class TriangleContainer implements Serializable{
 	
 	private int xNumber;
 	private int yNumber;
 	private float length;
 
+	private VerticeContainer verticeContainer;
 	private Triangle[][] triangleArray;
 	private Triangle[][] foreground;
 	
-	public TriangleContainer(int xTriCount, int yTriCount, float length) {
-				
+	public TriangleContainer(VerticeContainer verticeContainer, int xTriCount, int yTriCount, float length) {
+		
+		this.verticeContainer = verticeContainer;
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;
 		this.length = length;
@@ -32,23 +35,23 @@ public class TriangleContainer {
 		for(int j = 0; j < yTriCount; j ++){
 			for(int i = 0; i < xTriCount; i ++){		
 				//System.out.println(x + ", " + y + " - " + i + ", " + j);				
-				GridVertex vertex = VerticeContainer.getGridVertex(x, y);
+				GridVertex vertex = verticeContainer.getGridVertex(x, y);
 				if(j%2 == 0){			
 					if(i%2 != 0){
 						x += 2;
-						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f);
+						triangleArray[j][i] = new Triangle(verticeContainer, vertex, length, 0.0f, 0.0f, 0.0f);
 					}
 					else{
-						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f, true);
+						triangleArray[j][i] = new Triangle(verticeContainer, vertex, length, 0.0f, 0.0f, 0.0f, true);
 					}
 				}
 				else{			
 					if(i%2 != 0){
-						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f, true);
+						triangleArray[j][i] = new Triangle(verticeContainer, vertex, length, 0.0f, 0.0f, 0.0f, true);
 					}
 					else{
 						x += 2;
-						triangleArray[j][i] = new Triangle(vertex, length, 0.0f, 0.0f, 0.0f);
+						triangleArray[j][i] = new Triangle(verticeContainer, vertex, length, 0.0f, 0.0f, 0.0f);
 					}
 				}
 			}
@@ -116,7 +119,7 @@ public class TriangleContainer {
 	
 	public Triangle getExactTriangle(int mouseX, int mouseY){
 		
-		GridVertex vertex = VerticeContainer.getClosestVertex(mouseX, mouseY);
+		GridVertex vertex = verticeContainer.getClosestVertex(mouseX, mouseY);
 		mouseY = Tryangle.HEIGHT - mouseY;
 		
 		float vX = vertex.getxPos();
