@@ -2,7 +2,6 @@ package com.januskopf.tryangle.entity;
 
 import java.io.Serializable;
 
-import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
@@ -10,10 +9,10 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Cube implements Serializable{
 	
+	private static final long serialVersionUID = -4029133092011484498L;
 	private int xTriangles;
 	private int yTriangles;
 	
-	private VerticeContainer verticeContainer;
 	private TriangleContainer triangles;
 	private GridVertex vertex;
 	private Triangle[] cubeTriangles = new Triangle[6];
@@ -25,7 +24,6 @@ public class Cube implements Serializable{
 	public Cube(VerticeContainer verticeContainer, TriangleContainer triangles, GridVertex vertex, float colorR, float colorG, float colorB){
 		this.xTriangles = triangles.getxTriangles();
 		this.yTriangles = triangles.getyTriangles();
-		this.verticeContainer = verticeContainer;
 		this.triangles = triangles;
 		this.vertex = vertex;
 		

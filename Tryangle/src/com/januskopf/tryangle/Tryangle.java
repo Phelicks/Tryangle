@@ -1,7 +1,5 @@
 package com.januskopf.tryangle;
 
-import java.io.File;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;

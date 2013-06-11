@@ -11,6 +11,7 @@ import java.lang.Math;
 
 public class TriangleContainer implements Serializable{
 	
+	private static final long serialVersionUID = -5993312098303853315L;
 	private int xNumber;
 	private int yNumber;
 	private float length;

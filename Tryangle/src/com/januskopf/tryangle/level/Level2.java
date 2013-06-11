@@ -6,13 +6,10 @@ import java.util.Random;
 import org.lwjgl.input.Keyboard;
 
 import com.januskopf.tryangle.Tryangle;
-import com.januskopf.tryangle.entity.Triangle;
-import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level2 extends Levels{
@@ -24,7 +21,6 @@ public class Level2 extends Levels{
 	private VerticeContainer verticeContainer;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
-	private CubeContainer cubes;
 	private Random random;
 	private ArrayList<int[]> firePos = new ArrayList<int[]>();
 	
@@ -32,13 +28,11 @@ public class Level2 extends Levels{
 		random = new Random();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
-		cubes = new CubeContainer(verticeContainer, triangles);
 	}
 		
 	public void tick(){
 		triangles.tick();
 		this.runAnimations();
-		this.mouseTriangle();
 
 		int x = MouseListener.getMouseX(); 		
 		int y = MouseListener.getMouseY(); 
@@ -66,16 +60,6 @@ public class Level2 extends Levels{
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	
-	private void mouseTriangle() {
-		int x = MouseListener.getMouseX(); 		
-		int y = MouseListener.getMouseY(); 
-//		
-//		try {
-//			Triangle t = triangles.getExactTriangle(x, y);
-//			t.addEffect(new ColorFlash(1.0f, 0, 0, t, 30));
-//		} catch (Exception e) {}
-	}
 
 	public static void addAnimation(Animations animation){
 		animations.add(animation);
@@ -105,30 +89,8 @@ public class Level2 extends Levels{
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
 			Animations animation = new WaterAnimation(triangles, x, y, 0f, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, 1000, 50);
-			this.animations.add(animation);
+			Level2.animations.add(animation);
 		}
 
-	}
-	
-	private void circle(){
-		int xPos = MouseListener.getMouseX(); 		
-		int yPos = MouseListener.getMouseY();
-		
-		
-		for (int iRadius = 10; iRadius < 150; iRadius += 20) {
-			for (int i = 0; i < 45; i++) {
-				float a = (float) Math.sin(i) * iRadius;
-				float b = (float) Math.cos(i) * iRadius;
-				try {
-					Triangle t = triangles.getExactTriangle((int) a + xPos,
-							(int) b + yPos);
-					float d = 0.10f - (0.04f - (0.04f / iRadius));
-					t.addEffect(new ColorFlash(t.getColorR() + d, t.getColorG()
-							+ d, t.getColorB() + d, t, 40));
-				} catch (Exception e) {
-				}
-			}
-		}
-		
 	}
 }

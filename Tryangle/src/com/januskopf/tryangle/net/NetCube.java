@@ -1,14 +1,12 @@
 package com.januskopf.tryangle.net;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.januskopf.tryangle.level.grid.GridVertex;
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 public class NetCube implements Serializable{
 	
+	private static final long serialVersionUID = 4640961146160203944L;
 	private GridVertex vertex;
 	private float colorR;
 	private float colorG;

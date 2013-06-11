@@ -18,7 +18,8 @@ import com.januskopf.tryangle.level.shapeContainer.CubeSetterNet;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level3 extends Levels{
-		
+	
+	private Socket client;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	
@@ -35,7 +36,7 @@ public class Level3 extends Levels{
 		
 		try {
 			System.out.println("Connecting to " + serverName + " on port "+ port);
-			Socket client = new Socket(serverName, port);
+			this.client = new Socket(serverName, port);
 			OutputStream outToServer = client.getOutputStream();
 			out = new ObjectOutputStream(outToServer);
 			InputStream inFromServer = client.getInputStream();
@@ -52,8 +53,12 @@ public class Level3 extends Levels{
 			}
 			System.out.println("Just connected to "	+ client.getRemoteSocketAddress());
 					
-//			client.close();
 		} catch (IOException e) {
+			try {
+				this.client.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}		
 		animations.add(new RandomFlashing(triangles, triangles.getxTriangles(), triangles.getyTriangles()));		

@@ -10,7 +10,6 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.screens.IntroScreen;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeSetter;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
@@ -28,7 +27,6 @@ public class Level1 extends Levels{
 	private float keyboardX = 0;
 	private float keyboardY = 0;
 
-	private IntroScreen intro;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private VerticeContainer verticeContainer;
 	private TriangleContainer triangles;
@@ -36,7 +34,6 @@ public class Level1 extends Levels{
 	private CubeSetter cubeSetter;
 	
 	public Level1() {
-		intro = new IntroScreen();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
 		cubes = new CubeContainer(verticeContainer, triangles);
@@ -47,7 +44,6 @@ public class Level1 extends Levels{
 	}
 		
 	public void tick(){
-		//intro.tick();
 		triangles.tick();
 		//animation.tick();
 		cubeSetter.tick();
@@ -58,7 +54,6 @@ public class Level1 extends Levels{
 	}
 
 	public void render(){
-		//intro.render();
 		triangles.render();
 		//verticeGrid.render();
 	}

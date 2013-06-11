@@ -1,6 +1,5 @@
 package com.januskopf.tryangle.level.animations;
 
-import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
