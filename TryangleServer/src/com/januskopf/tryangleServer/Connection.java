@@ -5,11 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Random;
 
-import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.entity.Cube;
-import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
