@@ -23,8 +23,8 @@ public class Cube implements Serializable{
 	}
 	
 	public Cube(VerticeContainer verticeContainer, TriangleContainer triangles, GridVertex vertex, float colorR, float colorG, float colorB){
-		this.xTriangles = 30;
-		this.yTriangles = 30;
+		this.xTriangles = triangles.getxTriangles();
+		this.yTriangles = triangles.getyTriangles();
 		this.verticeContainer = verticeContainer;
 		this.triangles = triangles;
 		this.vertex = vertex;

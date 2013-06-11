@@ -13,6 +13,7 @@ import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.net.NetCube;
 
 public class Connection extends Thread{
 
@@ -57,19 +58,20 @@ public class Connection extends Thread{
 		}
 		while (true) {
 			try {
-				GridVertex vertex = null;
+				NetCube cubeData = null;
 				if (!client.isClosed()) {					
 					try {
-						vertex = (GridVertex) in.readObject();
+						cubeData = (NetCube) in.readObject();
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
-					if(vertex != null){
-						cubes.addCube(new Cube(verticeContainer, triangles, vertex));
-						server.broadcast(vertex);
-						System.out.println("Cube empfangen");
+					if(cubeData != null){
+						Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());
+						cubes.addCube(cube);
+						server.broadcast(cubeData);
+						System.out.println("CubeData empfangen");
 					}
 					
 					//client.close();
@@ -90,9 +92,9 @@ public class Connection extends Thread{
 		}
 	}
 	
-	public void sendVertex(GridVertex vertex){
+	public void sendCubeData(NetCube cubeData){
 		try {
-			out.writeObject(vertex);
+			out.writeObject(cubeData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

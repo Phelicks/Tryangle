@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.io.*;
 
 import com.januskopf.tryangle.level.grid.GridVertex;
+import com.januskopf.tryangle.net.NetCube;
 
 
 public class Server extends Thread {
+	private final static String IP_ADDRESS= "127.0.0.1";
 	private final static int PORT = 6066;
 	
 	private static GameObjects gameObjects;
@@ -28,7 +30,7 @@ public class Server extends Thread {
 		Server.gameObjects = new GameObjects();
 		Thread t = new Thread(Server.gameObjects);
 		t.start();
-		serverSocket = new ServerSocket(port);
+		serverSocket = new ServerSocket(port, 0, InetAddress.getByName(IP_ADDRESS));
 		//serverSocket.setSoTimeout(10000);
 	}
 	
@@ -36,7 +38,7 @@ public class Server extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
+				System.out.println("Waiting for client on " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort() + "...");
 				Socket client = serverSocket.accept();
 				Connection con = new Connection(this, client);
 				connections.add(con);
@@ -50,11 +52,11 @@ public class Server extends Thread {
 		}
 	}
 	
-	protected void broadcast(GridVertex vertex){
+	protected void broadcast(NetCube cubeData){
 		for(int i = 0; i < connections.size(); i++){
 			Connection con = connections.get(i);
 			if(con.isActive()){
-				con.sendVertex(vertex);
+				con.sendCubeData(cubeData);
 			}
 			else{
 				con = null;

@@ -180,4 +180,12 @@ public class TriangleContainer implements Serializable{
 			return null;
 		}
 	}
+
+	public int getxTriangles() {
+		return xNumber;
+	}
+
+	public int getyTriangles() {
+		return yNumber;
+	}
 }

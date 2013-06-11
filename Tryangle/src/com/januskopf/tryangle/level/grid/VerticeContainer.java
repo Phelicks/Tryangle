@@ -108,7 +108,6 @@ public class VerticeContainer implements Serializable{
 		try {
 			return gridVertices[y][x];
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

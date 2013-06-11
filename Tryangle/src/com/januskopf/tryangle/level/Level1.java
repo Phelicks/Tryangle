@@ -17,7 +17,7 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level1 extends Levels{
 	
-	private int yTriangles = 100;
+	private int yTriangles = 99;
 	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	
@@ -120,16 +120,6 @@ public class Level1 extends Levels{
         }
         
 		triangles.getBackgroundTriangle((int)keyboardX, (int)keyboardY).setColor(0.27f ,0.57f ,0.80f);		
-	}
-
-	@Override
-	public int getXTriangleCount() {
-		return this.xTriangles;
-	}
-
-	@Override
-	public int getYTriangleCount() {
-		return this.yTriangles;
 	}
 
 }

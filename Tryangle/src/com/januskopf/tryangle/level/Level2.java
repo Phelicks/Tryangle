@@ -131,15 +131,4 @@ public class Level2 extends Levels{
 		}
 		
 	}
-
-	@Override
-	public int getXTriangleCount() {
-		return this.xTriangles;
-	}
-
-	@Override
-	public int getYTriangleCount() {
-		return this.yTriangles;
-	}
-
 }

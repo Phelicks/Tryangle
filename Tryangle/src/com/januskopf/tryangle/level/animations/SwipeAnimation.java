@@ -18,8 +18,8 @@ public class SwipeAnimation extends Animations{
 	
 	public SwipeAnimation(TriangleContainer triangles) {
 		this.triangles = triangles;
-		this.xTriangles = Tryangle.getCurrentLevel().getXTriangleCount();
-		this.yTriangles = Tryangle.getCurrentLevel().getYTriangleCount();
+		this.xTriangles = triangles.getxTriangles();
+		this.yTriangles = triangles.getyTriangles();
 	}
 
 	@Override

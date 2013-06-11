@@ -23,11 +23,7 @@ import com.januskopf.tryangle.level.shapeContainer.CubeSetterNet;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level3 extends Levels{
-	
-	private int yTriangles = 30;
-	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
-	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
-	
+		
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private static Scanner keyboard = new Scanner(System.in);
@@ -63,15 +59,12 @@ public class Level3 extends Levels{
 				e.printStackTrace();
 			}
 			System.out.println("Just connected to "	+ client.getRemoteSocketAddress());
-			
-			
+					
 //			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		
-		
+		}		
+		animations.add(new RandomFlashing(triangles, triangles.getxTriangles(), triangles.getyTriangles()));		
 	}	
 	
 	public void tick(){
@@ -98,15 +91,4 @@ public class Level3 extends Levels{
 				animations.remove(i);
 		}
 	}
-
-	@Override
-	public int getXTriangleCount() {
-		return this.xTriangles;
-	}
-
-	@Override
-	public int getYTriangleCount() {
-		return this.yTriangles;
-	}
-
 }

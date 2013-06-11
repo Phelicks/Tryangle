@@ -51,16 +51,4 @@ public class StandartLevel extends Levels{
 				animations.remove(i);
 		}
 	}
-
-
-	@Override
-	public int getXTriangleCount() {
-		return this.xTriangles;
-	}
-
-	@Override
-	public int getYTriangleCount() {
-		return this.yTriangles;
-	}
-
 }

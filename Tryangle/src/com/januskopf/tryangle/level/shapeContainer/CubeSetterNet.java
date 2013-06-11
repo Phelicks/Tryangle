@@ -16,6 +16,7 @@ import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.animations.RadialAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
+import com.januskopf.tryangle.net.NetCube;
 
 public class CubeSetterNet{
 
@@ -61,11 +62,10 @@ public class CubeSetterNet{
         //Add new Cubes
         if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonClicked(0)){
     		GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);
-			Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
-    		//container.addCube(cube);
+			NetCube cube = new NetCube(vertex, cR, cG, cB);
 			try {
-				output.writeObject(vertex);
-				System.out.println("Vertex gesendet");
+				output.writeObject(cube);
+				System.out.println("CubeData gesendet");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -80,10 +80,10 @@ public class CubeSetterNet{
 			boolean isRunning = true;
 			while (isRunning) {
 				try {
-					GridVertex vertex = (GridVertex) input.readObject();
-					Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
+					NetCube cubeData = (NetCube) input.readObject();
+					Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());
 		    		container.addCube(cube);
-					System.out.println("Vertex empfangen");
+					System.out.println("CubeData empfangen");
 				}catch (IOException e) {
 					isRunning = false;
 					e.printStackTrace();
