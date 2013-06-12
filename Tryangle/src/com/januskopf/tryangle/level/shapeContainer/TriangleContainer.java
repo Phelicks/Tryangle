@@ -2,11 +2,17 @@ package com.januskopf.tryangle.level.shapeContainer;
 
 import com.januskopf.tryangle.*;
 import com.januskopf.tryangle.entity.Triangle;
+import com.januskopf.tryangle.input.KeyboardListener;
+import com.januskopf.tryangle.level.animations.Animations;
+import com.januskopf.tryangle.level.animations.SwipeAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 
 import java.io.Serializable;
 import java.lang.Math;
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
 
 
 public class TriangleContainer implements Serializable{
@@ -16,6 +22,7 @@ public class TriangleContainer implements Serializable{
 	private int yNumber;
 	private float length;
 
+	private ArrayList<Animations> animations = new ArrayList<Animations>();
 	private VerticeContainer verticeContainer;
 	private Triangle[][] triangleArray;
 	private Triangle[][] foreground;
@@ -67,6 +74,7 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	public void tick(){
+		runAnimations();
 		for(int j = 0; j < yNumber; j++){
 			for(int i = 0; i < xNumber; i++){
 				if(foreground[j][i] != null){
@@ -89,6 +97,23 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void addAnimation(Animations animation){
+		animations.add(animation);
+	}
+	
+	private void runAnimations() {
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
+			animations.add(new SwipeAnimation(this));			
+		}
+		
+		for(int i = 0; i < animations.size(); i++){
+			if(animations.get(i).isRunning())
+				animations.get(i).tick();
+			else
+				animations.remove(i);
+		}
+	}
 	
 	public void setForegroundTriangle(Triangle triangle){
 		int x = triangle.getVertex(0).getIndexX();

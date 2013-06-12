@@ -10,7 +10,6 @@ import org.lwjgl.input.Mouse;
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.animations.RadialAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
@@ -67,7 +66,7 @@ public class CubeSetterNet{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Level1.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+			triangles.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
 			//animation.startRadAni(mouseX, mouseY);
     	} 
 	}
@@ -81,6 +80,7 @@ public class CubeSetterNet{
 					NetCube cubeData = (NetCube) input.readObject();
 					Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());
 		    		container.addCube(cube);
+					triangles.addAnimation(new RadialAnimation(triangles, (int)cube.getVertex().getxPos(), (int)cube.getVertex().getyPos()));
 					System.out.println("CubeData empfangen");
 				}catch (IOException e) {
 					isRunning = false;

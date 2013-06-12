@@ -1,7 +1,5 @@
 package com.januskopf.tryangle.level;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 
 import com.januskopf.tryangle.Tryangle;
@@ -16,7 +14,7 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level1 extends Levels{
 	
-	private int yTriangles = 99;
+	private int yTriangles = 60;
 	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	
@@ -27,7 +25,6 @@ public class Level1 extends Levels{
 	private float keyboardX = 0;
 	private float keyboardY = 0;
 
-	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private VerticeContainer verticeContainer;
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
@@ -39,8 +36,8 @@ public class Level1 extends Levels{
 		cubes = new CubeContainer(verticeContainer, triangles);
 		cubeSetter = new CubeSetter(cubes, triangles, verticeContainer);
 		
-		animations.add(new FadeAnimation(triangles, xTriangles, yTriangles));
-		animations.add(new RandomFlashing(triangles, xTriangles, yTriangles));
+		triangles.addAnimation(new FadeAnimation(triangles, xTriangles, yTriangles));
+		triangles.addAnimation(new RandomFlashing(triangles, xTriangles, yTriangles));
 	}
 		
 	public void tick(){
@@ -48,7 +45,6 @@ public class Level1 extends Levels{
 		//animation.tick();
 		cubeSetter.tick();
 		cubes.tick();
-		this.runAnimations();
 		this.keyboardTriangle();
 		this.drawShield();
 	}
@@ -59,23 +55,6 @@ public class Level1 extends Levels{
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
-
-	public static void addAnimation(Animations animation){
-		animations.add(animation);
-	}
-	
-	private void runAnimations() {
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
-			animations.add(new SwipeAnimation(triangles));			
-		}
-		
-		for(int i = 0; i < animations.size(); i++){
-			if(animations.get(i).isRunning())
-				animations.get(i).tick();
-			else
-				animations.remove(i);
-		}
-	}
 		
 	private void drawShield(){
 		int mouseX = MouseListener.getMouseX();

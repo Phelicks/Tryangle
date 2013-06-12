@@ -31,7 +31,7 @@ public class Level3 extends Levels{
 	
 	public Level3(){
 		//NetworkStuff
-		String serverName = "141.22.91.87";
+		String serverName = "141.22.81.147";
 		int port = 6066;
 		
 		try {
@@ -54,12 +54,7 @@ public class Level3 extends Levels{
 			System.out.println("Just connected to "	+ client.getRemoteSocketAddress());
 					
 		} catch (IOException e) {
-			try {
-				this.client.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
+			System.out.println("Konnte keine Verbindung aufbauen.");
 		}		
 		animations.add(new RandomFlashing(triangles, triangles.getxTriangles(), triangles.getyTriangles()));		
 	}	

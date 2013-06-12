@@ -90,8 +90,13 @@ public class Tryangle implements Runnable{
 			currentLevel = new Level1();
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_2))
 			currentLevel = new Level2();
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_3))
-			currentLevel = new Level3();
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_3)){
+			try {
+				currentLevel = new Level3();
+			}catch (Exception e){
+				System.out.println("Konnte Level 3 nicht laden.");
+			}
+		}
 	}
 	
 	public static Levels getCurrentLevel(){
