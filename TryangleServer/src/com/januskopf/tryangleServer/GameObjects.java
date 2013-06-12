@@ -9,7 +9,7 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class GameObjects implements Runnable{
 
-	private int yTriangles = 50;
+	private int yTriangles = 70;
 	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	
