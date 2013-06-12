@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
@@ -76,6 +77,7 @@ public class CubeSetterNet{
 		public void run(){
 			boolean isRunning = true;
 			while (isRunning) {
+				if(Display.isCloseRequested())isRunning = false;
 				try {
 					NetCube cubeData = (NetCube) input.readObject();
 					Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());

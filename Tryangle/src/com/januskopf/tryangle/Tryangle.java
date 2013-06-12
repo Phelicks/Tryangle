@@ -1,14 +1,10 @@
 package com.januskopf.tryangle;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 
 import com.januskopf.tryangle.input.*;
-import com.januskopf.tryangle.level.Level1;
-import com.januskopf.tryangle.level.Level2;
-import com.januskopf.tryangle.level.Level3;
-import com.januskopf.tryangle.level.Levels;
+import com.januskopf.tryangle.level.LevelSelection;
  
 public class Tryangle implements Runnable{
 	
@@ -17,7 +13,7 @@ public class Tryangle implements Runnable{
 	public final static int FPS = 60;
 	private boolean running;
 	
-	private static Levels currentLevel;
+	private LevelSelection levelSelect;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
 	
@@ -59,10 +55,10 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
-
+		
+		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();
 		this.mouse = new MouseListener();
-		Tryangle.currentLevel  = new Level1();
 		
 		while(running){
 			if(Display.isCloseRequested()) stop();
@@ -77,29 +73,10 @@ public class Tryangle implements Runnable{
 	public void tick(){		
 		keyboard.tick();	
 		mouse.tick();
-		this.setActiveLevel();
-		currentLevel.tick();
+		levelSelect.tick();
 	}
  
-	public void render(){		
-		currentLevel.render();	
-	}
-	
-	private void setActiveLevel(){
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_1))
-			currentLevel = new Level1();
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_2))
-			currentLevel = new Level2();
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_3)){
-			try {
-				currentLevel = new Level3();
-			}catch (Exception e){
-				System.out.println("Konnte Level 3 nicht laden.");
-			}
-		}
-	}
-	
-	public static Levels getCurrentLevel(){
-		return Tryangle.currentLevel;
+	public void render(){
+		levelSelect.render();
 	}
 }
