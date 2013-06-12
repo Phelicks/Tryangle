@@ -1,7 +1,6 @@
 package com.januskopf.tryangle.level;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
@@ -21,16 +20,15 @@ public class StandartLevel extends Levels{
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
-	private Random random;
 	
 	public StandartLevel(){
-		random = new Random();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
 		cubes = new CubeContainer(verticeContainer, triangles);
 	}
 	public void tick(){
-		triangles.tick();
+		this.triangles.tick();
+		this.cubes.tick();
 		this.runAnimations();
 	}
 

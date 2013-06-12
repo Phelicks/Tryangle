@@ -2,14 +2,14 @@ package com.januskopf.tryangle.level.grid;
 
 import java.io.Serializable;
 
-import org.lwjgl.opengl.GL11;
-
 
 public class VerticeContainer implements Serializable{
 	
+	private static final long serialVersionUID = -2698766109264944611L;
 	private float length;
 	
 	private GridVertex[][] gridVertices;
+	
 	
 	public VerticeContainer(int xTriCount, int yTriCount, float length) {
 		

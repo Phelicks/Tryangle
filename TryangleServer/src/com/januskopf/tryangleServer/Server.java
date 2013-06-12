@@ -4,7 +4,6 @@ import java.net.*;
 import java.util.ArrayList;
 import java.io.*;
 
-import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.net.NetCube;
 
 
@@ -28,9 +27,7 @@ public class Server extends Thread {
 
 	public Server(int port) throws IOException {
 		Server.gameObjects = new GameObjects();
-		Thread t = new Thread(Server.gameObjects);
-		t.start();
-		serverSocket = new ServerSocket(port, 0, InetAddress.getByName(IP_ADDRESS));
+		this.serverSocket = new ServerSocket(port, 0, InetAddress.getByName(IP_ADDRESS));
 		//serverSocket.setSoTimeout(10000);
 	}
 	

@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GridVertex implements Serializable{
 	
+	private static final long serialVersionUID = 933878295537655623L;
 	private float xPos;
 	private float yPos;
 	private int indexX;

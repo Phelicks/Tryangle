@@ -11,6 +11,7 @@ import com.januskopf.tryangle.level.grid.VerticeContainer;
 
 public class Triangle implements Serializable{
 	
+	private static final long serialVersionUID = -8491845801420241012L;
 	private float colorR;
 	private float colorG;
 	private float colorB;
@@ -19,7 +20,6 @@ public class Triangle implements Serializable{
 	
 	private boolean foreground = false;
 
-	private VerticeContainer verticeContainer;
 	private GridVertex vertices[] = new GridVertex[3];
 	private ArrayList<Effects> effects = new ArrayList<Effects>();
 	
@@ -28,7 +28,6 @@ public class Triangle implements Serializable{
 	}
 
 	public Triangle(VerticeContainer verticeContainer, GridVertex vertex, float length, float colorR, float colorG, float colorB, boolean left){
-		this.verticeContainer = verticeContainer;
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;

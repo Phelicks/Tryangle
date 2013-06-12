@@ -4,18 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
-import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.Level1;
-import com.januskopf.tryangle.level.animations.RadialAnimation;
-import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 
 public class CubeContainer implements Serializable{
 	
+	private static final long serialVersionUID = -892061785060971961L;
 	private ArrayList<Cube> staticCubes = new ArrayList<Cube>();
 	private Cube mouseCube;
 	protected TriangleContainer triangles;

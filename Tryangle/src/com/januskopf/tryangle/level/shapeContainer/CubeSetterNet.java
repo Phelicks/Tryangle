@@ -3,12 +3,10 @@ package com.januskopf.tryangle.level.shapeContainer;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.SocketException;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
