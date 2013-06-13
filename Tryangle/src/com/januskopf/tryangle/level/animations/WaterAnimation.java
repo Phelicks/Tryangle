@@ -1,7 +1,5 @@
 package com.januskopf.tryangle.level.animations;
 
-import org.lwjgl.opengl.GL11;
-
 import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.entity.effects.ColorFlash;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
@@ -20,19 +18,19 @@ public class WaterAnimation extends Animations{
 	
 	private TriangleContainer triangles;
 	
-	public WaterAnimation(TriangleContainer triangles, int xPos, int yPos, float colorR, float colorG, float colorB, int radius, int iRadius){
+	public WaterAnimation(TriangleContainer triangles, int xPos, int yPos, float colorR, float colorG, float colorB, int radius){
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.triangles = triangles;
-		this.iRadius = iRadius;
+		this.iRadius = 10;
 		this.radius = radius;
 	}
 	
 	public WaterAnimation(TriangleContainer triangles, int xPos, int yPos) {
-		this(triangles, xPos, yPos, 1.0f, 1.0f, 1.0f, 300, 50);
+		this(triangles, xPos, yPos, 1.0f, 1.0f, 1.0f, 300);
 		
 	}
 
@@ -43,25 +41,18 @@ public class WaterAnimation extends Animations{
 	@Override
 	protected void runAnimation() {
 		for(int i = 0; i < 360; i++){
-			float a = (float)Math.sin(i*2)*iRadius;
-			float b = (float)Math.cos(i*2)*iRadius;	
-			
-			GL11.glColor3f(0.5f, 0.5f, 0.6f);
-			GL11.glPointSize(1.5f);
-			GL11.glBegin(GL11.GL_POINTS);
-				GL11.glVertex2i((int)a+xPos, (int)b+yPos);
-			GL11.glEnd();
+			float a = (float)(Math.sin(i)*iRadius);
+			float b = (float)(Math.cos(i)*iRadius);	
 			
 			try {
-				Triangle t = triangles.getExactTriangle((int)a+xPos, (int)b+yPos);
-				float d = 0.10f - (0.04f - (0.04f/iRadius));
+				Triangle t = triangles.getExactTriangle((int)(a+xPos), (int)(b+yPos));
+				float d = 0.10f - (0.4f - (0.4f/iRadius));
 				t.addEffect(new ColorFlash(colorR+d, colorG+d, colorB+d, t, 40));
-			} catch (Exception e) {
-				
-			}
+			} catch (Exception e) {}
 		}
-		if(iRadius <= radius)
-			iRadius += 5;
+		if(iRadius <= radius){
+			iRadius += 4;
+		}
 		else{
 			iRadius = 50;
 			isActive = false;

@@ -1,6 +1,7 @@
 package com.januskopf.tryangle;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 
 import com.januskopf.tryangle.input.*;
@@ -33,10 +34,21 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void initDisplay(){
-		try{
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+		try{			
+			DisplayMode displayMode = null;
+	        DisplayMode[] modes = Display.getAvailableDisplayModes();
+
+	         for (int i = 0; i < modes.length; i++){
+             if (modes[i].getWidth() == Tryangle.WIDTH
+	             && modes[i].getHeight() == Tryangle.HEIGHT
+	             && modes[i].isFullscreenCapable()) {
+                    displayMode = modes[i];
+               }
+	        }
+			Display.setDisplayMode(displayMode);
 			Display.setResizable(false);
 			PixelFormat p = new PixelFormat().withSamples(4);
+			
 			Display.create(p);
 		}
 		catch (LWJGLException e){
@@ -65,6 +77,14 @@ public class Tryangle implements Runnable{
 			
 			this.tick();
 			this.render();
+			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
+				try {
+					boolean isFull = Display.isFullscreen();
+					Display.setFullscreen(!isFull);
+				} catch (LWJGLException e) {
+					e.printStackTrace();
+				}
+			}
 			Display.sync(FPS);
 			Display.update();
 		}

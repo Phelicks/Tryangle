@@ -100,4 +100,10 @@ public class ColorFlash extends Effects{
 		return 10;
 	}
 
+	@Override
+	public void stop() {
+		endEffect();
+		ticks = 0;
+	}
+
 }

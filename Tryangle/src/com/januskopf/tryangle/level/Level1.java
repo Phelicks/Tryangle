@@ -14,7 +14,7 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level1 extends Levels{
 	
-	private int yTriangles = 60;
+	private int yTriangles = 40;
 	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	

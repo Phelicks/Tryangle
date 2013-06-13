@@ -14,7 +14,7 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
 public class Level2 extends Levels{
 
-	private int yTriangles = 100;
+	private int yTriangles = 50;
 	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 
@@ -84,11 +84,11 @@ public class Level2 extends Levels{
 	}
 	
 	public void waterAnimation(){
-		if (MouseListener.isButtonClicked(1)) {
+		if (MouseListener.isButtonPressed(1)) {
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
-			Animations animation = new WaterAnimation(triangles, x, y, 0f, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, 1000, 50);
+			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, 1469);
 			Level2.animations.add(animation);
 		}
 

@@ -85,4 +85,10 @@ public class ColorTransition extends Effects{
 		return 100;
 	}
 
+	@Override
+	public void stop() {
+		endEffect();
+		ticks = 0;
+	}
+
 }

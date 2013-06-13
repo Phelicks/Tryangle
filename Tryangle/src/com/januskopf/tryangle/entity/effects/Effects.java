@@ -33,6 +33,8 @@ public abstract class Effects {
 	
 	protected abstract boolean isActive();
 	
+	public abstract void stop();
+	
 	public abstract int getPriority();
 
 }

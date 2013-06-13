@@ -59,6 +59,8 @@ public class Triangle implements Serializable{
 	}
 	
 	public void addEffect(Effects effect){
+//		if(effects.size() > 0)
+//			effects.get(0).stop();
 		if(effects.size() < 1)
 			effects.add(effect);
 	}
