@@ -11,6 +11,7 @@ import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeSetter;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.sound.*;
 
 public class Level1 extends Levels{
 	
@@ -29,7 +30,7 @@ public class Level1 extends Levels{
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	private CubeSetter cubeSetter;
-	
+
 	public Level1() {
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
@@ -38,6 +39,7 @@ public class Level1 extends Levels{
 		
 		triangles.addAnimation(new FadeAnimation(triangles, xTriangles, yTriangles));
 		triangles.addAnimation(new RandomFlashing(triangles, xTriangles, yTriangles));
+		
 	}
 		
 	public void tick(){
@@ -47,6 +49,7 @@ public class Level1 extends Levels{
 		cubes.tick();
 		this.keyboardTriangle();
 		this.drawShield();
+
 	}
 
 	public void render(){
@@ -96,4 +99,4 @@ public class Level1 extends Levels{
 		triangles.getBackgroundTriangle((int)keyboardX, (int)keyboardY).setColor(0.27f ,0.57f ,0.80f);		
 	}
 
-}
+}	

@@ -6,6 +6,7 @@ import org.lwjgl.opengl.*;
 
 import com.januskopf.tryangle.input.*;
 import com.januskopf.tryangle.level.LevelSelection;
+import com.januskopf.tryangle.sound.Sound;
  
 public class Tryangle implements Runnable{
 	
@@ -67,6 +68,10 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
+		
+		Sound sound = new Sound();
+		sound.initialize();
+		sound.start();
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();
