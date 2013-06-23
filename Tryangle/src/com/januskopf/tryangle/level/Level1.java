@@ -38,23 +38,22 @@ public class Level1 extends Levels{
 		cubeSetter = new CubeSetter(cubes, triangles, verticeContainer);
 		
 		triangles.addAnimation(new FadeAnimation(triangles, xTriangles, yTriangles));
-		triangles.addAnimation(new RandomFlashing(triangles, xTriangles, yTriangles));
+		//triangles.addAnimation(new RandomFlashing(triangles, xTriangles, yTriangles));
 		
 	}
 		
 	public void tick(){
 		triangles.tick();
-		//animation.tick();
 		cubeSetter.tick();
 		cubes.tick();
-		this.keyboardTriangle();
-		this.drawShield();
+//		this.keyboardTriangle();
+//		this.drawShield();
 
 	}
 
 	public void render(){
 		triangles.render();
-		//verticeGrid.render();
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_F8))verticeContainer.render();
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////

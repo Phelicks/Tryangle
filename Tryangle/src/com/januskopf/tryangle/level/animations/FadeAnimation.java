@@ -28,7 +28,7 @@ public class FadeAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < 10; i++){
 			Triangle t = triangles.getBackgroundTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);
 			t.addEffect(new ColorTransition(0.0f*c, 0.69f*c, 0.39f*c, t, 100));

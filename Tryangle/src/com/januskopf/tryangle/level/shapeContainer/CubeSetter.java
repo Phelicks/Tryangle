@@ -22,7 +22,8 @@ public class CubeSetter{
 	private CubeContainer container;
 	private VerticeContainer verticeContainer;
 	private TriangleContainer triangles;
-
+	private GridVertex lastSetVertex;
+	
 	public CubeSetter(CubeContainer container, TriangleContainer triangles,VerticeContainer verticeContainer){
 		this.container = container;
 		this.verticeContainer = verticeContainer;
@@ -44,12 +45,14 @@ public class CubeSetter{
 	
 	protected void cubeSetter(){        
         //Add new Cubes
-        if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonClicked(0)){
+        if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonPressed(0)){
     		GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);
-			Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
-    		container.addCube(cube);
-			triangles.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
-			//animation.startRadAni(mouseX, mouseY);
+    		if (!vertex.equals(lastSetVertex)) {
+				lastSetVertex = vertex;
+				Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
+				container.addCube(cube);
+				triangles.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+			}
     	} 
 	}
 		

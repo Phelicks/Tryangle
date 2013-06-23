@@ -48,6 +48,7 @@ public class Tryangle implements Runnable{
 	        }
 			Display.setDisplayMode(displayMode);
 			Display.setResizable(false);
+			Display.setTitle("Tryangle");
 			PixelFormat p = new PixelFormat().withSamples(4);
 			
 			Display.create(p);
@@ -62,6 +63,7 @@ public class Tryangle implements Runnable{
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, WIDTH, HEIGHT, 0, -1.0, 1.0);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		System.out.println("You are running OpenGL version ["+GL11.glGetString(GL11.GL_VERSION)+"].");
 	}
 	
@@ -71,7 +73,7 @@ public class Tryangle implements Runnable{
 		
 		Sound sound = new Sound();
 		sound.initialize();
-		sound.start();
+		//sound.start();
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();
