@@ -153,7 +153,8 @@ public class LevelSelection {
 				
 		int xTimes = Tryangle.WIDTH / picX;
 		int yTimes = Tryangle.HEIGHT/ picY;
-		
+
+		GL11.glColor3f(1f, 1f, 1f);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.backgroundTex);
 		GL11.glBegin(GL11.GL_QUADS);
 		

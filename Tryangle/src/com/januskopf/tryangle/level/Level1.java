@@ -11,7 +11,6 @@ import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeSetter;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
-import com.januskopf.tryangle.sound.*;
 
 public class Level1 extends Levels{
 	

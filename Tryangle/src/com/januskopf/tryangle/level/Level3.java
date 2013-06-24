@@ -17,7 +17,7 @@ import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeSetterNet;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
-public class Level3 extends Levels implements Runnable{
+public class Level3 extends Levels{
 	
 	private Socket client;
 	private ObjectOutputStream out;
@@ -31,7 +31,7 @@ public class Level3 extends Levels implements Runnable{
 	
 	public Level3(){
 		//NetworkStuff
-		String serverName = "141.22.81.147";
+		String serverName = "localhost";
 		int port = 6066;
 		
 		try {
@@ -83,8 +83,4 @@ public class Level3 extends Levels implements Runnable{
 				animations.remove(i);
 		}
 	}
-
-@Override
-public void run() {	
-}
 }

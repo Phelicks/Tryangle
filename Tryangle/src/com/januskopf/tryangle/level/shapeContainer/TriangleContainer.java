@@ -28,7 +28,6 @@ public class TriangleContainer implements Serializable{
 	private Triangle[][] foreground;
 	
 	public TriangleContainer(VerticeContainer verticeContainer, int xTriCount, int yTriCount, float length) {
-		
 		this.verticeContainer = verticeContainer;
 		this.xNumber = xTriCount;
 		this.yNumber = yTriCount;
@@ -107,7 +106,7 @@ public class TriangleContainer implements Serializable{
 			animations.add(new SwipeAnimation(this));			
 		}
 		
-		for(int i = 0; i < animations.size(); i++){
+		for(int i = 0; i < this.animations.size(); i++){
 			if(animations.get(i).isRunning())
 				animations.get(i).tick();
 			else
