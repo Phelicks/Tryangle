@@ -22,18 +22,26 @@ public class LevelSelection {
 
 	private boolean isLevelSelect;
 	private boolean loadLevel;
-	private int texture;
+	private int backgroundTex;
+	private int[] buttonTex = new int[4];
 	
 	private static Levels currentLevel;
 	private Random random;
+	
+	private int bRaster = 40;
 	private ArrayList<IntroBTriangle> bTriangles = new ArrayList<IntroBTriangle>();
+	private boolean[][] hasBTriangle = new boolean[Tryangle.WIDTH/bRaster][Tryangle.HEIGHT/bRaster];
 	
 	private Rectangle[] buttons;
 	
 	public LevelSelection(){
 		currentLevel  = new Level1();
 		random = new Random();
-		texture = this.loadTexture("/introBackground.png");
+		backgroundTex = this.loadTexture("/introBackground.png");
+		buttonTex[0] = this.loadTexture("/button1.png");
+		buttonTex[1] = this.loadTexture("/button2.png");
+		buttonTex[2] = this.loadTexture("/button3.png");
+		buttonTex[3] = this.loadTexture("/close.png");
 		this.init();
 	}
 	
@@ -42,15 +50,15 @@ public class LevelSelection {
 		loadLevel = false;
 		bTriangles.clear();
 		bTActive = true;
-		buttonBrightness = 1.0f;
 		b = 1.0f;
 		f = 0;
 		
-		buttons = new Rectangle[3];
+		buttons = new Rectangle[4];
 		
 		buttons[0] = new Rectangle(Tryangle.WIDTH/2 -120, Tryangle.HEIGHT/2+130, 240, 40);
 		buttons[1] = new Rectangle(Tryangle.WIDTH/2 -120, Tryangle.HEIGHT/2+200, 240, 40);
 		buttons[2] = new Rectangle(Tryangle.WIDTH/2 -120, Tryangle.HEIGHT/2+270, 240, 40);
+		buttons[3] = new Rectangle(Tryangle.WIDTH -75, 25, 30, 30);
 	}
 	
 	public void tick(){
@@ -59,11 +67,40 @@ public class LevelSelection {
 			this.setActiveLevel();
 			this.bigTriangleTick();
 			this.backTriangles();
-			if(random.nextInt(20) == 0 && bTriangles.size() < 20 && !loadLevel){
-				int x = (random.nextInt(Tryangle.WIDTH)/40)*40;
-				int y = (random.nextInt(Tryangle.HEIGHT)/40)*40;
-				if(x > Tryangle.WIDTH/2+length/2+10 || x < Tryangle.WIDTH/2-length/2-10 || y > Tryangle.HEIGHT/2+10)
-					bTriangles.add(new IntroBTriangle(x, y));
+			if(random.nextInt(8) == 0 && !loadLevel){
+				int x = (random.nextInt(Tryangle.WIDTH)/bRaster)*bRaster;
+				int y = (random.nextInt(Tryangle.HEIGHT)/bRaster)*bRaster;
+				
+				boolean hasNoNeighbor = true;
+				boolean isInRange = (x > Tryangle.WIDTH/2+length/2+10 || x < Tryangle.WIDTH/2-length/2-10 
+									|| (y > Tryangle.HEIGHT/2+10 && y < buttons[0].getY() - 40));
+				
+				if (!hasBTriangle[x/bRaster][y/bRaster] && isInRange) {
+					
+					for(int i = -2; i < 3; i++){
+						for(int j = -2; j < 3; j++){
+							boolean check;
+							
+							try{
+								check = hasBTriangle[x/bRaster+i][y/bRaster+j];
+							}catch(ArrayIndexOutOfBoundsException e){
+								check = false;
+							}
+							
+							if(check){
+								hasNoNeighbor = false;
+								break;
+							}
+						}
+					}
+
+					if(hasNoNeighbor){
+						hasBTriangle[x/bRaster][y/bRaster] = true;
+						bTriangles.add(new IntroBTriangle(x, y));
+					}
+				}
+				
+				
 			}			
 		}
 		else{
@@ -82,8 +119,9 @@ public class LevelSelection {
 				bTriangles.get(i).render();
 			}
 			
-			this.drawButtons();
+			if(KeyboardListener.isKeyPressed(Keyboard.KEY_F8))this.drawPoints();
 			if (bTActive)this.bigTriangleRender();
+			this.drawButtons();
 		}
 		else
 			currentLevel.render();		
@@ -91,7 +129,24 @@ public class LevelSelection {
 	
 //////////////////////////////////////////////////////////////////////////////////////////////
 	
-
+	
+	private void drawPoints(){
+		for(int i = 0; i < hasBTriangle.length; i++){
+			for(int j = 0; j < hasBTriangle[i].length; j++){
+				if(hasBTriangle[i][j]){
+					GL11.glColor3f(0f, 1f, 0f);					
+				}
+				else{
+					GL11.glColor3f(1f, 0f, 0f);
+				}
+				GL11.glPointSize(2.0f);
+					GL11.glBegin(GL11.GL_POINTS);
+					GL11.glVertex2f(i*bRaster, j*bRaster);
+				GL11.glEnd();	
+			}
+		}
+	}
+	
 	private void drawBackgroung() {				
 		int picX = 100;
 		int picY = 100;
@@ -99,7 +154,7 @@ public class LevelSelection {
 		int xTimes = Tryangle.WIDTH / picX;
 		int yTimes = Tryangle.HEIGHT/ picY;
 		
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.backgroundTex);
 		GL11.glBegin(GL11.GL_QUADS);
 		
 			GL11.glTexCoord2f(0, 0);
@@ -143,17 +198,9 @@ public class LevelSelection {
 				GL11.glVertex2f(Tryangle.WIDTH/2 - length/2, Tryangle.HEIGHT/2 - height + y);
 		GL11.glEnd();
 
-	}	
+	}
 	
-	float buttonBrightness;
-	
-	private void drawButtons(){		
-		float t = 0.25f * buttonBrightness;
-		float bb = 0.3f * buttonBrightness;
-		
-		if(loadLevel){
-			buttonBrightness -= 0.1;
-		}
+	private void drawButtons(){
 		
 		for (int i = 0; i < buttons.length; i++) {
 			float x = (float)buttons[i].getX();	
@@ -161,16 +208,23 @@ public class LevelSelection {
 			float l = (float)buttons[i].getWidth();		
 			float h = (float)buttons[i].getHeight();		
 			
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.buttonTex[i]);
 			GL11.glBegin(GL11.GL_QUADS);
-				GL11.glColor3f(t, t, t);
-					GL11.glVertex2f(x, y);
-				GL11.glColor3f(t, t, t);
-					GL11.glVertex2f(x+l, y);
-				GL11.glColor3f(bb, bb, bb);
-					GL11.glVertex2f(x+l, y+h);
-				GL11.glColor3f(bb, bb, bb);
-					GL11.glVertex2f(x, y+h);
+			
+				GL11.glTexCoord2f(0, 0);
+				GL11.glVertex2f(x, y);
+				
+				GL11.glTexCoord2f(1, 0);
+				GL11.glVertex2f(x+l, y);
+				
+				GL11.glTexCoord2f(1, 1);
+				GL11.glVertex2f(x+l, y+h);
+				
+				GL11.glTexCoord2f(0, 1);
+				GL11.glVertex2f(x, y+h);
+				
 			GL11.glEnd();
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		}		
 	}
 	
@@ -180,6 +234,10 @@ public class LevelSelection {
 			if(t.isActive())
 				t.tick();
 			else{
+				int x = ((int)bTriangles.get(i).getStartX())/bRaster;
+				int y = ((int)bTriangles.get(i).getStartY())/bRaster;
+		
+				hasBTriangle[x][y] = false;
 				bTriangles.remove(i);
 				t = null;
 			}
@@ -229,25 +287,27 @@ public class LevelSelection {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		int[] pixels = img.getRGB(0, 0, width, height, null, 0, width);
-		
-		ByteBuffer b = BufferUtils.createByteBuffer((width * height) *3);
+				
+		ByteBuffer b = BufferUtils.createByteBuffer((width * height) *4);
 		tex = GL11.glGenTextures();
 		
 		for(int i = 0; i < pixels.length; i++){
 			byte rr = (byte)((pixels[i] >> 16) & 0xFF);
 			byte gg = (byte)((pixels[i] >> 8) & 0xFF);
 			byte bb = (byte)((pixels[i]) & 0xFF);
+			byte aa = (byte)((pixels[i] >> 24) & 0xFF);
 			
 			b.put(rr);
 			b.put(gg);
 			b.put(bb);
+			b.put(aa);
 		}
 		
 		b.flip();
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, tex);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, width, height, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, b);
+			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, b);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		
 		return tex;
@@ -282,6 +342,9 @@ public class LevelSelection {
 				}catch (Exception e){
 					System.out.println("Konnte Level 3 nicht laden.");
 				}			
+			}
+			else if(buttons[3].contains(x, y)){	
+				Tryangle.stop();
 			}
 		}
 	}

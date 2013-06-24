@@ -17,7 +17,7 @@ import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeSetterNet;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 
-public class Level3 extends Levels{
+public class Level3 extends Levels implements Runnable{
 	
 	private Socket client;
 	private ObjectOutputStream out;
@@ -83,4 +83,8 @@ public class Level3 extends Levels{
 				animations.remove(i);
 		}
 	}
+
+@Override
+public void run() {	
+}
 }

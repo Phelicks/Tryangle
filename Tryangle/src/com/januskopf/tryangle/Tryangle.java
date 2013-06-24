@@ -13,7 +13,7 @@ public class Tryangle implements Runnable{
 	public final static int WIDTH = 1280;
 	public final static int HEIGHT = 720;
 	public final static int FPS = 60;
-	private boolean running;
+	private static boolean running;
 	
 	private LevelSelection levelSelect;
 	private KeyboardListener keyboard;
@@ -30,8 +30,8 @@ public class Tryangle implements Runnable{
 		new Thread(this).start();
 	}
 	
-	public void stop()	{
-		this.running = false;
+	public static void stop()	{
+		Tryangle.running = false;
 	}
 	
 	public void initDisplay(){
@@ -64,6 +64,8 @@ public class Tryangle implements Runnable{
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, WIDTH, HEIGHT, 0, -1.0, 1.0);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_BLEND); 
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		System.out.println("You are running OpenGL version ["+GL11.glGetString(GL11.GL_VERSION)+"].");
 	}
 	
@@ -73,7 +75,7 @@ public class Tryangle implements Runnable{
 		
 		Sound sound = new Sound();
 		sound.initialize();
-		//sound.start();
+		sound.start();
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();

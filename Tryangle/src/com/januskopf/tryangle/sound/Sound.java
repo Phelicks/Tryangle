@@ -53,7 +53,7 @@ public class Sound {
 		    //Loads the wave file from your file system
 		    java.io.FileInputStream fin = null;
 		    try {
-		      fin = new java.io.FileInputStream("Soundtrack.wav");
+		      fin = new java.io.FileInputStream("res/Soundtrack.wav");
 		      if(fin != null){
 		    	  System.out.println("File Loaded");
 		      }
