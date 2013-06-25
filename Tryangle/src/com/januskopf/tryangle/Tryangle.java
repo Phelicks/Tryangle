@@ -12,8 +12,8 @@ import com.januskopf.tryangle.sound.Sound;
  
 public class Tryangle implements Runnable{
 	
-	public final static int WIDTH = 1280;
-	public final static int HEIGHT = 720;
+	public final static int WIDTH = 1366;
+	public final static int HEIGHT = 768;
 	public final static int FPS = 60;
 	private static boolean running;
 	private LevelSelection levelSelect;

@@ -30,7 +30,7 @@ public class LevelSelection {
 	
 	private int bRaster = 40;
 	private ArrayList<IntroBTriangle> bTriangles = new ArrayList<IntroBTriangle>();
-	private boolean[][] hasBTriangle = new boolean[Tryangle.WIDTH/bRaster][Tryangle.HEIGHT/bRaster];
+	private boolean[][] hasBTriangle = new boolean[(Tryangle.WIDTH+bRaster)/bRaster][(Tryangle.HEIGHT+bRaster)/bRaster];
 	
 	private Rectangle[] buttons;
 	

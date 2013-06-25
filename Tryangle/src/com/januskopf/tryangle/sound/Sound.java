@@ -186,7 +186,7 @@ public class Sound {
 		if(multi >= (i + length) || multi < i){
 			multi = i;
 		}
-		System.out.println("multi: " + multi);
+		//System.out.println("multi: " + multi);
 		start(i);
 		multi++;
 	}
