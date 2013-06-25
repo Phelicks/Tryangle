@@ -40,6 +40,7 @@ public class CubeSetterNet{
 		
 		Thread thread1 = new Thread(cubeReciver);
 		thread1.setPriority(1);
+		thread1.setDaemon(true);
 		thread1.start();
 	}
 	
@@ -79,6 +80,7 @@ public class CubeSetterNet{
 			while (isRunning) {
 				if(Display.isCloseRequested())isRunning = false;
 				try {
+					System.out.println(isRunning);
 					NetCube cubeData = (NetCube) input.readObject();
 					Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());
 		    		container.addCube(cube);
