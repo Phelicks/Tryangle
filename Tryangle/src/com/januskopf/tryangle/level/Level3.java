@@ -31,7 +31,7 @@ public class Level3 extends Levels{
 	
 	public Level3(){
 		//NetworkStuff
-		String serverName = "141.22.81.147";
+		String serverName = "141.22.91.81";
 		int port = 6066;
 		
 		try {
