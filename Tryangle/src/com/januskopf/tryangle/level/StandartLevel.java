@@ -9,6 +9,7 @@ import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.sound.*;
 
 public class StandartLevel extends Levels{
 	
@@ -40,7 +41,10 @@ public class StandartLevel extends Levels{
 	
 	private void runAnimations() {
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
-			animations.add(new SwipeAnimation(triangles));			
+			System.out.println("E");
+			//Sound.getInstance().startInBeat(Sound.SWOOSH);
+			animations.add(new SwipeAnimation(triangles));
+			
 		}		
 		for(int i = 0; i < animations.size(); i++){
 			if(animations.get(i).isRunning())

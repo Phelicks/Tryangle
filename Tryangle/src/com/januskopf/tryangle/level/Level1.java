@@ -30,7 +30,9 @@ public class Level1 extends Levels{
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	private CubeSetter cubeSetter;
-
+	
+	private Sound sound = Sound.getInstance();
+	
 	public Level1() {
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
@@ -68,6 +70,7 @@ public class Level1 extends Levels{
         	shieldActivated = true;
 			shield += 0.2f;
         	if (shield > 17.2f) shield = 0;
+        	sound.startInBeat(sound.SWOOSH);
         }
 		
         if (KeyboardListener.isKeyPressed(Keyboard.KEY_A)) {

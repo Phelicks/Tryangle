@@ -14,12 +14,11 @@ public class Tryangle implements Runnable{
 	public final static int HEIGHT = 720;
 	public final static int FPS = 60;
 	private boolean running;
-	
 	private LevelSelection levelSelect;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
+	public final Sound sound = Sound.getInstance();
 	
-		
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
 		t.start();
@@ -68,17 +67,20 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
-		
-		Sound sound = new Sound();
+					
 		sound.initialize();
-		sound.start();
+		sound.start(sound.SOUNDTRACK);
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();
 		this.mouse = new MouseListener();
 		
 		while(running){
-			if(Display.isCloseRequested()) stop();
+			if(Display.isCloseRequested()){ 
+				sound.end();
+				stop();
+				System.out.println("closing...");
+			}
 			
 			this.tick();
 			this.render();
@@ -99,6 +101,7 @@ public class Tryangle implements Runnable{
 		keyboard.tick();	
 		mouse.tick();
 		levelSelect.tick();
+		sound.tick();
 	}
  
 	public void render(){

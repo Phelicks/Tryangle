@@ -11,6 +11,7 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.sound.Sound;
 
 public class Level2 extends Levels{
 
@@ -28,12 +29,12 @@ public class Level2 extends Levels{
 		random = new Random();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
+		Sound sound = Sound.getInstance();
 	}
 		
 	public void tick(){
 		triangles.tick();
 		this.runAnimations();
-
 		int x = MouseListener.getMouseX(); 		
 		int y = MouseListener.getMouseY(); 
 		//this.fireAnimation(x, y);
@@ -42,10 +43,11 @@ public class Level2 extends Levels{
 		if(MouseListener.isButtonClicked(0)){
 			int pos[] = {x, y};
 			firePos.add(pos);
+			Sound.stop(0);
 		}
 		for(int i = 0; i < firePos.size(); i++){
 			int pos[] = firePos.get(i);
-			this.fireAnimation(pos[0], pos[1]);			
+			this.fireAnimation(pos[0], pos[1]);
 		}
 		
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){

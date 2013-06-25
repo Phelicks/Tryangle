@@ -8,6 +8,7 @@ import org.lwjgl.input.Keyboard;
 import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
+import com.januskopf.tryangle.sound.Sound;
 
 public class CubeContainer implements Serializable{
 	
@@ -30,8 +31,10 @@ public class CubeContainer implements Serializable{
 	private void cubeDeleter(){
 		//Delete all Cubes
 		if (KeyboardListener.isKeyPressed(Keyboard.KEY_E)) {
+			Sound.getInstance().startInBeat(Sound.SWOOSH);
 			for(int i=0; i < staticCubes.size(); i++){
     			staticCubes.get(i).removeCube();
+    			
     		}
 			staticCubes.clear();
 		}		
