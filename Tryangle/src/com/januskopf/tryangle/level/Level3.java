@@ -23,11 +23,11 @@ public class Level3 extends Levels{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	
-	private VerticeContainer verticeContainer;
+	private static VerticeContainer verticeContainer;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
-	private TriangleContainer triangles;
-	private CubeContainer cubes;
-	private CubeSetterNet cubeSetter;
+	private static TriangleContainer triangles;
+	private static CubeContainer cubes;
+	private static CubeSetterNet cubeSetter;
 	
 	public Level3(){
 		//NetworkStuff

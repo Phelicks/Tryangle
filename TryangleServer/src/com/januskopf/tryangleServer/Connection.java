@@ -1,5 +1,6 @@
 package com.januskopf.tryangleServer;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -53,15 +54,18 @@ public class Connection extends Thread{
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		while (true) {
+		while (isActive) {
 			try {
 				NetCube cubeData = null;
 				if (!client.isClosed()) {					
 					try {
 						cubeData = (NetCube) in.readObject();
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+					}catch(EOFException e){
+						isActive = false;
+						client.close();
+						System.out.println("Verbindung geschlossen");
 					}
 					
 					if(cubeData != null){
@@ -92,7 +96,15 @@ public class Connection extends Thread{
 	public void sendCubeData(NetCube cubeData){
 		try {
 			out.writeObject(cubeData);
-		} catch (IOException e) {
+		}catch(SocketException e){
+			try {
+				isActive = false;
+				client.close();
+				System.out.println("Verbindung geschlossen");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

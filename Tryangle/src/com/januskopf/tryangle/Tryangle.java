@@ -1,6 +1,7 @@
 package com.januskopf.tryangle;
 
-import java.io.File;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -12,8 +13,9 @@ import com.januskopf.tryangle.sound.Sound;
  
 public class Tryangle implements Runnable{
 	
-	public final static int WIDTH = 1366;
-	public final static int HEIGHT = 768;
+	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public final static int WIDTH = (int)screenSize.getWidth();
+	public final static int HEIGHT = (int)screenSize.getHeight();
 	public final static int FPS = 60;
 	private static boolean running;
 	private LevelSelection levelSelect;
@@ -27,7 +29,7 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void start()	{
-		this.running = true;
+		Tryangle.running = true;
 		new Thread(this).start();
 	}
 	
@@ -73,7 +75,13 @@ public class Tryangle implements Runnable{
 	public void run(){
 		this.initDisplay();
 		this.initOpenGL();
-					
+		
+		try {
+			Display.setFullscreen(true);
+		} catch (LWJGLException e1) {
+			e1.printStackTrace();
+		}
+		
 		sound.initialize();
 		sound.start(sound.SOUNDTRACK);
 		
