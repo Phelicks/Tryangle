@@ -8,7 +8,7 @@ import com.januskopf.tryangle.net.NetCube;
 
 
 public class Server extends Thread {
-	private final static String IP_ADDRESS= "localhost";
+	private final static String IP_ADDRESS= "141.22.84.108";
 	private final static int PORT = 6066;
 	
 	private static GameObjects gameObjects;
