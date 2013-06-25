@@ -16,23 +16,57 @@ public class Sound {
 	public static final String SOUNDTRACK_FILE = "Soundtrack.wav";
 	
 	public static final int DRAW_CUBE_1 = 1;
-	public static final String DRAW_CUBE_FILE_1 = "DrawCube1.wav";
+	public static final String DRAW_CUBE_FILE_1 = "DrawCubeC.wav";
 	
 	public static final int DRAW_CUBE_2 = 2;
-	public static final String DRAW_CUBE_FILE_2 = "DrawCube2.wav";
+	public static final String DRAW_CUBE_FILE_2 = "DrawCubeE.wav";
 	
 	public static final int DRAW_CUBE_3 = 3;
-	public static final String DRAW_CUBE_FILE_3 = "DrawCube3.wav";
+	public static final String DRAW_CUBE_FILE_3 = "DrawCubeG.wav";
 	
-	public static final int CHANGE_COLOR = 4;
+	public static final int DRAW_CUBE_DECAY_1 = 4;
+	public static final String DRAW_CUBE_DECAY_FILE_1 = "DrawCubeC_Decay.wav";
+	
+	public static final int DRAW_CUBE_DECAY_2 = 5;
+	public static final String DRAW_CUBE_DECAY_FILE_2 = "DrawCubeE_Decay.wav";
+	
+	public static final int DRAW_CUBE_DECAY_3 = 6;
+	public static final String DRAW_CUBE_DECAY_FILE_3 = "DrawCubeG_Decay.wav";
+		
+	public static final int CHANGE_COLOR = 7;
 	public static final String CHANGE_COLOR_FILE = "ChangeColor.wav";
 	
-	public static final int SWOOSH = 5;
+	public static final int SWOOSH = 8;
 	public static final String SWOOSH_FILE = "Swoosh.wav";
 	
-	public static final int[] LOOPING = {SOUNDTRACK};
-	public static final String[] WAV_FILES = {SOUNDTRACK_FILE,DRAW_CUBE_FILE_1,DRAW_CUBE_FILE_2,DRAW_CUBE_FILE_3,CHANGE_COLOR_FILE,SWOOSH_FILE};
+	public static final int FIRE_1 = 9;
+	public static final String FIRE_FILE_1 = "Fire1.wav";
+
+	public static final int FIRE_2 = 10;
+	public static final String FIRE_FILE_2 = "Fire2.wav";
+
+	public static final int FIRE_3 = 11;
+	public static final String FIRE_FILE_3 = "Fire3.wav";
+
+	public static final int FIRE_AMB = 12;
+	public static final String FIRE_AMB_FILE = "FireAmb.wav";
 	
+	public static final int WATER_1 = 13;
+	public static final String WATER_FILE_1 = "Water1.wav";
+
+	public static final int WATER_2 = 14;
+	public static final String WATER_FILE_2 = "Water2.wav";
+
+	public static final int WATER_3 = 15;
+	public static final String WATER_FILE_3 = "Water3.wav";
+		
+	public static final int[] LOOPING = {SOUNDTRACK};
+	public static final String[] WAV_FILES = {	SOUNDTRACK_FILE,DRAW_CUBE_FILE_1,DRAW_CUBE_FILE_2,
+												DRAW_CUBE_FILE_3,DRAW_CUBE_DECAY_FILE_1,DRAW_CUBE_DECAY_FILE_2,
+												DRAW_CUBE_DECAY_FILE_3,CHANGE_COLOR_FILE,SWOOSH_FILE,
+												FIRE_FILE_1,FIRE_FILE_2,FIRE_FILE_3, FIRE_AMB_FILE,
+												WATER_FILE_1,WATER_FILE_2,WATER_FILE_3};
+						
 	public static final int NUM_BUFFERS = WAV_FILES.length;
 	public static final int NUM_SOURCES = WAV_FILES.length;
 	
@@ -45,10 +79,12 @@ public class Sound {
 	protected static FloatBuffer listenerVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 	protected static FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f }).rewind();
 	protected static boolean playing;
+	protected static boolean release = true;
+	protected static float volume = 1.0f;
 	private boolean tickPlay = false;
 	private int tick = 0;
 	private boolean[] startlist = new boolean[NUM_SOURCES];
-	private int multi = 0;
+	public int multi = 0;
 	
 	
 	private Sound(){}
@@ -182,17 +218,43 @@ public class Sound {
 		startlist[i] = true;
 	}
 	
-	public void startMulti(int i, int length){
-		if(multi >= (i + length) || multi < i){
-			multi = i;
+	public void startMulti(int x, int y){
+		if(release == true){
+			start(x + multi);
 		}
-		//System.out.println("multi: " + multi);
-		start(i);
-		multi++;
-	}
 		
+		loop(y + multi);
+		
+		release = false;
+	}
+	
+	public void Multi2(int x){
+		multi = (multi+1)%3;
+		loop(x + multi);
+		
+		System.out.println("multi: " + (multi + x));
+	}
+	
+	public void release(int i){
+		release = true;
+		volume -= 0.1f;
+		setVolume(i + multi,volume);
+		if(volume <= 0.01f){
+			volume = 0.8f;
+			stop(i + multi);
+			multi = (multi+1)%3;	
+		}
+		//System.out.println("stop:" + (i + multi));
+			
+	}
+	
 	public void tick(){
+		
+			
+		
+		
 		if(tick == 30){
+			
 			tick = 0;
 			if(tickPlay == true){
 				System.out.println(startlist.toString());
@@ -208,8 +270,14 @@ public class Sound {
 		tick++;
 	}
 	
+	public static void setVolume(int i, float f){
+		AL10.alSourcef(source.get(i), AL10.AL_GAIN, f);
+	}
+	
 	public static void stop(int i){
-		AL10.alSourceStop(source.get(i));
+		if(AL10.alGetSourcei(source.get(i), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING){
+			AL10.alSourceStop(source.get(i));
+		}
 	}
 
 	public static void end(){
