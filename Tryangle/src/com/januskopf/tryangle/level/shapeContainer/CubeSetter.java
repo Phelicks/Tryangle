@@ -9,8 +9,10 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.RadialAnimation;
 import com.januskopf.tryangle.level.grid.GridVertex;
 import com.januskopf.tryangle.level.grid.VerticeContainer;
+import com.januskopf.tryangle.sound.Sound;
 
 public class CubeSetter{
+	
 	
 	protected int mouseX;
 	protected int mouseY;
@@ -25,6 +27,7 @@ public class CubeSetter{
 	private GridVertex lastSetVertex;
 	
 	public CubeSetter(CubeContainer container, TriangleContainer triangles,VerticeContainer verticeContainer){
+		
 		this.container = container;
 		this.verticeContainer = verticeContainer;
 		this.triangles = triangles;
@@ -38,6 +41,7 @@ public class CubeSetter{
 			cR = (float)Math.random();
 			cG = (float)Math.random();
 			cB = (float)Math.random();
+			Sound.getInstance().loop(Sound.CHANGE_COLOR);
 		}
 		this.cubeSetter();
 		this.drawMouseCube();
@@ -52,6 +56,7 @@ public class CubeSetter{
 				Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
 				container.addCube(cube);
 				triangles.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+				Sound.getInstance().startMulti(Sound.DRAW_CUBE_1,3);
 			}
     	} 
 	}
