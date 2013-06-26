@@ -41,11 +41,11 @@ public class Tryangle implements Runnable{
 		try{			
 			DisplayMode displayMode = null;
 	        DisplayMode[] modes = Display.getAvailableDisplayModes();
-
 	         for (int i = 0; i < modes.length; i++){
              if (modes[i].getWidth() == Tryangle.WIDTH
 	             && modes[i].getHeight() == Tryangle.HEIGHT
-	             && modes[i].isFullscreenCapable()) {
+	             && modes[i].isFullscreenCapable()
+	             && modes[i].getBitsPerPixel() == 32) {
                     displayMode = modes[i];
                     break;
                }
@@ -84,9 +84,9 @@ public class Tryangle implements Runnable{
 			e1.printStackTrace();
 		}
 		
-		sound.initialize();
-		sound.start(sound.SOUNDTRACK);
-		sound.setVolume(sound.SOUNDTRACK,0.8f);
+		Sound.initialize();
+		Sound.start(Sound.SOUNDTRACK);
+		Sound.setVolume(Sound.SOUNDTRACK,0.8f);
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();
@@ -94,7 +94,7 @@ public class Tryangle implements Runnable{
 		
 		while(running){
 			if(Display.isCloseRequested()){ 
-				sound.end();
+				Sound.end();
 				stop();
 				System.out.println("closing...");
 			}
