@@ -86,6 +86,7 @@ public class Tryangle implements Runnable{
 		
 		sound.initialize();
 		sound.start(sound.SOUNDTRACK);
+		sound.setVolume(sound.SOUNDTRACK,0.8f);
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();

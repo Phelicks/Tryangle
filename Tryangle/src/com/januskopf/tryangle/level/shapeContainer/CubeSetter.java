@@ -43,6 +43,9 @@ public class CubeSetter{
 			cB = (float)Math.random();
 			Sound.getInstance().loop(Sound.CHANGE_COLOR);
 		}
+		else{
+			Sound.getInstance().stop(Sound.CHANGE_COLOR);
+		}
 		this.cubeSetter();
 		this.drawMouseCube();
 	}
@@ -50,15 +53,20 @@ public class CubeSetter{
 	protected void cubeSetter(){        
         //Add new Cubes
         if(Mouse.isClipMouseCoordinatesToWindow() && MouseListener.isButtonPressed(0)){
-    		GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);
+        	Sound.getInstance().startMulti(Sound.DRAW_CUBE_1,Sound.DRAW_CUBE_DECAY_1);
+        	GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);
     		if (!vertex.equals(lastSetVertex)) {
 				lastSetVertex = vertex;
 				Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
 				container.addCube(cube);
 				triangles.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
-				Sound.getInstance().startMulti(Sound.DRAW_CUBE_1,3);
+				
 			}
-    	} 
+    	}
+        else{
+        	Sound.getInstance().release(Sound.DRAW_CUBE_1);
+        	Sound.getInstance().release(Sound.DRAW_CUBE_DECAY_1);
+        }
 	}
 		
 	private void drawMouseCube(){

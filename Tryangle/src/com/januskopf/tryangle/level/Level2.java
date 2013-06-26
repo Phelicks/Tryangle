@@ -43,7 +43,10 @@ public class Level2 extends Levels{
 		if(MouseListener.isButtonClicked(0)){
 			int pos[] = {x, y};
 			firePos.add(pos);
-			Sound.stop(0);
+			Sound.getInstance().Multi2(Sound.FIRE_1);
+		}
+		else{
+			//Sound.getInstance().release(Sound.FIRE_1);
 		}
 		for(int i = 0; i < firePos.size(); i++){
 			int pos[] = firePos.get(i);
@@ -87,12 +90,14 @@ public class Level2 extends Levels{
 	
 	public void waterAnimation(){
 		if (MouseListener.isButtonPressed(1)) {
+			Sound.getInstance().Multi2(Sound.WATER_1);
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
 			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, 1469);
 			Level2.animations.add(animation);
 		}
+		
 
 	}
 }
