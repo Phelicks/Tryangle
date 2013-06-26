@@ -97,9 +97,10 @@ public class CubeSetterNet{
 	};
 		
 	private void drawMouseCube(){
-		if(Mouse.isClipMouseCoordinatesToWindow()){
-    		GridVertex vertex = verticeContainer.getClosestVertex(mouseX,mouseY);	
-    		container.setMouseCube(new Cube(verticeContainer, triangles, vertex, cR, cG, cB));  		
+		if(Mouse.isClipMouseCoordinatesToWindow() && mouseX < 1280 && mouseY < 720){
+    		GridVertex vertex;
+			vertex = verticeContainer.getClosestVertex(mouseX, mouseY);
+			container.setMouseCube(new Cube(verticeContainer, triangles, vertex, cR, cG, cB));
         }
 	}
 }

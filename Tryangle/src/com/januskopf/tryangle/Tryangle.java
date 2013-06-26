@@ -47,8 +47,10 @@ public class Tryangle implements Runnable{
 	             && modes[i].getHeight() == Tryangle.HEIGHT
 	             && modes[i].isFullscreenCapable()) {
                     displayMode = modes[i];
+                    break;
                }
 	        }
+	        System.out.println("\nMode: " + displayMode.toString());
 			Display.setDisplayMode(displayMode);
 			Display.setResizable(false);
 			Display.setTitle("Tryangle");
@@ -109,6 +111,7 @@ public class Tryangle implements Runnable{
 			Display.sync(FPS);
 			Display.update();
 		}
+		System.out.println("END");
 	}
 	
 	public void tick(){		

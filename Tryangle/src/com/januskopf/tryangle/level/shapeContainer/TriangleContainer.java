@@ -121,8 +121,11 @@ public class TriangleContainer implements Serializable{
 			x -= 1;
 			
 		int y = triangle.getVertex(0).getIndexY();
-		foreground[y][x] = triangle;
-		triangle.setForeground(true);
+		try {
+			foreground[y][x] = triangle;
+			triangle.setForeground(true);
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
 	}
 	
 	public void removeForegroundTriangle(int x, int y, boolean isLeft){
