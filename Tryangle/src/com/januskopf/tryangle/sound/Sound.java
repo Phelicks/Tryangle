@@ -1,6 +1,7 @@
 package com.januskopf.tryangle.sound;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -113,7 +114,8 @@ public class Sound {
 	    for(int i = 0; i < NUM_SOURCES; i++){
 		    java.io.FileInputStream fin = null;
 		    try {
-		      fin = new java.io.FileInputStream(WAV_FILES[i]);
+		    	String path = new File("sound").getAbsolutePath();
+		      fin = new java.io.FileInputStream(path+"/"+WAV_FILES[i]);
 		      if(fin != null){
 		    	  System.out.println(WAV_FILES[i] + " loaded");
 		      }

@@ -63,7 +63,7 @@ public class LevelSelection {
 	
 	public void tick(){
 		if(isLevelSelect){
-			if(KeyboardListener.isKeyPressed(Keyboard.KEY_ESCAPE));
+			//if(KeyboardListener.isKeyClicked(Keyboard.KEY_ESCAPE))Tryangle.stop();
 			this.setActiveLevel();
 			this.bigTriangleTick();
 			this.backTriangles();
@@ -98,9 +98,7 @@ public class LevelSelection {
 						hasBTriangle[x/bRaster][y/bRaster] = true;
 						bTriangles.add(new IntroBTriangle(x, y));
 					}
-				}
-				
-				
+				}			
 			}			
 		}
 		else{

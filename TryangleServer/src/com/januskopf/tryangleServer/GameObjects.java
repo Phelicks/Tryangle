@@ -8,8 +8,8 @@ import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 public class GameObjects{
 
 	private int yTriangles = 100;
-	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2.1f;
-	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
+	private float triangleLength = 800f/((float)yTriangles-2)*2.1f;
+	private int xTriangles = (int)(1500f/((float)Math.sqrt(3)*(triangleLength/2)))+2;
 	
 
 	private static VerticeContainer verticeContainer;

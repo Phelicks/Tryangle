@@ -53,6 +53,8 @@ public class Connection extends Thread{
 			out.writeObject(cubes);
 		} catch (IOException e2) {
 			e2.printStackTrace();
+			isActive = false;
+			System.out.println("Verbindung geschlossen-NoDataSended");
 		}
 		while (isActive) {
 			try {
