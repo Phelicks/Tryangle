@@ -102,10 +102,10 @@ public class LevelSelection {
 			}			
 		}
 		else{
+			currentLevel.tick();
 			if(KeyboardListener.isKeyPressed(Keyboard.KEY_ESCAPE)){
 				this.init();
 			}
-			currentLevel.tick();
 		}
 	}
 	
@@ -121,8 +121,9 @@ public class LevelSelection {
 			if (bTActive)this.bigTriangleRender();
 			this.drawButtons();
 		}
-		else
-			currentLevel.render();		
+		else{
+			currentLevel.render();	
+		}
 	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +168,7 @@ public class LevelSelection {
 			
 			GL11.glTexCoord2f(0, yTimes);
 			GL11.glVertex2f(0, Tryangle.HEIGHT);
-			
+
 		GL11.glEnd();	
 		
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
@@ -313,10 +314,10 @@ public class LevelSelection {
 	}
 	
 	private void setActiveLevel(){
+		
 		if(!loadLevel && MouseListener.isButtonClicked(0)){
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
-
 			if(buttons[0].contains(x, y)){
 				for(int i=0; i < bTriangles.size(); i++){
 					bTriangles.get(i).setFastEnd();
@@ -340,14 +341,13 @@ public class LevelSelection {
 					}
 				}catch (Exception e){
 					System.out.println("Konnte Level 3 nicht laden.");
-				}			
+				}
 			}
-			else if(buttons[3].contains(x, y)){	
+			else if(buttons[3].contains(x, y)){
 				Tryangle.stop();
-			}
+			}			
 		}
 	}
-	
 	
 	public static Levels getCurrentLevel(){
 		return currentLevel;

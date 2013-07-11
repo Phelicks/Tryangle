@@ -14,8 +14,8 @@ import com.januskopf.tryangle.sound.Sound;
 public class Tryangle implements Runnable{
 	
 	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	public final static int WIDTH = (int)screenSize.getWidth();
-	public final static int HEIGHT = (int)screenSize.getHeight();
+	public final static int WIDTH = (int) screenSize.getWidth();
+	public final static int HEIGHT = (int) screenSize.getHeight();
 	public final static int FPS = 60;
 	private static boolean running;
 	private LevelSelection levelSelect;
@@ -57,6 +57,12 @@ public class Tryangle implements Runnable{
 			PixelFormat p = new PixelFormat().withSamples(4);
 			
 			Display.create(p);
+
+			try {
+				Display.setFullscreen(true);
+			} catch (LWJGLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		catch (LWJGLException e){
 			e.printStackTrace();
@@ -75,15 +81,10 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void run(){
-		this.initDisplay();
+		//this.initDisplay();
+		this.setDisplayMode(WIDTH, HEIGHT, true);
 		this.initOpenGL();
-		
-		try {
-			Display.setFullscreen(true);
-		} catch (LWJGLException e1) {
-			e1.printStackTrace();
-		}
-		
+				
 		Sound.initialize();
 		Sound.start(Sound.SOUNDTRACK);
 		Sound.setVolume(Sound.SOUNDTRACK,0.8f);
@@ -124,5 +125,65 @@ public class Tryangle implements Runnable{
  
 	public void render(){
 		levelSelect.render();
+	}
+	
+	/**
+	 * Set the display mode to be used 
+	 * 
+	 * @param width The width of the display required
+	 * @param height The height of the display required
+	 * @param fullscreen True if we want fullscreen mode
+	 */
+	public void setDisplayMode(int width, int height, boolean fullscreen) {
+
+	    try {
+	        DisplayMode targetDisplayMode = null;
+			
+		if (fullscreen) {
+		    DisplayMode[] modes = Display.getAvailableDisplayModes();
+		    int freq = 0;
+					
+		    for (int i=0;i<modes.length;i++) {
+		        DisplayMode current = modes[i];
+						
+			if ((current.getWidth() == width) && (current.getHeight() == height)) {
+			    if ((targetDisplayMode == null) || (current.getFrequency() >= freq)) {
+			        if ((targetDisplayMode == null) || (current.getBitsPerPixel() > targetDisplayMode.getBitsPerPixel())) {
+				    targetDisplayMode = current;
+				    freq = targetDisplayMode.getFrequency();
+	                        }
+	                    }
+
+			    // if we've found a match for bpp and frequence against the 
+			    // original display mode then it's probably best to go for this one
+			    // since it's most likely compatible with the monitor
+			    if ((current.getBitsPerPixel() == Display.getDesktopDisplayMode().getBitsPerPixel()) &&
+	                        (current.getFrequency() == Display.getDesktopDisplayMode().getFrequency())) {
+	                            targetDisplayMode = current;
+	                            System.out.println(targetDisplayMode);
+	                            break;
+	                    }
+	                }
+	            }
+	        } else {
+	            targetDisplayMode = new DisplayMode(width,height);
+	        }
+
+	        if (targetDisplayMode == null) {
+	            System.out.println("Failed to find value mode: "+width+"x"+height+" fs="+fullscreen);
+	            return;
+	        }
+
+	        Display.setDisplayMode(targetDisplayMode);
+			Display.setResizable(false);
+			Display.setTitle("Tryangle");
+			PixelFormat p = new PixelFormat().withSamples(4);
+			Display.setFullscreen(fullscreen);
+			
+			Display.create(p);
+				
+	    } catch (LWJGLException e) {
+	        System.out.println("Unable to setup mode "+width+"x"+height+" fullscreen="+fullscreen + e);
+	    }
 	}
 }

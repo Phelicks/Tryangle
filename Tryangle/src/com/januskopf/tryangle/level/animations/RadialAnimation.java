@@ -9,6 +9,7 @@ public class RadialAnimation extends Animations{
 	private boolean isActive = true;
 	private int xPos;
 	private int yPos;
+	private float radius;
 	private int iRadius = 50;
 	
 	private TriangleContainer triangles;
@@ -16,6 +17,7 @@ public class RadialAnimation extends Animations{
 	public RadialAnimation(TriangleContainer triangles, int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.radius = triangles.getLength()*5;
 		
 		this.triangles = triangles;
 	}
@@ -26,7 +28,6 @@ public class RadialAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
-		int radius = 300;
 		for(int i = 0; i < iRadius; i++){
 			float a = (float)Math.sin(i)*iRadius;
 			float b = (float)Math.cos(i)*iRadius;			
@@ -39,7 +40,7 @@ public class RadialAnimation extends Animations{
 			}
 		}
 		if(iRadius <= radius)
-			iRadius += 4;
+			iRadius += ((float)radius)/50f;
 		else{
 			iRadius = 50;
 			isActive = false;

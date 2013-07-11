@@ -41,10 +41,12 @@ public class CubeSetter{
 			cR = (float)Math.random();
 			cG = (float)Math.random();
 			cB = (float)Math.random();
-			Sound.getInstance().loop(Sound.CHANGE_COLOR);
+			Sound.getInstance();
+			Sound.loop(Sound.CHANGE_COLOR);
 		}
 		else{
-			Sound.getInstance().stop(Sound.CHANGE_COLOR);
+			Sound.getInstance();
+			Sound.stop(Sound.CHANGE_COLOR);
 		}
 		this.cubeSetter();
 		this.drawMouseCube();
@@ -59,7 +61,7 @@ public class CubeSetter{
 				lastSetVertex = vertex;
 				Cube cube = new Cube(verticeContainer, triangles, vertex, cR, cG, cB);
 				container.addCube(cube);
-				triangles.addAnimation(new RadialAnimation(triangles, mouseX, mouseY));
+				triangles.addAnimation(new RadialAnimation(triangles, (int)vertex.getxPos(), (int)vertex.getyPos()));
 				
 			}
     	}

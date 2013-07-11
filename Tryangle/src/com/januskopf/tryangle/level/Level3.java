@@ -1,5 +1,9 @@
 package com.januskopf.tryangle.level;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -31,7 +35,24 @@ public class Level3 extends Levels{
 	
 	public Level3(){
 		//NetworkStuff
-		String serverName = "141.22.93.12";
+		String serverName;
+		FileReader fr;
+		
+		try {
+			fr = new FileReader(new File("data/ip.txt").getAbsolutePath());
+			BufferedReader br = new BufferedReader(fr);
+			serverName = br.readLine();
+			br.close();
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("ip.txt not found." + "\n");
+			//e.printStackTrace();
+			serverName = "localhost";
+		} catch (IOException e){
+			e.printStackTrace();
+			serverName = "localhost";			
+		}
+		
 		int port = 6066;
 		
 		try {

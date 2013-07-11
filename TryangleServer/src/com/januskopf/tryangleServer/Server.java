@@ -2,13 +2,14 @@ package com.januskopf.tryangleServer;
 
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.*;
 
 import com.januskopf.tryangle.net.NetCube;
 
 
 public class Server extends Thread {
-	private final static String IP_ADDRESS = "141.22.93.12";
+	private final static String IP_ADDRESS = "localhost";
 	private final static int PORT = 6066;
 	
 	private static GameObjects gameObjects;
@@ -27,7 +28,13 @@ public class Server extends Thread {
 
 	public Server(int port) throws IOException {
 		Server.gameObjects = new GameObjects();
-		this.serverSocket = new ServerSocket(port, 0, InetAddress.getByName(IP_ADDRESS));
+		Scanner keyboard = new Scanner(System.in);
+		
+		String ip = IP_ADDRESS;
+		System.out.print("IP: ");
+		ip = keyboard.nextLine();
+		keyboard.close();
+		this.serverSocket = new ServerSocket(port, 0, InetAddress.getByName(ip));
 		//serverSocket.setSoTimeout(10000);
 	}
 	

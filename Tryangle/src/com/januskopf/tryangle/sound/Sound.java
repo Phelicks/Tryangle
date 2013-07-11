@@ -100,7 +100,7 @@ public class Sound {
 		  	
 	 	System.setProperty("org.lgjwl.util.Debug", "true");
 		  
-	  	System.out.println("LoadALData()");
+	  	//System.out.println("LoadALData()");
 		  
 	    // Load wav data into a buffer.
 	    AL10.alGenBuffers(buffer);
@@ -117,12 +117,12 @@ public class Sound {
 		    	String path = new File("sound").getAbsolutePath();
 		      fin = new java.io.FileInputStream(path+"/"+WAV_FILES[i]);
 		      if(fin != null){
-		    	  System.out.println(WAV_FILES[i] + " loaded");
+		    	  //System.out.println(WAV_FILES[i] + " loaded");
 		      }
 		    } 
 		    catch (java.io.FileNotFoundException ex) {
 		    	System.out.println("File " + WAV_FILES[i] + " not found");
-		    	ex.printStackTrace();
+		    	//ex.printStackTrace();
 			   	return AL10.AL_FALSE;
 			}			 
 			WaveData waveFile = WaveData.create(new BufferedInputStream(fin));			    
@@ -143,7 +143,7 @@ public class Sound {
 		}
 		
 		for(int i = 0; i < NUM_SOURCES; i++){
-			System.out.println("Source " + i + " buffered");
+			//System.out.println("Source " + i + " buffered");
 			boolean isLoop = false;
 			AL10.alSourcei(source.get(i), AL10.AL_BUFFER,   buffer.get(i) );
 			AL10.alSourcef(source.get(i), AL10.AL_PITCH,    1.0f          );
@@ -165,7 +165,7 @@ public class Sound {
 		}
 		// Do another error check and return.
 		if (AL10.alGetError() == AL10.AL_NO_ERROR){
-		  	System.out.println("AL_TRUE");
+		  	//System.out.println("AL_TRUE");
 		   	return AL10.AL_TRUE;
 		}
 		System.out.println("AL_FALSE");
@@ -184,7 +184,7 @@ public class Sound {
 	}
 	  
 	public static void initialize() {
-		System.out.println("Initialize");
+		System.out.println("Initialize OpenAL");
 		// Initialize OpenAL and clear the error bit.
 		try{
 			AL.create();
@@ -196,7 +196,7 @@ public class Sound {
 		AL10.alGetError();    
 		// Load the wav data.
 		if(loadALData() == AL10.AL_FALSE) {
-			System.out.println("Error loading data.");
+			System.out.println("Error loading sound data.");
 		    return;
 		}
 		        
@@ -233,8 +233,7 @@ public class Sound {
 	public void Multi2(int x){
 		multi = (multi+1)%3;
 		loop(x + multi);
-		
-		System.out.println("multi: " + (multi + x));
+		//System.out.println("multi: " + (multi + x));
 	}
 	
 	public void release(int i){
@@ -252,14 +251,10 @@ public class Sound {
 	
 	public void tick(){
 		
-			
-		
-		
 		if(tick == 30){
-			
 			tick = 0;
 			if(tickPlay == true){
-				System.out.println(startlist.toString());
+				//System.out.println(startlist.toString());
 				for(int i = 0; i < startlist.length; i++){
 					if(startlist[i]){
 						start(i);
@@ -286,4 +281,4 @@ public class Sound {
 		killALData();
 		AL.destroy();
 	}
-}	
+}

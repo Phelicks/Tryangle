@@ -29,7 +29,7 @@ public class Level2 extends Levels{
 		random = new Random();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
-		Sound sound = Sound.getInstance();
+		Sound.getInstance();
 	}
 		
 	public void tick(){
@@ -94,7 +94,7 @@ public class Level2 extends Levels{
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
-			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, 1469);
+			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, ((int)Math.hypot(Tryangle.HEIGHT, Tryangle.WIDTH))+1);
 			Level2.animations.add(animation);
 		}
 		
