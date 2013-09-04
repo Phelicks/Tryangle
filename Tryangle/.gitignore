@@ -1,5 +1,8 @@
-/native
-/bin
-/.settings
-/.project
-/.classpath
+/Tryangle/native/
+/native/
+/bin/
+/.settings/
+/.project/
+/.classpath/
+/lib/
+/data

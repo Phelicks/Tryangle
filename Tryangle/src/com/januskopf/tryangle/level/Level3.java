@@ -46,7 +46,7 @@ public class Level3 extends Levels{
 			
 		} catch (FileNotFoundException e) {
 			System.out.println("ip.txt not found." + "\n");
-			//e.printStackTrace();
+			e.printStackTrace();
 			serverName = "localhost";
 		} catch (IOException e){
 			e.printStackTrace();

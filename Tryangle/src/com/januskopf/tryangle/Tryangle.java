@@ -14,8 +14,9 @@ import com.januskopf.tryangle.sound.Sound;
 public class Tryangle implements Runnable{
 	
 	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	public final static int WIDTH = (int) screenSize.getWidth();
-	public final static int HEIGHT = (int) screenSize.getHeight();
+	public final static int WIDTH = 1280; //(int) screenSize.getWidth();
+	public final static int HEIGHT = 720; //(int) screenSize.getHeight();
+	public final static boolean FULLSCREEN = false;
 	public final static int FPS = 60;
 	private static boolean running;
 	private LevelSelection levelSelect;
@@ -36,40 +37,9 @@ public class Tryangle implements Runnable{
 	public static void stop()	{
 		Tryangle.running = false;
 	}
-	
-	public void initDisplay(){
-		try{			
-			DisplayMode displayMode = null;
-	        DisplayMode[] modes = Display.getAvailableDisplayModes();
-	         for (int i = 0; i < modes.length; i++){
-             if (modes[i].getWidth() == Tryangle.WIDTH
-	             && modes[i].getHeight() == Tryangle.HEIGHT
-	             && modes[i].isFullscreenCapable()
-	             && modes[i].getBitsPerPixel() == 32) {
-                    displayMode = modes[i];
-                    break;
-               }
-	        }
-	        System.out.println("\nMode: " + displayMode.toString());
-			Display.setDisplayMode(displayMode);
-			Display.setResizable(false);
-			Display.setTitle("Tryangle");
-			PixelFormat p = new PixelFormat().withSamples(4);
-			
-			Display.create(p);
-
-			try {
-				Display.setFullscreen(true);
-			} catch (LWJGLException e1) {
-				e1.printStackTrace();
-			}
-		}
-		catch (LWJGLException e){
-			e.printStackTrace();
-		}
-	}
-	
+		
 	public void initOpenGL(){
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -81,8 +51,7 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void run(){
-		//this.initDisplay();
-		this.setDisplayMode(WIDTH, HEIGHT, true);
+		this.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
 		this.initOpenGL();
 				
 		Sound.initialize();
@@ -175,6 +144,7 @@ public class Tryangle implements Runnable{
 	        }
 
 	        Display.setDisplayMode(targetDisplayMode);
+	        Display.setVSyncEnabled(true);
 			Display.setResizable(false);
 			Display.setTitle("Tryangle");
 			PixelFormat p = new PixelFormat().withSamples(4);
