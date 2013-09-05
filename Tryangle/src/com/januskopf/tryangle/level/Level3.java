@@ -14,12 +14,11 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
+import com.januskopf.tryangle.alt.CubeContainer;
+import com.januskopf.tryangle.alt.CubeSetterNet;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.animations.*;
-import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
-import com.januskopf.tryangle.level.shapeContainer.CubeSetterNet;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.triangles.TriangleContainer;
 
 public class Level3 extends Levels{
 	
@@ -27,7 +26,6 @@ public class Level3 extends Levels{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	
-	private static VerticeContainer verticeContainer;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private static TriangleContainer triangles;
 	private static CubeContainer cubes;
@@ -65,10 +63,10 @@ public class Level3 extends Levels{
 			
 			//TryangleStuff
 			try {
-				verticeContainer = (VerticeContainer) in.readObject();
+//				verticeContainer = (VerticeContainer) in.readObject();
 				triangles = (TriangleContainer) in.readObject();
 				cubes = (CubeContainer) in.readObject();
-				cubeSetter = new CubeSetterNet(cubes, triangles, verticeContainer, in, out);
+				cubeSetter = new CubeSetterNet(cubes, triangles, in, out);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

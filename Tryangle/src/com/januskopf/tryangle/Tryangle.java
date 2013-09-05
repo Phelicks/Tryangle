@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 
 import com.januskopf.tryangle.input.*;
-import com.januskopf.tryangle.level.LevelSelection;
+import com.januskopf.tryangle.level.screens.LevelSelection;
 import com.januskopf.tryangle.sound.Sound;
  
 public class Tryangle implements Runnable{

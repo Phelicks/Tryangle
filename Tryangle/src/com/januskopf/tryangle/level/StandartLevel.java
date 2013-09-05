@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
+import com.januskopf.tryangle.alt.CubeContainer;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.animations.*;
-import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.triangles.TriangleContainer;
 
 public class StandartLevel extends Levels{
 	
@@ -16,15 +15,15 @@ public class StandartLevel extends Levels{
 	private int yTriangles = 50;
 	private float triangleLength = 50.0f;
 
-	private VerticeContainer verticeContainer;
+//	private VerticeContainer verticeContainer;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	
 	public StandartLevel(){
-		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
+//		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
-		cubes = new CubeContainer(verticeContainer, triangles);
+//		cubes = new CubeContainer(verticeContainer, triangles);
 	}
 	public void tick(){
 		this.triangles.tick();

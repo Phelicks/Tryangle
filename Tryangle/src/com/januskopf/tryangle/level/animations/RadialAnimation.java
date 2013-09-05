@@ -1,8 +1,8 @@
 package com.januskopf.tryangle.level.animations;
 
-import com.januskopf.tryangle.entity.Triangle;
-import com.januskopf.tryangle.entity.effects.ColorFlash;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.triangles.Triangle;
+import com.januskopf.tryangle.triangles.TriangleContainer;
+import com.januskopf.tryangle.triangles.effects.ColorFlash;
 
 public class RadialAnimation extends Animations{
 	

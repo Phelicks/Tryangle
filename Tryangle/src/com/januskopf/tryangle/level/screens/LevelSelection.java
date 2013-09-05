@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level;
+package com.januskopf.tryangle.level.screens;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -16,7 +16,10 @@ import org.lwjgl.opengl.GL11;
 import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.shapeContainer.IntroBTriangle;
+import com.januskopf.tryangle.level.Level1;
+import com.januskopf.tryangle.level.Level2;
+import com.januskopf.tryangle.level.Level3;
+import com.januskopf.tryangle.level.Levels;
 
 public class LevelSelection {
 

@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.entity.effects;
+package com.januskopf.tryangle.triangles.effects;
 
 
 public abstract class Effects {

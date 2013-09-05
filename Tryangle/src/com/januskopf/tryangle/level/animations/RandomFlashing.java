@@ -2,9 +2,9 @@ package com.januskopf.tryangle.level.animations;
 
 import java.util.Random;
 
-import com.januskopf.tryangle.entity.Triangle;
-import com.januskopf.tryangle.entity.effects.ColorTransition;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.triangles.Triangle;
+import com.januskopf.tryangle.triangles.TriangleContainer;
+import com.januskopf.tryangle.triangles.effects.ColorTransition;
 
 public class RandomFlashing extends Animations{	
 	

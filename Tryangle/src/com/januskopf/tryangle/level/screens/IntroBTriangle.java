@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.shapeContainer;
+package com.januskopf.tryangle.level.screens;
 
 import java.util.Random;
 import org.lwjgl.opengl.GL11;

@@ -1,9 +1,9 @@
-package com.januskopf.tryangle.entity;
+package com.januskopf.tryangle.triangles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.januskopf.tryangle.entity.effects.Effects;
+import com.januskopf.tryangle.triangles.effects.Effects;
 
 public class Triangle implements Serializable{
 	

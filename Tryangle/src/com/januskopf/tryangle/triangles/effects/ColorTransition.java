@@ -1,6 +1,6 @@
-package com.januskopf.tryangle.entity.effects;
+package com.januskopf.tryangle.triangles.effects;
 
-import com.januskopf.tryangle.entity.Triangle;
+import com.januskopf.tryangle.triangles.Triangle;
 
 public class ColorTransition extends Effects{
 

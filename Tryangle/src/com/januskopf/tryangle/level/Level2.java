@@ -9,9 +9,8 @@ import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
-import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 import com.januskopf.tryangle.sound.Sound;
+import com.januskopf.tryangle.triangles.TriangleContainer;
 
 public class Level2 extends Levels{
 
@@ -19,7 +18,6 @@ public class Level2 extends Levels{
 	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2f;
 	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 
-	private VerticeContainer verticeContainer;
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
 	private Random random;
@@ -27,7 +25,6 @@ public class Level2 extends Levels{
 	
 	public Level2() {
 		random = new Random();
-		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
 		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
 		Sound.getInstance();
 	}

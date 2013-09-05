@@ -1,14 +1,13 @@
-package com.januskopf.tryangle.level.shapeContainer;
+package com.januskopf.tryangle.alt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
-import com.januskopf.tryangle.entity.Cube;
 import com.januskopf.tryangle.input.KeyboardListener;
-import com.januskopf.tryangle.level.grid.VerticeContainer;
 import com.januskopf.tryangle.sound.Sound;
+import com.januskopf.tryangle.triangles.TriangleContainer;
 
 public class CubeContainer implements Serializable{
 	
@@ -16,11 +15,10 @@ public class CubeContainer implements Serializable{
 	private ArrayList<Cube> staticCubes = new ArrayList<Cube>();
 	private Cube mouseCube;
 	protected TriangleContainer triangles;
-	protected VerticeContainer verticeContainer;
 
-	public CubeContainer(VerticeContainer verticeContainer, TriangleContainer triangles) {
+	public CubeContainer(TriangleContainer triangles) {
 		this.triangles = triangles;
-		this.verticeContainer = verticeContainer;
+//		this.verticeContainer = verticeContainer;
 	}
 	
 	public void tick(){	

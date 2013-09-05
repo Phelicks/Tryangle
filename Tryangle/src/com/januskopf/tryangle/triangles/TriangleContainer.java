@@ -1,6 +1,5 @@
-package com.januskopf.tryangle.level.shapeContainer;
+package com.januskopf.tryangle.triangles;
 
-import com.januskopf.tryangle.entity.Triangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.animations.Animations;
 import com.januskopf.tryangle.level.animations.SwipeAnimation;

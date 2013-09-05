@@ -1,10 +1,9 @@
-package com.januskopf.tryangle.entity;
+package com.januskopf.tryangle.alt;
 
 import java.io.Serializable;
 
-import com.januskopf.tryangle.level.grid.GridVertex;
-import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.triangles.Triangle;
+import com.januskopf.tryangle.triangles.TriangleContainer;
 
 
 public class Cube implements Serializable{
@@ -16,18 +15,18 @@ public class Cube implements Serializable{
 	private TriangleContainer triangles;
 	private Triangle[] cubeTriangles = new Triangle[6];
 	
-	public Cube(VerticeContainer verticeContainer, TriangleContainer triangles, GridVertex vertex){
-		this( verticeContainer, triangles, vertex, 0f, 0.21f, 0.62f);
+	public Cube(TriangleContainer triangles){
+		this(triangles, 0f, 0.21f, 0.62f);
 	}
 	
-	public Cube(VerticeContainer verticeContainer, TriangleContainer triangles, GridVertex vertex, float colorR, float colorG, float colorB){
+	public Cube(TriangleContainer triangles, float colorR, float colorG, float colorB){
 		this.xTriangles = triangles.getxTriangles();
 		this.yTriangles = triangles.getyTriangles();
 		this.triangles = triangles;
 		
 		//float length = triangles.getLength();
-		int xInx = vertex.getIndexX();
-		int yInx = vertex.getIndexY();
+//		int xInx = vertex.getIndexX();
+//		int yInx = vertex.getIndexY();
 		
 		float xM = 0; //xPos Middle 
 		float yM = 0; //yPos Middle 
