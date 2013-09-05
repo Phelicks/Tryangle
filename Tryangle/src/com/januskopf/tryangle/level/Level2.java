@@ -28,7 +28,7 @@ public class Level2 extends Levels{
 	public Level2() {
 		random = new Random();
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
-		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
+		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
 		Sound.getInstance();
 	}
 		

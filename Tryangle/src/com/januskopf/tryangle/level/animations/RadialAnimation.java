@@ -17,7 +17,7 @@ public class RadialAnimation extends Animations{
 	public RadialAnimation(TriangleContainer triangles, int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.radius = triangles.getLength()*5;
+		this.radius = 50;//triangles.getLength()*5;
 		
 		this.triangles = triangles;
 	}

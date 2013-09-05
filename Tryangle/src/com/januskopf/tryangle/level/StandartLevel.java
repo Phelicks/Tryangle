@@ -23,7 +23,7 @@ public class StandartLevel extends Levels{
 	
 	public StandartLevel(){
 		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
-		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
+		triangles = new TriangleContainer(xTriangles, yTriangles, triangleLength);
 		cubes = new CubeContainer(verticeContainer, triangles);
 	}
 	public void tick(){

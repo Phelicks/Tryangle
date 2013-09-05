@@ -68,7 +68,7 @@ public class Tryangle implements Runnable{
 				stop();
 				System.out.println("closing...");
 			}
-			
+			if(Display.wasResized())this.resize();
 			this.tick();
 			this.render();
 			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
@@ -94,6 +94,15 @@ public class Tryangle implements Runnable{
  
 	public void render(){
 		levelSelect.render();
+	}
+	
+
+	private void resize() {
+		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glLoadIdentity();
+		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 	}
 	
 	/**
@@ -145,7 +154,7 @@ public class Tryangle implements Runnable{
 
 	        Display.setDisplayMode(targetDisplayMode);
 	        Display.setVSyncEnabled(true);
-			Display.setResizable(false);
+			Display.setResizable(true);
 			Display.setTitle("Tryangle");
 			PixelFormat p = new PixelFormat().withSamples(4);
 			Display.setFullscreen(fullscreen);

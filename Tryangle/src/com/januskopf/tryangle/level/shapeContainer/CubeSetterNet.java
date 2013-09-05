@@ -84,7 +84,7 @@ public class CubeSetterNet{
 					NetCube cubeData = (NetCube) input.readObject();
 					Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());
 		    		container.addCube(cube);
-					triangles.addAnimation(new RadialAnimation(triangles, (int)cube.getVertex().getxPos(), (int)cube.getVertex().getyPos()));
+					//triangles.addAnimation(new RadialAnimation(triangles, (int)cube.getVertex().getxPos(), (int)cube.getVertex().getyPos()));
 					System.out.println("CubeData empfangen");
 				}catch (IOException e) {
 					isRunning = false;
