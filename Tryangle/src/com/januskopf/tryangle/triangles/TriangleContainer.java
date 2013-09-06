@@ -20,8 +20,7 @@ public class TriangleContainer implements Serializable{
 	private float height;
 	
 	private ArrayList<Animations> animations = new ArrayList<Animations>();
-	private Triangle[][] background;
-	private Triangle[][] foreground;
+	private Triangle[][] triangles;
 	
 	public TriangleContainer(int xTriCount, int yTriCount, float length){
 		this.length = length;
@@ -30,13 +29,12 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	public void fillTriangleArray(int xNumber, int yNumber){
-		background = new Triangle[yNumber][xNumber];
-		foreground = new Triangle[yNumber][xNumber];
+		triangles = new Triangle[yNumber][xNumber];
 		
 		//Triangle creation
 		for(int y = 0; y < yNumber; y ++){
 			for(int x = 0; x < xNumber; x ++){
-				background[y][x] = new Triangle();
+				triangles[y][x] = new Triangle();
 			}
 		}
 	}
@@ -50,18 +48,17 @@ public class TriangleContainer implements Serializable{
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT))xView += 1f;
 		
 		runAnimations();
-		for(int j = 0; j < background.length; j++){
-			for(int i = 0; i < background[j].length; i++){
-				if(foreground[j][i] != null)foreground[j][i].tick();
-				background[j][i].tick();
+		for(int j = 0; j < triangles.length; j++){
+			for(int i = 0; i < triangles[j].length; i++){
+				triangles[j][i].tick();
 			}
 		}
 	}
 	
 	public void render(){
-		for(int y = 0; y < background.length; y++){
-			for(int x = 0; x < background[y].length; x++){
-				renderTriangle(x, y, background[y][x]);
+		for(int y = 0; y < triangles.length; y++){
+			for(int x = 0; x < triangles[y].length; x++){
+				renderTriangle(x, y, triangles[y][x]);
 			}
 		}
 	}
@@ -102,39 +99,8 @@ public class TriangleContainer implements Serializable{
 		}
 	}
 	
-//	public void setForegroundTriangle(Triangle triangle){
-//		int x = triangle.getVertex(0).getIndexX();
-//		
-//		if(triangle.isLeft() && x > 0)
-//			x -= 1;
-//			
-//		int y = triangle.getVertex(0).getIndexY();
-//		try {
-//			foreground[y][x] = triangle;
-//			triangle.setForeground(true);
-//		} catch (ArrayIndexOutOfBoundsException e) {
-//		}
-//	}
-	
-	public void removeForegroundTriangle(int x, int y, boolean isLeft){
-		if(isLeft && x > 0)
-			x -= 1;
-		try {
-			foreground[y][x] = null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public boolean isForegroundTriangle(int x, int y){
-		if(foreground[y][x] == null)
-			return false;
-		else
-			return true;
-	}
-	
 	public Triangle getExactTriangle(int mouseX, int mouseY){
-		return this.background[0][0];
+		return this.triangles[0][0];
 	}
 	
 //	public Triangle getExactTriangle(int mouseX, int mouseY){
@@ -170,8 +136,8 @@ public class TriangleContainer implements Serializable{
 //	}
 	
 	public Triangle getBackgroundTriangle(int x, int y){
-		if((x >= 0 && x < background.length) && (y >= 0 && y < background[y].length)){
-			return background[y][x];
+		if((x >= 0 && x < triangles.length) && (y >= 0 && y < triangles[y].length)){
+			return triangles[y][x];
 		}
 		else{
 			return null;
@@ -179,11 +145,8 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	public Triangle getTriangle(int x, int y){
-		if((x >= 0 && x < background.length)&&(y >= 0 && y < background[x].length)){
-			if(foreground[y][x] == null)
-				return background[y][x];
-			else
-				return foreground[y][x];
+		if((x >= 0 && x < triangles.length)&&(y >= 0 && y < triangles[x].length)){
+			return triangles[y][x];
 		}
 		else{
 			return null;
@@ -191,11 +154,11 @@ public class TriangleContainer implements Serializable{
 	}
 
 	public int getxTriangles() {
-		return background[0].length;
+		return triangles[0].length;
 	}
 
 	public int getyTriangles() {
-		return background.length;
+		return triangles.length;
 	}
 	
 	public void setLength(float length){

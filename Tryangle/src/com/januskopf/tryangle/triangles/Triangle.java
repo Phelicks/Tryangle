@@ -37,7 +37,6 @@ public class Triangle implements Serializable{
 	}
 	
 	private void runEffects(){
-		
 		for(int i = 0; i < effects.size(); i++){
 			if(effects.get(i).isRunning()){				
 				effects.get(i).tick();
