@@ -38,7 +38,7 @@ public class FireAnimation extends Animations{
 		float p = ((float)startDuration/(float)duration)/8f;
 		try {
 			Triangle t = triangles.getExactTriangle(xPos, yPos);
-			t.addEffect(new ColorFlash(1.0f-p, Math.abs(random.nextFloat()-0.5f)-p, 0f, t, 50));
+			t.addBottomLayerEffect(new ColorFlash(1.0f-p, Math.abs(random.nextFloat()-0.5f)-p, 0f, 50));
 		} catch (Exception e) {}
 		yPos -= random.nextInt(13);
 		xPos += -20 + random.nextInt(41);
@@ -53,7 +53,7 @@ public class FireAnimation extends Animations{
 	}
 
 	@Override
-	protected boolean isActive() {
+	public boolean isActive() {
 		return isActive;
 	}
 

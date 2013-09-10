@@ -1,7 +1,7 @@
 package com.januskopf.tryangle.triangles.effects;
 
 
-public abstract class Effects {
+public abstract class Effect {
 
 	private boolean isFirst = true;
 	private boolean running = true;
@@ -35,6 +35,10 @@ public abstract class Effects {
 	
 	public abstract void stop();
 	
-	public abstract int getPriority();
+	public abstract float getColorR();
+	
+	public abstract float getColorG();
+	
+	public abstract float getColorB();
 
 }

@@ -31,7 +31,7 @@ public class FadeAnimation extends Animations{
 		for(int i = 0; i < 10; i++){
 			Triangle t = triangles.getBackgroundTriangle(rowAni, colAni);
 			float c = (float)(1.0 - Math.random()/2.0);
-			if(t != null)t.addEffect(new ColorTransition(0.0f*c, 0.69f*c, 0.39f*c, t, 100));
+			if(t != null)t.addBackgroundEffect(new ColorTransition(0.0f*c, 0.69f*c, 0.39f*c, 100));
 			
 			if(rowAni < xTriangles-1)
 				rowAni++;
@@ -53,7 +53,7 @@ public class FadeAnimation extends Animations{
 	}
 
 	@Override
-	protected boolean isActive() {
+	public boolean isActive() {
 		return isActive;
 	}
 

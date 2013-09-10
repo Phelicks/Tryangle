@@ -31,6 +31,6 @@ public abstract class Animations{
 	
 	protected abstract void endAnimation();
 	
-	protected abstract boolean isActive();
+	public abstract boolean isActive();
 
 }

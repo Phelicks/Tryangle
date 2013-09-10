@@ -34,7 +34,7 @@ public class RadialAnimation extends Animations{
 			try {
 				Triangle t = triangles.getExactTriangle((int)a+xPos, (int)b+yPos);
 				float d = 0.10f - (0.04f - (0.04f/iRadius));
-				t.addEffect(new ColorFlash(t.getColorR()+d, t.getColorG()+d, t.getColorB()+d, t, 40));
+				t.addBottomLayerEffect(new ColorFlash(d, d, d, 40));//War mal TriangleFarbe + d
 			} catch (Exception e) {
 				
 			}
@@ -53,7 +53,7 @@ public class RadialAnimation extends Animations{
 	}
 
 	@Override
-	protected boolean isActive() {
+	public boolean isActive() {
 		return isActive;
 	}
 

@@ -87,7 +87,7 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	private void runAnimations() {
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
+		if(KeyboardListener.isKeyClicked(Keyboard.KEY_E)){
 			animations.add(new SwipeAnimation(this));			
 		}
 		

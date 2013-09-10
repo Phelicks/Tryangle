@@ -20,6 +20,9 @@ public class Level1 extends Levels{
 	private TriangleContainer triangles;
 	private CubeContainer cubes;
 	private CubeSetter cubeSetter;
+
+	private Animations fadeAnimation;
+	private Animations flashAnimation;
 	
 //	private Sound sound = Sound.getInstance();
 	
@@ -28,8 +31,10 @@ public class Level1 extends Levels{
 		cubes = new CubeContainer(triangles);
 		cubeSetter = new CubeSetter(cubes, triangles);
 		
-		triangles.addAnimation(new FadeAnimation(triangles, xTriangles, yTriangles));
-		//triangles.addAnimation(new RandomFlashing(triangles, xTriangles, yTriangles));
+		fadeAnimation = new FadeAnimation(triangles, xTriangles, yTriangles);
+		flashAnimation = new RandomFlashing(triangles, xTriangles, yTriangles);
+		
+		triangles.addAnimation(fadeAnimation);
 		
 	}
 		
@@ -37,8 +42,12 @@ public class Level1 extends Levels{
 		triangles.tick();
 		//cubeSetter.tick();
 		cubes.tick();
-
+		if(fadeAnimation != null && !fadeAnimation.isActive() ){
+			triangles.addAnimation(flashAnimation);
+			fadeAnimation = null;
+		}
 	}
+		
 
 	public void render(){
 		GL11.glColor3f(0, 0, 0);

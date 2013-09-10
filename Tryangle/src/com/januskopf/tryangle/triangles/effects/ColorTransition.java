@@ -1,8 +1,7 @@
 package com.januskopf.tryangle.triangles.effects;
 
-import com.januskopf.tryangle.triangles.Triangle;
 
-public class ColorTransition extends Effects{
+public class ColorTransition extends BackgroundEffect{
 
 	private float startColorR;
 	private float startColorG;
@@ -21,19 +20,17 @@ public class ColorTransition extends Effects{
 	private float newColorB;
 
 	private int ticks;
-	private Triangle triangle;
 	
 	
-	public ColorTransition(float newColorR, float newColorG, float newColorB, Triangle triangle, int ticks) {
+	public ColorTransition(float newColorR, float newColorG, float newColorB, int ticks) {
 		super();
 		
-		this.triangle = triangle;
 		this.ticks = ticks;
 		
-		this.startColorR = triangle.getColorR();
-		this.startColorG = triangle.getColorG();
-		this.startColorB = triangle.getColorB();
-
+		this.startColorR = super.getBackgroundR();
+		this.startColorG = super.getBackgroundG();
+		this.startColorB = super.getBackgroundB();
+		
 		this.curColorR = startColorR;
 		this.curColorG = startColorG;
 		this.curColorB = startColorB;
@@ -56,7 +53,6 @@ public class ColorTransition extends Effects{
 		this.curColorR += stepColorR;
 		this.curColorG += stepColorG;
 		this.curColorB += stepColorB;
-		setNewColor();
 		ticks--;
 	}
 
@@ -65,7 +61,22 @@ public class ColorTransition extends Effects{
 		this.curColorR  = newColorR;
 		this.curColorG  = newColorG;
 		this.curColorB  = newColorB;
-		setNewColor();
+	}
+
+	@Override
+	protected void newBackgroundListener() {
+
+		this.startColorR = super.getBackgroundR();
+		this.startColorG = super.getBackgroundG();
+		this.startColorB = super.getBackgroundB();
+
+		this.curColorR = startColorR;
+		this.curColorG = startColorG;
+		this.curColorB = startColorB;
+		
+		this.stepColorR = (newColorR - this.startColorR) / ticks;
+		this.stepColorG = (newColorG - this.startColorG) / ticks;
+		this.stepColorB = (newColorB - this.startColorB) / ticks;
 	}
 
 	@Override
@@ -75,20 +86,26 @@ public class ColorTransition extends Effects{
 		else
 			return true;
 	}
-	
-	public void setNewColor(){		
-		triangle.setColor(curColorR, curColorG, curColorB);
-	}
-
-	@Override
-	public int getPriority() {
-		return 100;
-	}
 
 	@Override
 	public void stop() {
 		endEffect();
 		ticks = 0;
+	}
+
+	@Override
+	public float getColorR() {
+		return this.curColorR;
+	}
+
+	@Override
+	public float getColorG() {
+		return this.curColorG;
+	}
+
+	@Override
+	public float getColorB() {
+		return this.curColorB;
 	}
 
 }

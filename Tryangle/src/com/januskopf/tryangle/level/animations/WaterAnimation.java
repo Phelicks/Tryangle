@@ -47,7 +47,7 @@ public class WaterAnimation extends Animations{
 			try {
 				Triangle t = triangles.getExactTriangle((int)(a+xPos), (int)(b+yPos));
 				float d = 0.10f - (0.4f - (0.4f/iRadius));
-				t.addEffect(new ColorFlash(colorR+d, colorG+d, colorB+d, t, 40));
+				t.addBottomLayerEffect(new ColorFlash(colorR+d, colorG+d, colorB+d, 40));
 			} catch (Exception e) {}
 		}
 		if(iRadius <= radius){
@@ -65,7 +65,7 @@ public class WaterAnimation extends Animations{
 	}
 
 	@Override
-	protected boolean isActive() {
+	public boolean isActive() {
 		return isActive;
 	}
 

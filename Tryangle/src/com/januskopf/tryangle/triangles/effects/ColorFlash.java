@@ -1,17 +1,12 @@
 package com.januskopf.tryangle.triangles.effects;
 
-import com.januskopf.tryangle.triangles.Triangle;
 
-public class ColorFlash extends Effects{
+public class ColorFlash extends BackgroundEffect{
 
 	private float startColorR;
 	private float startColorG;
 	private float startColorB;
 	
-	private float flashColorR;
-	private float flashColorG;
-	private float flashColorB;
-		
 	private float stepColorR;
 	private float stepColorG;
 	private float stepColorB;
@@ -23,35 +18,27 @@ public class ColorFlash extends Effects{
 	private int tickCount;
 	private int ticks;
 	
-	private Triangle triangle;
-	
-	public  ColorFlash(float newColorR, float newColorG, float newColorB, Triangle triangle, int ticks){
+	public  ColorFlash(float flashColorR, float flashColorG, float flashColorB, int ticks){
 		super();
 		
 		this.ticks = ticks;
 		tickCount = ticks;
-		this.triangle = triangle;
-		
-		this.startColorR = triangle.getColorR();
-		this.startColorG = triangle.getColorG();
-		this.startColorB = triangle.getColorB();
-		
-		this.setColorR = triangle.getColorR();
-		this.setColorG = triangle.getColorG();
-		this.setColorB = triangle.getColorB();
-		
 
-		this.flashColorR = newColorR;
-		this.flashColorG = newColorG;
-		this.flashColorB = newColorB;
+		this.startColorR = super.getBackgroundR();
+		this.startColorG = super.getBackgroundG();
+		this.startColorB = super.getBackgroundB();
+		
+		this.setColorR = super.getBackgroundR();
+		this.setColorG = super.getBackgroundG();
+		this.setColorB = super.getBackgroundB();
 		
 		this.stepColorR = (flashColorR - this.startColorR) / ticks*2;
 		this.stepColorG = (flashColorG - this.startColorG) / ticks*2;
 		this.stepColorB = (flashColorB - this.startColorB) / ticks*2;
 	}
 	
-	public ColorFlash(Triangle triangle, int ticks) {
-		this(1.0f, 1.0f, 1.0f, triangle, ticks);		
+	public ColorFlash(int ticks) {
+		this(1.0f, 1.0f, 1.0f, ticks);		
 	}
 
 	@Override
@@ -72,7 +59,6 @@ public class ColorFlash extends Effects{
 			this.setColorB -= stepColorB;			
 		}		
 		ticks--;
-		setNewColor();
 	}
 
 	@Override
@@ -80,7 +66,6 @@ public class ColorFlash extends Effects{
 		this.setColorR = startColorR;
 		this.setColorG = startColorG;
 		this.setColorB = startColorB;
-		setNewColor();
 	}
 
 	@Override
@@ -90,20 +75,32 @@ public class ColorFlash extends Effects{
 		else
 			return true;
 	}
-	
-	public void setNewColor(){		
-		triangle.setColor(setColorR, setColorG, setColorB);
-	}
-
-	@Override
-	public int getPriority() {
-		return 10;
-	}
 
 	@Override
 	public void stop() {
 		endEffect();
 		ticks = 0;
+	}
+
+	@Override
+	public float getColorR() {
+		return setColorR;
+	}
+
+	@Override
+	public float getColorG() {
+		return setColorG;
+	}
+
+	@Override
+	public float getColorB() {
+		return setColorB;
+	}
+
+	@Override
+	protected void newBackgroundListener() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
