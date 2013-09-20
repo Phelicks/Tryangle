@@ -8,24 +8,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 
 public class TriangleContainer implements Serializable{
 	
 	private static final long serialVersionUID = -5993312098303853315L;
+		
 	private float xView = 0;
 	private float yView = 0;
-	private float length;
-	private float height;
+	private float length = 0;
+	private float height = 0;
 	
 	private ArrayList<Animations> animations = new ArrayList<Animations>();
 	private Triangle[][] triangles;
 	
-	public TriangleContainer(int xTriCount, int yTriCount, float length){
-		this.length = length;
+	public TriangleContainer(int xTriCount, int yTriCount){
 		this.height = ((float)Math.sqrt(3)*(length/2));
 		fillTriangleArray(xTriCount, yTriCount);
+		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
 	
 	public void fillTriangleArray(int xNumber, int yNumber){
@@ -39,15 +42,13 @@ public class TriangleContainer implements Serializable{
 		}
 	}
 	
-	public void tick(){
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_SUBTRACT))this.setLength(length-0.1f);
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_ADD))this.setLength(length+0.1f);
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_UP))yView -= 1f;
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN))yView += 1f;
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT))xView -= 1f;
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT))xView += 1f;
+	public void tick(){		
+		if(Display.wasResized()){
+			this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+			this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
+		}
 		
-		runAnimations();
+		this.runAnimations();
 		for(int j = 0; j < triangles.length; j++){
 			for(int i = 0; i < triangles[j].length; i++){
 				triangles[j][i].tick();
@@ -61,6 +62,24 @@ public class TriangleContainer implements Serializable{
 				renderTriangle(x, y, triangles[y][x]);
 			}
 		}
+	}
+	
+	private void resizeTriangles(float x1, float y1, float x2, float y2){		
+		if(triangles[0].length*height < x2-x1)
+			this.setHeight((x2-x1)/triangles[0].length);	
+		if(triangles.length*(length/2)-(length/2) < y2-y1)
+			this.setLength((2*(y2-y1))/(triangles.length-1));
+	}
+	
+	private void checkBorder(float x1, float y1, float x2, float y2){
+		if(xView > x1)
+			xView = x1;
+		if(yView > y1-length/2)
+			yView = y1-length/2;
+		if(xView + triangles[0].length*height < x2)
+			xView = x2 -(triangles[0].length*height);
+		if(yView + triangles.length*(length/2) < y2)
+			yView = y2 -(triangles.length*(length/2));
 	}
 	
 	private void renderTriangle(int x, int y, Triangle t){
@@ -135,17 +154,8 @@ public class TriangleContainer implements Serializable{
 //		}
 //	}
 	
-	public Triangle getBackgroundTriangle(int x, int y){
-		if((x >= 0 && x < triangles.length) && (y >= 0 && y < triangles[y].length)){
-			return triangles[y][x];
-		}
-		else{
-			return null;
-		}
-	}
-	
 	public Triangle getTriangle(int x, int y){
-		if((x >= 0 && x < triangles.length)&&(y >= 0 && y < triangles[x].length)){
+		if((y >= 0 && y < triangles.length) && (x >= 0 && x < triangles[y].length)){
 			return triangles[y][x];
 		}
 		else{
@@ -164,5 +174,32 @@ public class TriangleContainer implements Serializable{
 	public void setLength(float length){
 		this.length = length;
 		this.height = ((float)Math.sqrt(3)*(length/2));
+		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
+	}
+	
+	public void setHeight(float height){
+		this.height = (height);
+		this.length = (float)(2*height/Math.sqrt(3));
+		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
+	}
+	
+	public void addHeight(float addHeight){
+		this.setHeight(height+addHeight);		
+	}
+	
+	public void addLength(float addLength){
+		this.setLength(length+addLength);		
+	}
+	
+	public void moveHorizontal(float move){
+		xView += move;
+		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
+	}
+	
+	public void moveVertical(float move){
+		yView += move;
+		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
 }

@@ -43,6 +43,7 @@ public class Triangle implements Serializable{
 	}
 	
 	public void addBottomLayerEffect(BackgroundEffect effect){
+		effect.setBackgroundColor(backgroundColorR, backgroundColorG, backgroundColorB);
 		bottomLayerEffects.add(effect);
 	}
 	
@@ -50,7 +51,6 @@ public class Triangle implements Serializable{
 		if(backgroundEffect == null){
 			backgroundEffect = effect;
 			backgroundEffect.setBackgroundColor(backgroundColorR, backgroundColorG, backgroundColorB);
-			System.out.println(backgroundColorR + ", " + backgroundColorG + ", " + backgroundColorB);
 		}
 		//TODO Was wenn schon ein Effect da ist??
 	}
@@ -76,7 +76,6 @@ public class Triangle implements Serializable{
 				bottomLayerEffects.remove(i);
 			}
 		}
-		//TODO Reihenfolge umkehren
 		//TopLayer
 		for(int i = 0; i < topLayerEffects.size(); i++){
 			if(topLayerEffects.get(i).isRunning()){				

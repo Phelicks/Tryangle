@@ -27,12 +27,12 @@ public class SwipeAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
-		for(int i = 0; i < yTriangles; i++){		
-			Triangle t = triangles.getBackgroundTriangle(rowAni, i);
+		for(int i = 0; i < xTriangles; i++){		
+			Triangle t = triangles.getTriangle(rowAni, i);
 			float c = 1.8f;
-			if(t != null)t.addTopLayerEffect(new ColorFlash(c, c, c, 20));//War mal TriangleFarbe + c
+			if(t != null)t.addBottomLayerEffect(new ColorFlash(0.3f, 0.3f, 0.7f, 20));//War mal TriangleFarbe + c
 		}		
-		if(rowAni < xTriangles-1) 
+		if(rowAni < yTriangles-1) 
 			rowAni++;
 		else{
 			isActive = false;

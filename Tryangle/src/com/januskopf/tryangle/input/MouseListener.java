@@ -8,6 +8,7 @@ public class MouseListener {
 	
 	private static int mouseX;
 	private static int mouseY;
+	private static int mouseWheel;
 	
 	private static boolean[] buttons = new boolean[3];
 	private static boolean[] isFirst = new boolean[3];
@@ -18,6 +19,7 @@ public class MouseListener {
 
         MouseListener.mouseX = Mouse.getX();
         MouseListener.mouseY = Tryangle.HEIGHT - Mouse.getY();
+        MouseListener.mouseWheel = Mouse.getDWheel();
 		
 		isFirst[0] = false;
 		isFirst[1] = false;
@@ -50,6 +52,10 @@ public class MouseListener {
 
 	public static int getMouseY() {
 		return mouseY;
+	}
+
+	public static int getMouseWheel() {
+		return mouseWheel;
 	}
 
 }

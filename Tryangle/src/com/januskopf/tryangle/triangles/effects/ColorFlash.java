@@ -15,6 +15,10 @@ public class ColorFlash extends BackgroundEffect{
 	private float setColorG;
 	private float setColorB;
 	
+	private float flashColorR;
+	private float flashColorG;
+	private float flashColorB;
+	
 	private int tickCount;
 	private int ticks;
 	
@@ -23,7 +27,11 @@ public class ColorFlash extends BackgroundEffect{
 		
 		this.ticks = ticks;
 		tickCount = ticks;
-
+		
+		this.flashColorR = flashColorR;
+		this.flashColorG = flashColorG;
+		this.flashColorB = flashColorB;
+		
 		this.startColorR = super.getBackgroundR();
 		this.startColorG = super.getBackgroundG();
 		this.startColorB = super.getBackgroundB();
@@ -48,6 +56,7 @@ public class ColorFlash extends BackgroundEffect{
 
 	@Override
 	protected void runEffect() {
+
 		if(ticks > tickCount/2){			
 			this.setColorR += stepColorR;
 			this.setColorG += stepColorG;
@@ -62,10 +71,8 @@ public class ColorFlash extends BackgroundEffect{
 	}
 
 	@Override
-	protected void endEffect() {		
-		this.setColorR = startColorR;
-		this.setColorG = startColorG;
-		this.setColorB = startColorB;
+	protected void endEffect() {
+		
 	}
 
 	@Override
@@ -99,7 +106,18 @@ public class ColorFlash extends BackgroundEffect{
 
 	@Override
 	protected void newBackgroundListener() {
-		// TODO Auto-generated method stub
+		
+		this.startColorR = super.getBackgroundR();
+		this.startColorG = super.getBackgroundG();
+		this.startColorB = super.getBackgroundB();
+		
+		this.setColorR = super.getBackgroundR();
+		this.setColorG = super.getBackgroundG();
+		this.setColorB = super.getBackgroundB();
+		
+		this.stepColorR = (flashColorR - this.startColorR) / ticks*2;
+		this.stepColorG = (flashColorG - this.startColorG) / ticks*2;
+		this.stepColorB = (flashColorB - this.startColorB) / ticks*2;
 		
 	}
 
