@@ -152,7 +152,7 @@ public class Tryangle implements Runnable{
 	        Display.setVSyncEnabled(true);
 			Display.setResizable(true);
 			Display.setTitle("Tryangle");
-			PixelFormat p = new PixelFormat().withSamples(4);
+			PixelFormat p = new PixelFormat().withSamples(8);
 			Display.setFullscreen(fullscreen);
 			
 			Display.create(p);

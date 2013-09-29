@@ -4,6 +4,7 @@ import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.animations.Animations;
 import com.januskopf.tryangle.level.animations.SwipeAnimation;
 
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -30,6 +31,40 @@ public class TriangleContainer implements Serializable{
 		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
 		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
+	//////////////////////////////
+	//							//
+	//			tick()			//
+	//							//
+	//////////////////////////////
+	
+	public void tick(){		
+		if(Display.wasResized()){
+			this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		}
+		
+		this.runAnimations();
+		for(int j = 0; j < triangles.length; j++){
+			for(int i = 0; i < triangles[j].length; i++){
+				triangles[j][i].tick();
+			}
+		}
+	}
+	
+	//////////////////////////////
+	//							//
+	//			render()		//
+	//							//
+	//////////////////////////////
+	
+	public void render(){
+		for(int y = 0; y < triangles.length; y++){
+			for(int x = 0; x < triangles[y].length; x++){
+				renderTriangle(x, y, triangles[y][x]);
+			}
+		}
+	}
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void fillTriangleArray(int xNumber, int yNumber){
 		triangles = new Triangle[yNumber][xNumber];
@@ -42,26 +77,21 @@ public class TriangleContainer implements Serializable{
 		}
 	}
 	
-	public void tick(){		
-		if(Display.wasResized()){
-			this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
-			this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
+	private void renderTriangle(int x, int y, Triangle t){
+		float xPos = xView + x*height;
+		float yPos = yView + y*length/2;
+		float tHeight = height;
+		if(isTriangleLeft(x, y)){
+			tHeight = tHeight * -1;
+			xPos = xPos + height;
 		}
 		
-		this.runAnimations();
-		for(int j = 0; j < triangles.length; j++){
-			for(int i = 0; i < triangles[j].length; i++){
-				triangles[j][i].tick();
-			}
-		}
-	}
-	
-	public void render(){
-		for(int y = 0; y < triangles.length; y++){
-			for(int x = 0; x < triangles[y].length; x++){
-				renderTriangle(x, y, triangles[y][x]);
-			}
-		}
+		GL11.glColor3f(t.getColorR(), t.getColorG(), t.getColorB());
+		GL11.glBegin(GL11.GL_TRIANGLES);
+			GL11.glVertex2f(xPos , yPos);//Top
+			GL11.glVertex2f(xPos, yPos+length);//Bottom
+			GL11.glVertex2f(xPos + tHeight, yPos+length/2);//Left/Right
+		GL11.glEnd();
 	}
 	
 	private void resizeTriangles(float x1, float y1, float x2, float y2){		
@@ -82,24 +112,15 @@ public class TriangleContainer implements Serializable{
 			yView = y2 -(triangles.length*(length/2));
 	}
 	
-	private void renderTriangle(int x, int y, Triangle t){
-		float xPos = xView + x*height;
-		float yPos = yView + y*length/2;
-		float tHeight = height;
-		if((x%2==0 && y%2==0) || (x%2!=0 && y%2!=0)){
-			tHeight = tHeight * -1;
-			xPos = xPos + height;
-		}
-		
-		GL11.glColor3f(t.getColorR(), t.getColorG(), t.getColorB());
-		GL11.glBegin(GL11.GL_TRIANGLES);
-			GL11.glVertex2f(xPos , yPos);//Top
-			GL11.glVertex2f(xPos, yPos+length);//Bottom
-			GL11.glVertex2f(xPos + tHeight, yPos+length/2);//Left/Right
-		GL11.glEnd();
+	public static boolean isTriangleLeft(int x, int y){
+		return ((x%2==0 && y%2==0) || (x%2!=0 && y%2!=0));
 	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////
+	//							//
+	//		field animations	//
+	//							//
+	//////////////////////////////
 
 	public void addAnimation(Animations animation){
 		animations.add(animation);
@@ -117,43 +138,47 @@ public class TriangleContainer implements Serializable{
 				animations.remove(i);
 		}
 	}
+
+	//////////////////////////////
+	//							//
+	//	getter()  &  setter()	//
+	//							//
+	//////////////////////////////
 	
-	public Triangle getExactTriangle(int mouseX, int mouseY){
-		return this.triangles[0][0];
+	public Triangle getExactTriangle(int xPos, int yPos){
+		int x = (int)((xPos-xView) / height);
+		int y = (int)((yPos-yView) / (length))*2;
+		
+		float oX = (((x+1)*height)-(xPos-xView))/height;
+		float oY = (((y+1)*(length/2))-(yPos-yView))/(length/2);
+		
+		if(x % 2 != 0) oX = 1 - oX;
+		
+		int o = (int)(oX + Math.abs(oY));
+		if(oY < 0) o *= -1;
+		
+		try {
+			return this.triangles[y-o][x];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 	
-//	public Triangle getExactTriangle(int mouseX, int mouseY){
-//		
-//		GridVertex vertex = verticeContainer.getClosestVertex(mouseX, mouseY);
-//		mouseY = Tryangle.HEIGHT - mouseY;
-//		
-//		float vX = vertex.getxPos();
-//		float vY = vertex.getyPos();
-//		
-//		float deltaX = mouseX-vX;
-//		float deltaY = mouseY-vY;
-//		double angle = Math.toDegrees(Math.atan2(deltaY, deltaX));
-//
-//		if(angle>-30 && angle<=30){
-//			return getTriangle(vertex.getIndexX(),vertex.getIndexY()-1);
-//		}
-//		else if(angle>30 && angle<=90){
-//			return getTriangle(vertex.getIndexX(),vertex.getIndexY());
-//		}
-//		else if(angle>90 && angle<=150){
-//			return getTriangle(vertex.getIndexX()-1,vertex.getIndexY());
-//		}
-//		else if((angle>150 && angle<=180)||(angle>-180 && angle<=-150)){
-//			return getTriangle(vertex.getIndexX()-1,vertex.getIndexY()-1);
-//		}
-//		else if(angle>-150 && angle<=-90){
-//			return getTriangle(vertex.getIndexX()-1,vertex.getIndexY()-2);
-//		}
-//		else{
-//			return getTriangle(vertex.getIndexX(),vertex.getIndexY()-2);
-//		}
-//	}
-	
+	public Point getIndexFromPos(int xPos, int yPos){
+		int x = (int)((xPos-xView) / height);
+		int y = (int)((yPos-yView) / (length))*2;
+		
+		float oX = (((x+1)*height)-(xPos-xView))/height;
+		float oY = (((y+1)*(length/2))-(yPos-yView))/(length/2);
+		
+		if(x % 2 != 0) oX = 1 - oX;
+		
+		int o = (int)(oX + Math.abs(oY));
+		if(oY < 0) o *= -1;
+		
+		return new Point(x, y-o);
+	}
+		
 	public Triangle getTriangle(int x, int y){
 		if((y >= 0 && y < triangles.length) && (x >= 0 && x < triangles[y].length)){
 			return triangles[y][x];
@@ -172,18 +197,23 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	public void setLength(float length){
-		this.length = length;
-		this.height = ((float)Math.sqrt(3)*(length/2));
-		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		if(Math.round(triangles.length *(length/2)-(length/2)) >= Display.getHeight() &&
+				triangles[0].length*((float)Math.sqrt(3)*(length/2)) >= Display.getWidth()){
+			this.length = length;
+			this.height = ((float)Math.sqrt(3)*(length/2));
+		}
 		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
 	
 	public void setHeight(float height){
-		this.height = (height);
-		this.length = (float)(2*height/Math.sqrt(3));
-		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
-		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
+		this.setLength((float)(2*height/Math.sqrt(3)));
 	}
+
+	//////////////////////////////
+	//							//
+	//	Field transformation	//
+	//							//
+	//////////////////////////////
 	
 	public void addHeight(float addHeight){
 		this.setHeight(height+addHeight);		

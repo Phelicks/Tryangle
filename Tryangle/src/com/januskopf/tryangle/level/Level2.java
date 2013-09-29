@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 
 import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
@@ -86,12 +87,12 @@ public class Level2 extends Levels{
 	}
 	
 	public void waterAnimation(){
-		if (MouseListener.isButtonPressed(1)) {
+		if (MouseListener.isButtonClicked(1)) {
 			Sound.getInstance().Multi2(Sound.WATER_1);
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
-			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, ((int)Math.hypot(Tryangle.HEIGHT, Tryangle.WIDTH))+1);
+			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.random()/5, 0.25f, ((int)Math.hypot(Display.getHeight(), Display.getWidth()))+1);
 			Level2.animations.add(animation);
 		}
 		

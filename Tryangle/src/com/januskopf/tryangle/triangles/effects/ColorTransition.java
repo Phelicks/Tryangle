@@ -88,12 +88,6 @@ public class ColorTransition extends BackgroundEffect{
 	}
 
 	@Override
-	public void stop() {
-		endEffect();
-		ticks = 0;
-	}
-
-	@Override
 	public float getColorR() {
 		return this.curColorR;
 	}

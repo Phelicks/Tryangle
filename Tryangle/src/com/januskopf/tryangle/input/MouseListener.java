@@ -1,8 +1,7 @@
 package com.januskopf.tryangle.input;
 
 import org.lwjgl.input.Mouse;
-
-import com.januskopf.tryangle.Tryangle;
+import org.lwjgl.opengl.Display;
 
 public class MouseListener {
 	
@@ -18,7 +17,7 @@ public class MouseListener {
 		//System.out.println(Mouse.getDX() + ", " + Mouse.getEventDY());
 
         MouseListener.mouseX = Mouse.getX();
-        MouseListener.mouseY = Tryangle.HEIGHT - Mouse.getY();
+        MouseListener.mouseY = Display.getHeight() - Mouse.getY();
         MouseListener.mouseWheel = Mouse.getDWheel();
 		
 		isFirst[0] = false;
