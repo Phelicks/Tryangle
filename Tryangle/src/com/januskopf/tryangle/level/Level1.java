@@ -1,7 +1,6 @@
 package com.januskopf.tryangle.level;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
@@ -33,8 +32,8 @@ public class Level1 extends Levels{
 		
 	public void tick(){
 
-		if(MouseListener.getMouseWheel() < 0)triangles.addLength(-1f);
-		if(MouseListener.getMouseWheel() > 0)triangles.addLength(1f);
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_SUBTRACT))triangles.addLength(-1f);
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_ADD))triangles.addLength(1f);
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_UP))triangles.moveVertical(-1f);
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_DOWN))triangles.moveVertical(1f);
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT))triangles.moveHorizontal(-1f);

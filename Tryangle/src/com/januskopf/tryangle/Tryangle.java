@@ -10,15 +10,19 @@ import com.januskopf.tryangle.sound.Sound;
  
 public class Tryangle implements Runnable{
 	
-	public final static int WIDTH = 1280; 
-	public final static int HEIGHT = 720;
 	public final static boolean FULLSCREEN = false;
 	public final static int FPS = 60;
+	private int width = 1280; 
+	private int height = 720;
 	private static boolean running;
 	private LevelSelection levelSelect;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
 	public final Sound sound = Sound.getInstance();
+	
+	private int frame = 0;
+	private int fps = 0;
+	private long fpsCounter = System.currentTimeMillis();
 	
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
@@ -39,7 +43,7 @@ public class Tryangle implements Runnable{
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0, WIDTH, HEIGHT, 0, -1.0, 1.0);
+		GL11.glOrtho(0, width, height, 0, -1.0, 1.0);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND); 
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -47,7 +51,7 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void run(){
-		this.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
+		this.setDisplayMode(width, height, FULLSCREEN);
 		this.initOpenGL();
 				
 		Sound.initialize();
@@ -65,8 +69,35 @@ public class Tryangle implements Runnable{
 				System.out.println("closing...");
 			}
 			if(Display.wasResized())this.resize();
+			this.frameCounter();
+			
+			long countStart = System.currentTimeMillis();
 			this.tick();
+			long countTick = System.currentTimeMillis();
 			this.render();
+			long countRender = System.currentTimeMillis();
+			
+			long countAll = countRender-countStart;
+			
+			long tickPer;
+			try {
+				tickPer = (countTick-countStart)*100/countAll*100;
+				tickPer /= 100;
+			} catch (java.lang.ArithmeticException e1) {
+				tickPer = 0;
+			}
+			
+			long renderPer;
+			try {
+				renderPer = (countRender-countTick)*100/countAll*100;
+				renderPer /= 100;
+			} catch (java.lang.ArithmeticException e1) {
+				renderPer = 0;
+			}
+			
+			Display.setTitle("Tryangle FPS: " + fps + " Frametime: " + (countAll) +"ms " + " - tick: " + tickPer + "% render: " + renderPer + "%");
+
+			//Fullscreen?
 			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
 				try {
 					boolean isFull = Display.isFullscreen();
@@ -151,8 +182,7 @@ public class Tryangle implements Runnable{
 	        Display.setDisplayMode(targetDisplayMode);
 	        Display.setVSyncEnabled(true);
 			Display.setResizable(true);
-			Display.setTitle("Tryangle");
-			PixelFormat p = new PixelFormat().withSamples(8);
+			PixelFormat p = new PixelFormat().withSamples(4);
 			Display.setFullscreen(fullscreen);
 			
 			Display.create(p);
@@ -160,5 +190,15 @@ public class Tryangle implements Runnable{
 	    } catch (LWJGLException e) {
 	        System.out.println("Unable to setup mode "+width+"x"+height+" fullscreen="+fullscreen + e);
 	    }
+	}
+
+	
+	private void frameCounter(){
+		this.frame++;
+		if((this.fpsCounter+1000) <= System.currentTimeMillis()){
+			this.fps = this.frame;
+			this.frame = 0;
+			this.fpsCounter = System.currentTimeMillis(); 
+		}
 	}
 }

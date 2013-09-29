@@ -1,9 +1,10 @@
 package com.januskopf.tryangle.level.screens;
 
 import java.util.Random;
+
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import com.januskopf.tryangle.Tryangle;
 
 public class IntroBTriangle
 {
@@ -37,7 +38,7 @@ public class IntroBTriangle
     this.speed = (0.06F - this.mod / 1000.0F);
     this.maxBrightness = (1.0F - this.mod / 5.0F);
 
-    if (x > Tryangle.WIDTH/2) this.toRigth = true; 
+    if (x > Display.getWidth()/2) this.toRigth = true; 
   }
 
   public void tick()
