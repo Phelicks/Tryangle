@@ -10,56 +10,83 @@ public class CubeAnimation extends Animations{
 	private float colorR;
 	private float colorG;
 	private float colorB;
+	
 	//top
 	private Triangle tL;
 	private Triangle tR;
+	private ColorSet tLColor;
+	private ColorSet tRColor;
 	//left
 	private Triangle lT;
 	private Triangle lB;
+	private ColorSet lTColor;
+	private ColorSet lBColor;
 	//right
 	private Triangle rT;
 	private Triangle rB;
+	private ColorSet rTColor;
+	private ColorSet rBColor;
 	
 	private boolean isActive = true;
 	
+	private TriangleContainer triangles;
+	
 	public CubeAnimation(TriangleContainer triangles, int xPos, int yPos, float colorR, float colorG, float colorB){
+		
+		
+		this.triangles = triangles;
+		
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
 		
 		int x = triangles.getIndexFromPos(xPos, yPos).x;
 		int y = triangles.getIndexFromPos(xPos, yPos).y;
-				
+		
+		this.setCube(x, y);
+	}
+	
+	private void setCube(int x, int y){
 		if(!TriangleContainer.isTriangleLeft(x, y)){
 			//Top
 			tL = triangles.getTriangle(x-1, y);
 			tR = triangles.getTriangle(x, y);
 			//Left
-			lT = triangles.getTriangle(x-1, y+1);
-			lB = triangles.getTriangle(x-1, y+2);
+			lT = triangles.getTriangle(x, y+1);
+			lB = triangles.getTriangle(x, y+2);
 			//Right
-			rT = triangles.getTriangle(x, y+1);
-			rB = triangles.getTriangle(x, y+2);
+			rT = triangles.getTriangle(x-1, y+1);
+			rB = triangles.getTriangle(x-1, y+2);
 		}else{
 			//Top
 			tL = triangles.getTriangle(x, y);
 			tR = triangles.getTriangle(x+1, y);
 			//Left
-			lT = triangles.getTriangle(x, y+1);
-			lB = triangles.getTriangle(x, y+2);
+			lT = triangles.getTriangle(x+1, y+1);
+			lB = triangles.getTriangle(x+1, y+2);
 			//Right
-			rT = triangles.getTriangle(x+1, y+1);
-			rB = triangles.getTriangle(x+1, y+2);
+			rT = triangles.getTriangle(x, y+1);
+			rB = triangles.getTriangle(x, y+2);
 		}
 		
-		tL.addTopLayerEffect(0, new ColorSet(colorR, colorG, colorB));
-		tR.addTopLayerEffect(0, new ColorSet(colorR, colorG, colorB));
+		//top
+		tLColor = new ColorSet(colorR, colorG, colorB);
+		tRColor = new ColorSet(colorR, colorG, colorB);
+		//left
+		lTColor = new ColorSet(colorR-0.1f, colorG-0.1f, colorB-0.1f);
+		lBColor = new ColorSet(colorR-0.1f, colorG-0.1f, colorB-0.1f);
+		//right
+		rTColor = new ColorSet(colorR-0.2f, colorG-0.2f, colorB-0.2f);
+		rBColor = new ColorSet(colorR-0.2f, colorG-0.2f, colorB-0.2f);
 		
-		lT.addTopLayerEffect(0, new ColorSet(colorR-0.1f, colorG-0.1f, colorB-0.1f));
-		lB.addTopLayerEffect(0, new ColorSet(colorR-0.1f, colorG-0.1f, colorB-0.1f));
+		if(tL != null)tL.addTopLayerEffect(0, tLColor);
+		if(tR != null)tR.addTopLayerEffect(0, tRColor);
 		
-		rT.addTopLayerEffect(0, new ColorSet(colorR-0.2f, colorG-0.2f, colorB-0.2f));
-		rB.addTopLayerEffect(0, new ColorSet(colorR-0.2f, colorG-0.2f, colorB-0.2f));
+		if(lT != null)lT.addTopLayerEffect(0, lTColor);
+		if(lB != null)lB.addTopLayerEffect(0, lBColor);
+		
+		if(rT != null)rT.addTopLayerEffect(0, rTColor);
+		if(rB != null)rB.addTopLayerEffect(0, rBColor);
 	}
 	
 	@Override
@@ -80,6 +107,22 @@ public class CubeAnimation extends Animations{
 		
 	}
 	
+	public void moveTo(int xPos, int yPos){
+		tLColor.remove();
+		tRColor.remove();
+		
+		lTColor.remove();
+		lBColor.remove();
+		
+		rTColor.remove();
+		rBColor.remove();
+		
+		int x = triangles.getIndexFromPos(xPos, yPos).x;
+		int y = triangles.getIndexFromPos(xPos, yPos).y;
+		
+		this.setCube(x, y);
+	}
+	
 	public void remove(){
 		isActive = false;
 	}
@@ -88,5 +131,4 @@ public class CubeAnimation extends Animations{
 	public boolean isActive() {
 		return isActive;
 	}
-
 }

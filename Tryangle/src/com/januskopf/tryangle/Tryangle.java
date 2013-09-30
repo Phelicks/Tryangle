@@ -95,7 +95,7 @@ public class Tryangle implements Runnable{
 				renderPer = 0;
 			}
 			
-			Display.setTitle("Tryangle FPS: " + fps + " Frametime: " + (countAll) +"ms " + " - tick: " + tickPer + "% render: " + renderPer + "%");
+			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps + " Frametime: " + (countAll) +"ms"+ " - tick: " + tickPer + "% render: " + renderPer + "%");
 
 			//Fullscreen?
 			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
