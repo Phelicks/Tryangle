@@ -43,6 +43,7 @@ public class TriangleContainer implements Serializable{
 		}
 		
 		this.runAnimations();
+		
 		for(int j = 0; j < triangles.length; j++){
 			for(int i = 0; i < triangles[j].length; i++){
 				triangles[j][i].tick();

@@ -18,6 +18,7 @@ public class Level1 extends Levels{
 
 	private Animations fadeAnimation;
 	private Animations flashAnimation;
+	private CubeAnimation mouseCube;
 	
 	
 	public Level1() {
@@ -28,6 +29,7 @@ public class Level1 extends Levels{
 		
 		triangles.addAnimation(fadeAnimation);
 		
+		mouseCube = new CubeAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY(), 0.5f, 0.5f, 0.5f);
 	}
 		
 	public void tick(){
@@ -39,13 +41,15 @@ public class Level1 extends Levels{
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT))triangles.moveHorizontal(-1f);
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT))triangles.moveHorizontal(1f);
 		
+		this.mouseCube.moveTo(MouseListener.getMouseX(), MouseListener.getMouseY());
+		
 		if(fadeAnimation != null && !fadeAnimation.isActive() ){
 			triangles.addAnimation(flashAnimation);
 			fadeAnimation = null;
 		}
 		
 		Triangle t = triangles.getExactTriangle(MouseListener.getMouseX(), MouseListener.getMouseY());
-		if(t != null)t.addTopLayerEffect(0, new ColorTransition(1.0f, 0, 0, 1));
+//		if(t != null)t.addTopLayerEffect(0, new ColorTransition(1.0f, 0, 0, 1));
 		
 		if(MouseListener.isButtonClicked(0)){
 			triangles.addAnimation(new CubeAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY(), 0.5f, 0.5f, 0.5f));
