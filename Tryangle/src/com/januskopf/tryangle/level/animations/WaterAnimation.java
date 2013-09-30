@@ -44,11 +44,11 @@ public class WaterAnimation extends Animations{
 			float a = (float)(Math.sin(i)*iRadius);
 			float b = (float)(Math.cos(i)*iRadius);	
 			
-			try {
-				Triangle t = triangles.getExactTriangle((int)(a+xPos), (int)(b+yPos));
-				float d = 0.10f - (0.4f - (0.4f/iRadius));
+			Triangle t = triangles.getExactTriangle((int)(a+xPos), (int)(b+yPos));
+			if(t != null){
+				float d = 0.01f - (0.04f - (0.04f/iRadius));
 				t.addBottomLayerEffect(new ColorFlash(colorR+d, colorG+d, colorB+d, 40));
-			} catch (Exception e) {}
+			}
 		}
 		if(iRadius <= radius){
 			iRadius += 4;

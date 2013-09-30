@@ -1,11 +1,7 @@
 package com.januskopf.tryangle.triangles.effects;
 
 
-public class ColorFlash extends BackgroundEffect{
-
-	private float startColorR;
-	private float startColorG;
-	private float startColorB;
+public class ColorFlash extends Effect{
 	
 	private float stepColorR;
 	private float stepColorG;
@@ -14,10 +10,6 @@ public class ColorFlash extends BackgroundEffect{
 	private float setColorR;
 	private float setColorG;
 	private float setColorB;
-	
-	private float flashColorR;
-	private float flashColorG;
-	private float flashColorB;
 	
 	private int tickCount;
 	private int ticks;
@@ -28,21 +20,13 @@ public class ColorFlash extends BackgroundEffect{
 		this.ticks = ticks;
 		tickCount = ticks;
 		
-		this.flashColorR = flashColorR;
-		this.flashColorG = flashColorG;
-		this.flashColorB = flashColorB;
-		
-		this.startColorR = super.getBackgroundR();
-		this.startColorG = super.getBackgroundG();
-		this.startColorB = super.getBackgroundB();
-		
-		this.setColorR = super.getBackgroundR();
-		this.setColorG = super.getBackgroundG();
-		this.setColorB = super.getBackgroundB();
-		
-		this.stepColorR = (flashColorR - this.startColorR) / ticks*2;
-		this.stepColorG = (flashColorG - this.startColorG) / ticks*2;
-		this.stepColorB = (flashColorB - this.startColorB) / ticks*2;
+		this.stepColorR = flashColorR / ticks*2;
+		this.stepColorG = flashColorG / ticks*2;
+		this.stepColorB = flashColorB / ticks*2;
+	}
+	
+	public ColorFlash(float brightness, int ticks) {
+		this(brightness, brightness, brightness, ticks);		
 	}
 	
 	public ColorFlash(int ticks) {
@@ -84,12 +68,6 @@ public class ColorFlash extends BackgroundEffect{
 	}
 
 	@Override
-	public void stop() {
-		endEffect();
-		ticks = 0;
-	}
-
-	@Override
 	public float getColorR() {
 		return setColorR;
 	}
@@ -103,22 +81,4 @@ public class ColorFlash extends BackgroundEffect{
 	public float getColorB() {
 		return setColorB;
 	}
-
-	@Override
-	protected void newBackgroundListener() {
-		
-		this.startColorR = super.getBackgroundR();
-		this.startColorG = super.getBackgroundG();
-		this.startColorB = super.getBackgroundB();
-		
-		this.setColorR = super.getBackgroundR();
-		this.setColorG = super.getBackgroundG();
-		this.setColorB = super.getBackgroundB();
-		
-		this.stepColorR = (flashColorR - this.startColorR) / ticks*2;
-		this.stepColorG = (flashColorG - this.startColorG) / ticks*2;
-		this.stepColorB = (flashColorB - this.startColorB) / ticks*2;
-		
-	}
-
 }

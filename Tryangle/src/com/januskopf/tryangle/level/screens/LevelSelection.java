@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import com.januskopf.tryangle.Tryangle;
@@ -33,7 +34,7 @@ public class LevelSelection {
 	
 	private int bRaster = 40;
 	private ArrayList<IntroBTriangle> bTriangles = new ArrayList<IntroBTriangle>();
-	private boolean[][] hasBTriangle = new boolean[(Tryangle.WIDTH+bRaster)/bRaster][(Tryangle.HEIGHT+bRaster)/bRaster];
+	private boolean[][] hasBTriangle = new boolean[(Display.getWidth()+bRaster)/bRaster][(Display.getHeight()+bRaster)/bRaster];
 	
 	private Rectangle[] buttons;
 	
@@ -58,25 +59,26 @@ public class LevelSelection {
 		
 		buttons = new Rectangle[4];
 		
-		buttons[0] = new Rectangle(Tryangle.WIDTH/2 -120, Tryangle.HEIGHT/2+130, 240, 40);
-		buttons[1] = new Rectangle(Tryangle.WIDTH/2 -120, Tryangle.HEIGHT/2+200, 240, 40);
-		buttons[2] = new Rectangle(Tryangle.WIDTH/2 -120, Tryangle.HEIGHT/2+270, 240, 40);
-		buttons[3] = new Rectangle(Tryangle.WIDTH -75, 25, 30, 30);
+		buttons[0] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+130, 240, 40);
+		buttons[1] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+200, 240, 40);
+		buttons[2] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+270, 240, 40);
+		buttons[3] = new Rectangle(Display.getWidth() -75, 25, 30, 30);
 	}
 	
 	public void tick(){
+		if(Display.wasResized())hasBTriangle = new boolean[(Display.getWidth()+bRaster)/bRaster][(Display.getHeight()+bRaster)/bRaster];
 		if(isLevelSelect){
 			//if(KeyboardListener.isKeyClicked(Keyboard.KEY_ESCAPE))Tryangle.stop();
 			this.setActiveLevel();
 			this.bigTriangleTick();
 			this.backTriangles();
 			if(random.nextInt(8) == 0 && !loadLevel){
-				int x = (random.nextInt(Tryangle.WIDTH)/bRaster)*bRaster;
-				int y = (random.nextInt(Tryangle.HEIGHT)/bRaster)*bRaster;
+				int x = (random.nextInt(Display.getWidth())/bRaster)*bRaster;
+				int y = (random.nextInt(Display.getHeight())/bRaster)*bRaster;
 				
 				boolean hasNoNeighbor = true;
-				boolean isInRange = (x > Tryangle.WIDTH/2+length/2+10 || x < Tryangle.WIDTH/2-length/2-10 
-									|| (y > Tryangle.HEIGHT/2+10 && y < buttons[0].getY() - 40));
+				boolean isInRange = (x > Display.getWidth()/2+length/2+10 || x < Display.getWidth()/2-length/2-10 
+									|| (y > Display.getHeight()/2+10 && y < buttons[0].getY() - 40));
 				
 				if (!hasBTriangle[x/bRaster][y/bRaster] && isInRange) {
 					
@@ -153,8 +155,8 @@ public class LevelSelection {
 		int picX = 100;
 		int picY = 100;
 				
-		int xTimes = Tryangle.WIDTH / picX;
-		int yTimes = Tryangle.HEIGHT/ picY;
+		int xTimes = Display.getWidth() / picX;
+		int yTimes = Display.getHeight()/ picY;
 
 		GL11.glColor3f(1f, 1f, 1f);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.backgroundTex);
@@ -164,13 +166,13 @@ public class LevelSelection {
 			GL11.glVertex2f(0, 0);
 			
 			GL11.glTexCoord2f(xTimes, 0);
-			GL11.glVertex2f(Tryangle.WIDTH, 0);
+			GL11.glVertex2f(Display.getWidth(), 0);
 			
 			GL11.glTexCoord2f(xTimes, yTimes);
-			GL11.glVertex2f(Tryangle.WIDTH, Tryangle.HEIGHT);
+			GL11.glVertex2f(Display.getWidth(), Display.getHeight());
 			
 			GL11.glTexCoord2f(0, yTimes);
-			GL11.glVertex2f(0, Tryangle.HEIGHT);
+			GL11.glVertex2f(0, Display.getHeight());
 
 		GL11.glEnd();	
 		
@@ -194,11 +196,11 @@ public class LevelSelection {
 		
 		GL11.glBegin(GL11.GL_TRIANGLES);
 			GL11.glColor3f(0.8f*b+f, 0.8f*b+f, 0.8f*b+f);
-				GL11.glVertex2f(Tryangle.WIDTH/2, Tryangle.HEIGHT/2 + y);
+				GL11.glVertex2f(Display.getWidth()/2, Display.getHeight()/2 + y);
 			GL11.glColor3f(0.95f*b+f, 0.95f*b+f, 0.95f*b+f);
-				GL11.glVertex2f(Tryangle.WIDTH/2 + length/2, Tryangle.HEIGHT/2 - height + y);
+				GL11.glVertex2f(Display.getWidth()/2 + length/2, Display.getHeight()/2 - height + y);
 			GL11.glColor3f(0.95f*b+f, 0.95f*b+f, 0.95f*b+f);
-				GL11.glVertex2f(Tryangle.WIDTH/2 - length/2, Tryangle.HEIGHT/2 - height + y);
+				GL11.glVertex2f(Display.getWidth()/2 - length/2, Display.getHeight()/2 - height + y);
 		GL11.glEnd();
 
 	}

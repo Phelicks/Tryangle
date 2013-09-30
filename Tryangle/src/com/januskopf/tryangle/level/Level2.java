@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 
-import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
@@ -15,8 +15,8 @@ import com.januskopf.tryangle.triangles.TriangleContainer;
 public class Level2 extends Levels{
 
 	private int yTriangles = 50;
-	private float triangleLength = (float)Tryangle.HEIGHT/((float)yTriangles-2)*2f;
-	private int xTriangles = (int)((float)Tryangle.WIDTH /((float)Math.sqrt(3)*(triangleLength/2)))+2;
+	private float triangleLength = (float)Display.getHeight()/((float)yTriangles-2)*2f;
+	private int xTriangles = (int)((float)Display.getWidth() /((float)Math.sqrt(3)*(triangleLength/2)))+2;
 
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
@@ -86,12 +86,12 @@ public class Level2 extends Levels{
 	}
 	
 	public void waterAnimation(){
-		if (MouseListener.isButtonPressed(1)) {
+		if (MouseListener.isButtonClicked(1)) {
 			Sound.getInstance().Multi2(Sound.WATER_1);
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
-			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.abs(0.5f-(float)Math.random()), 0.75f, ((int)Math.hypot(Tryangle.HEIGHT, Tryangle.WIDTH))+1);
+			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.random()/5, 0.25f, ((int)Math.hypot(Display.getHeight(), Display.getWidth()))+1);
 			Level2.animations.add(animation);
 		}
 		

@@ -33,8 +33,6 @@ public abstract class Effect {
 	
 	protected abstract boolean isActive();
 	
-	public abstract void stop();
-	
 	public abstract float getColorR();
 	
 	public abstract float getColorG();
