@@ -172,16 +172,20 @@ public class TriangleContainer implements Serializable{
 	}
 	
 	public void setLength(float length){
-		this.length = length;
-		this.height = ((float)Math.sqrt(3)*(length/2));
-		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		if(triangles.length*(length/2)-(length/2) < Display.getHeight()){
+			this.length = length;
+			this.height = ((float)Math.sqrt(3)*(length/2));
+		}
+//		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
 		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
 	
 	public void setHeight(float height){
-		this.height = (height);
-		this.length = (float)(2*height/Math.sqrt(3));
-		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
+		if(triangles[0].length*height < Display.getWidth()){
+			this.height = height;
+			this.length = (float)(2*height/Math.sqrt(3));			
+		}
+//		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
 		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
 	
