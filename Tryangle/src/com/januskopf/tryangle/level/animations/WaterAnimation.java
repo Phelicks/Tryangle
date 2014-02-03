@@ -32,8 +32,7 @@ public class WaterAnimation extends Animations{
 	}
 	
 	public WaterAnimation(TriangleContainer triangles, int xPos, int yPos) {
-		this(triangles, xPos, yPos, 1.0f, 1.0f, 1.0f, 300);
-		
+		this(triangles, xPos, yPos, 1.0f, 1.0f, 1.0f, 300);		
 	}
 
 	@Override

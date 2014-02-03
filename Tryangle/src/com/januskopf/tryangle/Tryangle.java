@@ -41,61 +41,75 @@ public class Tryangle implements Runnable{
 		
 	public void initOpenGL(){
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, width, height, 0, -1.0, 1.0);
+		
+		this.resize();
+		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND); 
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
 		System.out.println("You are running OpenGL version ["+GL11.glGetString(GL11.GL_VERSION)+"].");
+	}
+	
+	public void initSound(){
+		Sound.initialize();
+		Sound.start(Sound.SOUNDTRACK);
+		Sound.setVolume(Sound.SOUNDTRACK,0.8f);		
 	}
 	
 	public void run(){
 		this.setDisplayMode(width, height, FULLSCREEN);
 		this.initOpenGL();
-				
-		Sound.initialize();
-		Sound.start(Sound.SOUNDTRACK);
-		Sound.setVolume(Sound.SOUNDTRACK,0.8f);
+		this.initSound();
 		
 		this.levelSelect = new LevelSelection();
 		this.keyboard = new KeyboardListener();
 		this.mouse = new MouseListener();
 		
 		while(running){
+			Display.update();
+			
+			if(Display.wasResized()){
+				this.resize();
+			}
+			
+			if(Display.isDirty()){
+				System.out.println("Ohoh");
+			}
+			
 			if(Display.isCloseRequested()){ 
 				stop();
 				System.out.println("closing...");
 			}
-			if(Display.wasResized())this.resize();
-			this.frameCounter();
+//			this.frameCounter();
 			
-			long countStart = System.currentTimeMillis();
+//			long countStart = System.currentTimeMillis();
 			this.render();
-			long countRender = System.currentTimeMillis();
+//			long countRender = System.currentTimeMillis();
 			this.tick();
-			long countTick = System.currentTimeMillis();
-			
-			long countAll = countRender-countStart;
-			
-			long tickPer;
-			try {
-				tickPer = (countTick-countStart)*100/countAll*100;
-				tickPer /= 100;
-			} catch (java.lang.ArithmeticException e1) {
-				tickPer = 0;
-			}
-			
-			long renderPer;
-			try {
-				renderPer = (countRender-countTick)*100/countAll*100;
-				renderPer /= 100;
-			} catch (java.lang.ArithmeticException e1) {
-				renderPer = 0;
-			}
-			
-			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps + " Frametime: " + (countAll) +"ms"+ " - tick: " + tickPer + "% render: " + renderPer + "%");
+//			long countTick = System.currentTimeMillis();
+//			
+//			long countAll = countRender-countStart;
+//			
+//			long tickPer;
+//			try {
+//				tickPer = (countTick-countStart)*100/countAll*100;
+//				tickPer /= 100;
+//			} catch (java.lang.ArithmeticException e1) {
+//				tickPer = 0;
+//			}
+//			
+//			long renderPer;
+//			try {
+//				renderPer = (countRender-countTick)*100/countAll*100;
+//				renderPer /= 100;
+//			} catch (java.lang.ArithmeticException e1) {
+//				renderPer = 0;
+//			}
+//			
+//			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps + " Frametime: " + (countAll) +"ms"+ " - tick: " + tickPer + "% render: " + renderPer + "%");
 
 			//Fullscreen?
 			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
@@ -106,14 +120,14 @@ public class Tryangle implements Runnable{
 					e.printStackTrace();
 				}
 			}
+			
 			Display.sync(FPS);
-			Display.update();
 		}
 		System.out.println("END");
 	}
 	
 	public void tick(){		
-		keyboard.tick();	
+//		keyboard.tick();	
 		mouse.tick();
 		levelSelect.tick();
 		sound.tick();
@@ -121,15 +135,23 @@ public class Tryangle implements Runnable{
  
 	public void render(){
 		levelSelect.render();
+
+		GL11.glColor3f(1, 0, 0);
+		GL11.glBegin(GL11.GL_POINTS);
+			GL11.glVertex2f(MouseListener.getMouseX(), MouseListener.getMouseY());
+		GL11.glEnd();
 	}
 	
 
 	private void resize() {
+		System.out.println(Display.getWidth());
+		System.out.println(Display.getHeight());
+		
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, -1, 1);
 	}
 	
 	/**

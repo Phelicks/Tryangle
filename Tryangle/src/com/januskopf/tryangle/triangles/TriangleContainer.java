@@ -38,7 +38,8 @@ public class TriangleContainer implements Serializable{
 	//////////////////////////////
 	
 	public void tick(){		
-		if(Display.wasResized()){
+		if(Display.wasResized() || KeyboardListener.isKeyClicked(Keyboard.KEY_F9)){
+			System.out.println("Jo1");
 			this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
 		}
 		
