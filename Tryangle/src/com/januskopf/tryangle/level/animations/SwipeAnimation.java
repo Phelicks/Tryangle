@@ -29,7 +29,7 @@ public class SwipeAnimation extends Animations{
 	protected void runAnimation() {
 		for(int i = 0; i < xTriangles; i++){		
 			Triangle t = triangles.getTriangle(rowAni, i);
-			t.addBottomLayerEffect(new ColorFlash(0.5f, 10));
+			if(t != null)t.addBottomLayerEffect(new ColorFlash(0.5f, 10));
 		}		
 		if(rowAni < yTriangles-1) 
 			rowAni++;

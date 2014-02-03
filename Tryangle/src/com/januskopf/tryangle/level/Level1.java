@@ -7,7 +7,6 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;
-import com.januskopf.tryangle.triangles.effects.ColorTransition;
 
 public class Level1 extends Levels{
 	
@@ -24,7 +23,7 @@ public class Level1 extends Levels{
 	public Level1() {
 		triangles = new TriangleContainer(xTriangles, yTriangles);
 		
-		fadeAnimation = new FadeAnimation(triangles, 0.0f, 0.69f, 0.39f, 100, true);
+		fadeAnimation = new FadeAnimation(triangles, 0.0f, 0.39f, 0.69f, 100, true);
 		flashAnimation = new RandomFlashing(triangles, xTriangles, yTriangles);
 		
 		triangles.addAnimation(fadeAnimation);
@@ -41,7 +40,7 @@ public class Level1 extends Levels{
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT))triangles.moveHorizontal(-1f);
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_RIGHT))triangles.moveHorizontal(1f);
 		
-		this.mouseCube.moveTo(MouseListener.getMouseX(), MouseListener.getMouseY());
+		this.mouseCube.moveTo(MouseListener.getMouseX(), MouseListener.getMouseY() - (int)(triangles.getLength()/2));
 		
 		if(fadeAnimation != null && !fadeAnimation.isActive() ){
 			triangles.addAnimation(flashAnimation);
@@ -52,7 +51,8 @@ public class Level1 extends Levels{
 //		if(t != null)t.addTopLayerEffect(0, new ColorTransition(1.0f, 0, 0, 1));
 		
 		if(MouseListener.isButtonClicked(0)){
-			triangles.addAnimation(new CubeAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY(), 0.5f, 0.5f, 0.5f));
+			triangles.addAnimation(new CubeAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY() - (int)(triangles.getLength()/2), 0.5f, 0.5f, 0.5f));
+//			triangles.addAnimation(new RadialAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY()));
 		}
 		
 		triangles.tick();

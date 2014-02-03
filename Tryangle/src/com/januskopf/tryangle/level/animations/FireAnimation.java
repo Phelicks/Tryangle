@@ -16,6 +16,7 @@ public class FireAnimation extends Animations{
 	
 	private TriangleContainer triangles;
 	private Random random;
+	private Triangle lastTriangle;
 	
 	public FireAnimation(TriangleContainer triangles, int xPos, int yPos, int duration) {
 		random = new Random();
@@ -36,10 +37,11 @@ public class FireAnimation extends Animations{
 	@Override
 	protected void runAnimation() {
 		float p = ((float)startDuration/(float)duration)/8f;
-		try {
-			Triangle t = triangles.getExactTriangle(xPos, yPos);
-			t.addBottomLayerEffect(new ColorFlash(1.0f-p, Math.abs(random.nextFloat()-0.5f)-p, 0f, 50));
-		} catch (Exception e) {}
+		
+		Triangle t = triangles.getExactTriangle(xPos, yPos);
+		if(t != null && t != lastTriangle)t.addBottomLayerEffect(new ColorFlash(0.8f-p, Math.abs(random.nextFloat()-0.5f)-p, 0f, 50));
+		lastTriangle = t;
+		
 		yPos -= random.nextInt(13);
 		xPos += -20 + random.nextInt(41);
 		duration--;

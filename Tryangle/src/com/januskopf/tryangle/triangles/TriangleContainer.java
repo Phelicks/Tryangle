@@ -196,6 +196,10 @@ public class TriangleContainer implements Serializable{
 	public int getyTriangles() {
 		return triangles.length;
 	}
+
+	public float getLength() {
+		return this.length;
+	}
 	
 	public void setLength(float length){
 		if(Math.round(triangles.length *(length/2)-(length/2)) >= Display.getHeight() &&

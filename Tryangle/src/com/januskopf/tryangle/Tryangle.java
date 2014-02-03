@@ -36,6 +36,7 @@ public class Tryangle implements Runnable{
 	
 	public static void stop()	{
 		Tryangle.running = false;
+		Sound.end();
 	}
 		
 	public void initOpenGL(){
@@ -64,7 +65,6 @@ public class Tryangle implements Runnable{
 		
 		while(running){
 			if(Display.isCloseRequested()){ 
-				Sound.end();
 				stop();
 				System.out.println("closing...");
 			}
@@ -72,10 +72,10 @@ public class Tryangle implements Runnable{
 			this.frameCounter();
 			
 			long countStart = System.currentTimeMillis();
-			this.tick();
-			long countTick = System.currentTimeMillis();
 			this.render();
 			long countRender = System.currentTimeMillis();
+			this.tick();
+			long countTick = System.currentTimeMillis();
 			
 			long countAll = countRender-countStart;
 			
