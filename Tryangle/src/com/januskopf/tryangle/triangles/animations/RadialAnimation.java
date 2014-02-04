@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.animations;
+package com.januskopf.tryangle.triangles.animations;
 
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;

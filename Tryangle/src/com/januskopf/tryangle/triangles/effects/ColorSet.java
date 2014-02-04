@@ -33,11 +33,16 @@ public class ColorSet extends Effect{
 	}
 	
 	public void remove(){
-		isActive = false;
+		isActive = false;		
 	}
 
 	@Override
 	protected boolean isActive() {
+		return isActive;
+	}
+	
+	@Override
+	public boolean isRunning() {
 		return isActive;
 	}
 

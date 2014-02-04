@@ -62,14 +62,7 @@ public class Tryangle implements Runnable{
 			if(Display.wasResized()){
 				this.resize();
 			}
-
-			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F8)){
-				this.setDisplayMode(width, height, Display.isFullscreen());
-			}
-
-			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F9)){
-				this.resize();
-			}
+			
 			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
 				//Fullscreen?
 				if(Display.isFullscreen()){

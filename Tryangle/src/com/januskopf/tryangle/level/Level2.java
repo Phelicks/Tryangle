@@ -8,9 +8,9 @@ import org.lwjgl.opengl.Display;
 
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.sound.Sound;
 import com.januskopf.tryangle.triangles.TriangleContainer;
+import com.januskopf.tryangle.triangles.animations.*;
 
 public class Level2 implements Levels{
 

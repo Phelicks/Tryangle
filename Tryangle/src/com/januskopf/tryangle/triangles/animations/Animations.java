@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.animations;
+package com.januskopf.tryangle.triangles.animations;
 
 
 public abstract class Animations{

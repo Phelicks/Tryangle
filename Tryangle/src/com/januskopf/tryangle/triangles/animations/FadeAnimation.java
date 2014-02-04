@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.animations;
+package com.januskopf.tryangle.triangles.animations;
 
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;
@@ -24,14 +24,14 @@ public class FadeAnimation extends Animations{
 
 	private TriangleContainer triangles;
 	
-	public FadeAnimation(TriangleContainer triangles, float colorR, float colorG, float colorB, int ticks, boolean randomise) {
+	public FadeAnimation(TriangleContainer triangles, int ticks, boolean randomise) {
 		this.triangles = triangles;
 		this.xTriangles = triangles.getxTriangles();
 		this.yTriangles = triangles.getyTriangles();
 		
-		this.colorR = colorR;
-		this.colorG = colorG;
-		this.colorB = colorB;
+		this.colorR = triangles.getBackgroundRed();
+		this.colorG = triangles.getBackgroundGreen();
+		this.colorB = triangles.getBackgroundBlue();
 		
 		this.ticks = ticks;
 		

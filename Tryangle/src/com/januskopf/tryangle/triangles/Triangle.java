@@ -38,7 +38,9 @@ public class Triangle implements Serializable{
 		}
 	}
 	
-	public void addTopLayerEffect(int i, Effect effect){
+	public void addTopLayerEffect(Effect effect, boolean background){
+		int i = 0;
+		if(background && topLayerEffects.size() > 0) i = 1;
 		topLayerEffects.add(i, effect);
 	}
 	
@@ -81,7 +83,23 @@ public class Triangle implements Serializable{
 		}
 	}
 	
-	protected float getColorR() {
+	public void updateEffects(){
+		//BottomLayer
+		for(int i = 0; i < bottomLayerEffects.size(); i++){
+			if(!bottomLayerEffects.get(i).isRunning()){
+				bottomLayerEffects.remove(i);
+			}
+		}
+		
+		//TopLayer
+		for(int i = 0; i < topLayerEffects.size(); i++){
+			if(!topLayerEffects.get(i).isRunning()){
+				topLayerEffects.remove(i);
+			}
+		}
+	}
+	
+	public float getColorR() {
 		if(topLayerEffects.size() > 0)
 			return topLayerEffects.get(0).getColorR();
 		else if(bottomLayerEffects.size() > 0){
@@ -95,7 +113,7 @@ public class Triangle implements Serializable{
 			return backgroundColorR;
 	}
 	
-	protected float getColorG() {
+	public float getColorG() {
 		if(topLayerEffects.size() > 0)
 			return topLayerEffects.get(0).getColorG();
 		else if(bottomLayerEffects.size() > 0){
@@ -109,7 +127,7 @@ public class Triangle implements Serializable{
 			return backgroundColorG;
 	}
 	
-	protected float getColorB() {
+	public float getColorB() {
 		if(topLayerEffects.size() > 0)
 			return topLayerEffects.get(0).getColorB();
 		else if(bottomLayerEffects.size() > 0){

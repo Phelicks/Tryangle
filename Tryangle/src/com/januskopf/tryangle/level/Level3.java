@@ -14,11 +14,9 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
-import com.januskopf.tryangle.alt.CubeContainer;
-import com.januskopf.tryangle.alt.CubeSetterNet;
 import com.januskopf.tryangle.input.KeyboardListener;
-import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.triangles.TriangleContainer;
+import com.januskopf.tryangle.triangles.animations.*;
 
 public class Level3 implements Levels{
 	
@@ -28,8 +26,8 @@ public class Level3 implements Levels{
 	
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private static TriangleContainer triangles;
-	private static CubeContainer cubes;
-	private static CubeSetterNet cubeSetter;
+//	private static CubeContainer cubes;
+//	private static CubeSetterNet cubeSetter;
 	
 	public Level3(){
 		//NetworkStuff
@@ -65,8 +63,8 @@ public class Level3 implements Levels{
 			try {
 //				verticeContainer = (VerticeContainer) in.readObject();
 				triangles = (TriangleContainer) in.readObject();
-				cubes = (CubeContainer) in.readObject();
-				cubeSetter = new CubeSetterNet(cubes, triangles, in, out);
+//				cubes = (CubeContainer) in.readObject();
+//				cubeSetter = new CubeSetterNet(cubes, triangles, in, out);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -80,8 +78,8 @@ public class Level3 implements Levels{
 	
 	public void tick(){
 		triangles.tick();
-		cubeSetter.tick();
-		cubes.tick();
+//		cubeSetter.tick();
+//		cubes.tick();
 		this.runAnimations();
 	}
 

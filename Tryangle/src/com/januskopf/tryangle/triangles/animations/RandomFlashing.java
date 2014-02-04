@@ -1,4 +1,4 @@
-package com.januskopf.tryangle.level.animations;
+package com.januskopf.tryangle.triangles.animations;
 
 import java.util.Random;
 
@@ -32,7 +32,7 @@ public class RandomFlashing extends Animations{
 		for(int i = 0; i < 2; i++){
 			Triangle t = triangles.getTriangle(random.nextInt(xTriangles), random.nextInt(yTriangles));
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.addBackgroundEffect(new ColorTransition(0.0f*c, 0.39f*c, 0.69f*c, 150));
+			t.addBackgroundEffect(new ColorTransition(triangles.getBackgroundRed()*c, triangles.getBackgroundGreen()*c, triangles.getBackgroundBlue()*c, 150));
 		}		
 	}
 	
