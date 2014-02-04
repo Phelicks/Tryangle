@@ -1,9 +1,6 @@
 package com.januskopf.tryangle.triangles;
 
-import com.januskopf.tryangle.input.KeyboardListener;
-import com.januskopf.tryangle.level.animations.Animations;
-import com.januskopf.tryangle.level.animations.SwipeAnimation;
-
+import java.awt.Color;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +8,11 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+
+import com.januskopf.tryangle.Tryangle;
+import com.januskopf.tryangle.input.KeyboardListener;
+import com.januskopf.tryangle.level.animations.Animations;
+import com.januskopf.tryangle.level.animations.SwipeAnimation;
 
 
 public class TriangleContainer implements Serializable{
@@ -24,13 +26,17 @@ public class TriangleContainer implements Serializable{
 	
 	private ArrayList<Animations> animations = new ArrayList<Animations>();
 	private Triangle[][] triangles;
+
+	private Color backgroundColor;
 	
 	public TriangleContainer(int xTriCount, int yTriCount){
 		this.height = ((float)Math.sqrt(3)*(length/2));
+		this.backgroundColor = new Color(0, 0, 0);
 		fillTriangleArray(xTriCount, yTriCount);
 		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
 		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}
+	
 	//////////////////////////////
 	//							//
 	//			tick()			//
@@ -38,8 +44,7 @@ public class TriangleContainer implements Serializable{
 	//////////////////////////////
 	
 	public void tick(){		
-		if(Display.wasResized() || KeyboardListener.isKeyClicked(Keyboard.KEY_F9)){
-			System.out.println("Jo1");
+		if(Tryangle.isResized()){
 			this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
 		}
 		
@@ -147,6 +152,10 @@ public class TriangleContainer implements Serializable{
 	//							//
 	//////////////////////////////
 	
+	public Color getBackgroundColor(){
+		return this.backgroundColor;
+	}
+	
 	public Triangle getExactTriangle(int xPos, int yPos){
 		int x = (int)((xPos-xView) / height);
 		int y = (int)((yPos-yView) / (length))*2;
@@ -204,7 +213,7 @@ public class TriangleContainer implements Serializable{
 	
 	public void setLength(float length){
 		if(Math.round(triangles.length *(length/2)-(length/2)) >= Display.getHeight() &&
-				triangles[0].length*((float)Math.sqrt(3)*(length/2)) >= Display.getWidth()){
+				Math.round(triangles[0].length*((float)Math.sqrt(3)*(length/2))) >= Display.getWidth()){
 			this.length = length;
 			this.height = ((float)Math.sqrt(3)*(length/2));
 		}

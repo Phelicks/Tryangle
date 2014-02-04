@@ -20,7 +20,7 @@ import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.triangles.TriangleContainer;
 
-public class Level3 extends Levels{
+public class Level3 implements Levels{
 	
 	private Socket client;
 	private ObjectOutputStream out;

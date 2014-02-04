@@ -12,11 +12,10 @@ import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.sound.Sound;
 import com.januskopf.tryangle.triangles.TriangleContainer;
 
-public class Level2 extends Levels{
+public class Level2 implements Levels{
 
 	private int yTriangles = 50;
-	private float triangleLength = (float)Display.getHeight()/((float)yTriangles-2)*2f;
-	private int xTriangles = (int)((float)Display.getWidth() /((float)Math.sqrt(3)*(triangleLength/2)))+2;
+	private int xTriangles = 400;
 
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;

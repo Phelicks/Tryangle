@@ -1,7 +1,6 @@
 package com.januskopf.tryangle.level;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
@@ -9,7 +8,7 @@ import com.januskopf.tryangle.level.animations.*;
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;
 
-public class Level1 extends Levels{
+public class Level1 implements Levels{
 	
 	private int xTriangles = 30;
 	private int yTriangles = 30;

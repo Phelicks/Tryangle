@@ -1,17 +1,12 @@
 package com.januskopf.tryangle.alt;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
-import com.januskopf.tryangle.level.animations.RadialAnimation;
-import com.januskopf.tryangle.net.NetCube;
 import com.januskopf.tryangle.triangles.TriangleContainer;
 
 public class CubeSetterNet{

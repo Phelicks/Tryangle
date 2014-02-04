@@ -1,5 +1,8 @@
 package com.januskopf.tryangle;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
@@ -10,11 +13,15 @@ import com.januskopf.tryangle.sound.Sound;
  
 public class Tryangle implements Runnable{
 	
+	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public final static boolean FULLSCREEN = false;
 	public final static int FPS = 60;
 	private int width = 1280; 
 	private int height = 720;
+	private int screenWidth  = (int) screenSize.getWidth();
+	private int screenHeight = (int) screenSize.getHeight();
 	private static boolean running;
+	private static boolean isResized;
 	private LevelSelection levelSelect;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
@@ -38,30 +45,11 @@ public class Tryangle implements Runnable{
 		Tryangle.running = false;
 		Sound.end();
 	}
-		
-	public void initOpenGL(){
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		
-		this.resize();
-		
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glEnable(GL11.GL_BLEND); 
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		
-		System.out.println("You are running OpenGL version ["+GL11.glGetString(GL11.GL_VERSION)+"].");
-	}
-	
-	public void initSound(){
-		Sound.initialize();
-		Sound.start(Sound.SOUNDTRACK);
-		Sound.setVolume(Sound.SOUNDTRACK,0.8f);		
-	}
 	
 	public void run(){
 		this.setDisplayMode(width, height, FULLSCREEN);
-		this.initOpenGL();
+		this.initDisplay();
+		this.initOpenGL();	
 		this.initSound();
 		
 		this.levelSelect = new LevelSelection();
@@ -69,65 +57,48 @@ public class Tryangle implements Runnable{
 		this.mouse = new MouseListener();
 		
 		while(running){
-			Display.update();
+			isResized = false;
 			
 			if(Display.wasResized()){
 				this.resize();
 			}
-			
-			if(Display.isDirty()){
-				System.out.println("Ohoh");
+
+			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F8)){
+				this.setDisplayMode(width, height, Display.isFullscreen());
+			}
+
+			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F9)){
+				this.resize();
+			}
+			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
+				//Fullscreen?
+				if(Display.isFullscreen()){
+					this.setDisplayMode(width, height, false);
+					this.resize();
+				}
+				else{
+					this.setDisplayMode(screenWidth, screenHeight, true);					
+					this.resize();
+				}
 			}
 			
 			if(Display.isCloseRequested()){ 
 				stop();
 				System.out.println("closing...");
 			}
-//			this.frameCounter();
-			
-//			long countStart = System.currentTimeMillis();
+			this.frameCounter();			
 			this.render();
-//			long countRender = System.currentTimeMillis();
 			this.tick();
-//			long countTick = System.currentTimeMillis();
-//			
-//			long countAll = countRender-countStart;
-//			
-//			long tickPer;
-//			try {
-//				tickPer = (countTick-countStart)*100/countAll*100;
-//				tickPer /= 100;
-//			} catch (java.lang.ArithmeticException e1) {
-//				tickPer = 0;
-//			}
-//			
-//			long renderPer;
-//			try {
-//				renderPer = (countRender-countTick)*100/countAll*100;
-//				renderPer /= 100;
-//			} catch (java.lang.ArithmeticException e1) {
-//				renderPer = 0;
-//			}
-//			
-//			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps + " Frametime: " + (countAll) +"ms"+ " - tick: " + tickPer + "% render: " + renderPer + "%");
-
-			//Fullscreen?
-			if(KeyboardListener.isKeyClicked(Keyboard.KEY_F11)){
-				try {
-					boolean isFull = Display.isFullscreen();
-					Display.setFullscreen(!isFull);
-				} catch (LWJGLException e) {
-					e.printStackTrace();
-				}
-			}
 			
+			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps);			
 			Display.sync(FPS);
+			Display.update();
 		}
 		System.out.println("END");
 	}
-	
+
 	public void tick(){		
-//		keyboard.tick();	
+		keyboard.tick();	
 		mouse.tick();
 		levelSelect.tick();
 		sound.tick();
@@ -135,23 +106,16 @@ public class Tryangle implements Runnable{
  
 	public void render(){
 		levelSelect.render();
-
-		GL11.glColor3f(1, 0, 0);
-		GL11.glBegin(GL11.GL_POINTS);
-			GL11.glVertex2f(MouseListener.getMouseX(), MouseListener.getMouseY());
-		GL11.glEnd();
 	}
 	
 
 	private void resize() {
-		System.out.println(Display.getWidth());
-		System.out.println(Display.getHeight());
-		
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, -1, 1);
+		isResized = true;
 	}
 	
 	/**
@@ -200,20 +164,49 @@ public class Tryangle implements Runnable{
 	            System.out.println("Failed to find value mode: "+width+"x"+height+" fs="+fullscreen);
 	            return;
 	        }
+	        
+	        Display.setDisplayMode(targetDisplayMode);					
+	        Display.setFullscreen(fullscreen);
 
-	        Display.setDisplayMode(targetDisplayMode);
-	        Display.setVSyncEnabled(true);
-			Display.setResizable(true);
-			PixelFormat p = new PixelFormat().withSamples(4);
-			Display.setFullscreen(fullscreen);
-			
-			Display.create(p);
 				
 	    } catch (LWJGLException e) {
 	        System.out.println("Unable to setup mode "+width+"x"+height+" fullscreen="+fullscreen + e);
 	    }
+	    
 	}
+	
+	private void initDisplay() {
+        Display.setVSyncEnabled(false);
+		Display.setResizable(true);
+		PixelFormat p = new PixelFormat().withSamples(4);
+		try {
+			Display.setFullscreen(FULLSCREEN);
+			Display.create(p);
+		} catch (LWJGLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	public void initOpenGL(){
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		
+		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		
+		this.resize();
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_BLEND); 
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
+		System.out.println("You are running OpenGL version ["+GL11.glGetString(GL11.GL_VERSION)+"].");
+	}	
 
+	public void initSound(){
+		Sound.initialize();
+		Sound.start(Sound.SOUNDTRACK);
+		Sound.setVolume(Sound.SOUNDTRACK,0.8f);		
+	}
 	
 	private void frameCounter(){
 		this.frame++;
@@ -223,4 +216,9 @@ public class Tryangle implements Runnable{
 			this.fpsCounter = System.currentTimeMillis(); 
 		}
 	}
+	
+	public static boolean isResized(){
+		return isResized;
+	}
+	
 }

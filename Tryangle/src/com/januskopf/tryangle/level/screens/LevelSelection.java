@@ -34,7 +34,7 @@ public class LevelSelection {
 	
 	private int bRaster = 40;
 	private ArrayList<IntroBTriangle> bTriangles = new ArrayList<IntroBTriangle>();
-	private boolean[][] hasBTriangle = new boolean[(Display.getWidth()+bRaster)/bRaster][(Display.getHeight()+bRaster)/bRaster];
+	private boolean[][] hasBTriangle;
 	
 	private Rectangle[] buttons;
 	
@@ -52,13 +52,15 @@ public class LevelSelection {
 	private void init(){
 		isLevelSelect = true;
 		loadLevel = false;
-		bTriangles.clear();
 		bTActive = true;
 		b = 1.0f;
 		f = 0;
 		
-		buttons = new Rectangle[4];
+		bTriangles.clear();
 		
+		hasBTriangle = new boolean[(Display.getWidth()+bRaster)/bRaster][(Display.getHeight()+bRaster)/bRaster];
+		
+		buttons = new Rectangle[4];
 		buttons[0] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+130, 240, 40);
 		buttons[1] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+200, 240, 40);
 		buttons[2] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+270, 240, 40);
@@ -66,9 +68,11 @@ public class LevelSelection {
 	}
 	
 	public void tick(){
-		if(Display.wasResized())hasBTriangle = new boolean[(Display.getWidth()+bRaster)/bRaster][(Display.getHeight()+bRaster)/bRaster];
 		if(isLevelSelect){
-			//if(KeyboardListener.isKeyClicked(Keyboard.KEY_ESCAPE))Tryangle.stop();
+			if(Tryangle.isResized()){
+				this.init();
+			}
+			if(KeyboardListener.isKeyClicked(Keyboard.KEY_ESCAPE))Tryangle.stop();
 			this.setActiveLevel();
 			this.bigTriangleTick();
 			this.backTriangles();
@@ -108,7 +112,7 @@ public class LevelSelection {
 		}
 		else{
 			currentLevel.tick();
-			if(KeyboardListener.isKeyPressed(Keyboard.KEY_ESCAPE)){
+			if(KeyboardListener.isKeyClicked(Keyboard.KEY_ESCAPE)){
 				this.init();
 			}
 		}
