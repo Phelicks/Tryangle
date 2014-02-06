@@ -23,18 +23,14 @@ public class TriangleContainer implements Serializable{
 	private float yView = 0;
 	private float length = 0;
 	private float height = 0;
+	private float groundColorR = 0;
+	private float groundColorG = 0;
+	private float groundColorB = 0;
 	
 	private ArrayList<Animations> animations = new ArrayList<Animations>();
 	private Triangle[][] triangles;
-
-	private float backgroundRed;
-	private float backgroundGreen;
-	private float backgroundBlue;
 	
 	public TriangleContainer(int xTriCount, int yTriCount){
-		this.backgroundRed 	 = 0f;
-		this.backgroundGreen = 0f;
-		this.backgroundBlue  = 0f;
 		this.height = ((float)Math.sqrt(3)*(length/2));
 		fillTriangleArray(xTriCount, yTriCount);
 		this.resizeTriangles(0, 0, Display.getWidth(), Display.getHeight());
@@ -155,24 +151,25 @@ public class TriangleContainer implements Serializable{
 	//	getter()  &  setter()	//
 	//							//
 	//////////////////////////////
+
+	public void setGroundColor(float red, float green, float blue) {
+		this.groundColorR = red;
+		this.groundColorG = green;
+		this.groundColorB = blue;
+	}
 	
-	public void setBackgroundColor(float red, float green, float blue){
-		this.backgroundRed = red;
-		this.backgroundGreen = green;
-		this.backgroundBlue = blue;
+	public float getGroundColorR() {
+		return groundColorR;
 	}
 
-	public float getBackgroundRed(){
-		return this.backgroundRed;
+	public float getGroundColorG() {
+		return groundColorG;
 	}
-	
-	public float getBackgroundGreen(){
-		return this.backgroundGreen;
+
+	public float getGroundColorB() {
+		return groundColorB;
 	}
-	
-	public float getBackgroundBlue(){
-		return this.backgroundBlue;
-	}
+
 	
 	public Triangle getExactTriangle(int xPos, int yPos){
 		int x = (int)((xPos-xView) / height);

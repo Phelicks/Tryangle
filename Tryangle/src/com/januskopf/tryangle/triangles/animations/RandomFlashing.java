@@ -24,7 +24,7 @@ public class RandomFlashing extends Animations{
 	}
 
 	@Override
-	protected void startAnimation() {		
+	protected void startAnimation() {
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class RandomFlashing extends Animations{
 		for(int i = 0; i < 2; i++){
 			Triangle t = triangles.getTriangle(random.nextInt(xTriangles), random.nextInt(yTriangles));
 			float c = (float)(1.0 - Math.random()/2.0);
-			t.addBackgroundEffect(new ColorTransition(triangles.getBackgroundRed()*c, triangles.getBackgroundGreen()*c, triangles.getBackgroundBlue()*c, 150));
+			t.addBackgroundEffect(new ColorTransition(triangles, triangles.getGroundColorR()*c, triangles.getGroundColorG()*c, triangles.getGroundColorB()*c, 150));
 		}		
 	}
 	

@@ -11,7 +11,7 @@ public abstract class BackgroundEffect extends Effect{
 		this.backgroundColorR = r;
 		this.backgroundColorG = g;
 		this.backgroundColorB = b;
-		this.newBackgroundListener();
+		this.backgroundChangedListener();
 	}
 
 	protected float getBackgroundR(){
@@ -24,6 +24,6 @@ public abstract class BackgroundEffect extends Effect{
 		return this.backgroundColorB;
 	}
 	
-	protected abstract void newBackgroundListener();
+	protected abstract void backgroundChangedListener();
 	
 }

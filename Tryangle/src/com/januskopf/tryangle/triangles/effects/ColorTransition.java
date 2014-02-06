@@ -1,5 +1,7 @@
 package com.januskopf.tryangle.triangles.effects;
 
+import com.januskopf.tryangle.triangles.TriangleContainer;
+
 
 public class ColorTransition extends BackgroundEffect{
 
@@ -22,9 +24,7 @@ public class ColorTransition extends BackgroundEffect{
 	private int ticks;
 	
 	
-	public ColorTransition(float newColorR, float newColorG, float newColorB, int ticks) {
-		super();
-		
+	public ColorTransition(TriangleContainer triangles, float newColorR, float newColorG, float newColorB, int ticks) {		
 		this.ticks = ticks;
 		
 		this.startColorR = super.getBackgroundR();
@@ -64,7 +64,7 @@ public class ColorTransition extends BackgroundEffect{
 	}
 
 	@Override
-	protected void newBackgroundListener() {
+	protected void backgroundChangedListener() {
 
 		this.startColorR = super.getBackgroundR();
 		this.startColorG = super.getBackgroundG();
