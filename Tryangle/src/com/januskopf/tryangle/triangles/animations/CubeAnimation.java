@@ -16,10 +16,6 @@ public class CubeAnimation extends Animations{
 	private float colorG;
 	private float colorB;
 	
-	//coordinates
-	private int x;
-	private int y;
-	
 	//top
 	private Triangle tL;
 	private Triangle tR;
@@ -47,16 +43,14 @@ public class CubeAnimation extends Animations{
 		this.colorG = colorG;
 		this.colorB = colorB;
 		
-		this.x = triangles.getIndexFromPos(xPos, yPos).x;
-		this.y = triangles.getIndexFromPos(xPos, yPos).y;
-		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
+		int x = triangles.getIndexFromPos(xPos, yPos).x;
+		int y = triangles.getIndexFromPos(xPos, yPos).y;
+		
 		this.setCube(x, y);
-		System.out.println("x: " + x + "y: " + y);
 	}
 	
 	private void setCube(int x, int y){
 		if(!TriangleContainer.isTriangleLeft(x, y)){
-//			System.out.println("is right");
 			//Top
 			tL = triangles.getTriangle(x-1, y);
 			tR = triangles.getTriangle(x, y);
@@ -67,7 +61,6 @@ public class CubeAnimation extends Animations{
 			rT = triangles.getTriangle(x, y+1);
 			rB = triangles.getTriangle(x, y+2);
 		}else{
-//			System.out.println("is left");
 			//Top
 			tL = triangles.getTriangle(x, y);
 			tR = triangles.getTriangle(x+1, y);
@@ -153,50 +146,12 @@ public class CubeAnimation extends Animations{
 		this.setCube(x, y);
 	}
 	
-	
-	public void changeColor(float colorR, float colorG, float colorB){
-		this.colorR = colorR;
-		this.colorG = colorG;
-		this.colorB = colorB;
-	}
-	
-	
 	public void remove(){
 		isActive = false;
-		tLColor.remove();
-		tRColor.remove();		
-		lTColor.remove();
-		lBColor.remove();		
-		rTColor.remove();
-		rBColor.remove();
-		
-		if(tL!=null)tL.updateEffects();
-		if(tR!=null)tR.updateEffects();
-		if(lT!=null)lT.updateEffects();
-		if(lB!=null)lB.updateEffects();
-		if(rT!=null)rT.updateEffects();
-		if(rB!=null)rB.updateEffects();
-	}
-	
-	public void delete(int xPos, int yPos){
-		int x = triangles.getIndexFromPos(xPos, yPos).x;
-		int y = triangles.getIndexFromPos(xPos, yPos).y;
-		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
-		if(this.x == x && this.y == y){
-			remove();
-		}
 	}
 
 	@Override
 	public boolean isActive() {
 		return isActive;
-	}
-	
-	public int getX(){
-		return x;
-	}
-	
-	public int getY(){
-		return y;
 	}
 }
