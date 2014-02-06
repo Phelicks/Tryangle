@@ -32,7 +32,7 @@ public class RadialAnimation extends Animations{
 			float a = (float)Math.sin(i)*iRadius;
 			float b = (float)Math.cos(i)*iRadius;
 			Triangle t = triangles.getExactTriangle((int)a+xPos, (int)b+yPos);
-			if(t != null)t.addBottomLayerEffect(new ColorFlash(0.1f, 0.1f, 0.1f, 40));
+			if(t != null)t.addBottomLayerEffect(new ColorFlash(0.01f, 0.01f, 0.01f, 10));
 		}
 		if(iRadius <= radius)
 			iRadius += ((float)radius)/50f;
