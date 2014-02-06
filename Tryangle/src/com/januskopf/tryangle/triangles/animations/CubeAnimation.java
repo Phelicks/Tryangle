@@ -178,13 +178,15 @@ public class CubeAnimation extends Animations{
 		if(rB!=null)rB.updateEffects();
 	}
 	
-	public void delete(int xPos, int yPos){
+	public boolean delete(int xPos, int yPos){
 		int x = triangles.getIndexFromPos(xPos, yPos).x;
 		int y = triangles.getIndexFromPos(xPos, yPos).y;
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		if(this.x == x && this.y == y){
 			remove();
+			return true;
 		}
+		return false;
 	}
 
 	@Override

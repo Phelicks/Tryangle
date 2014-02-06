@@ -105,7 +105,7 @@ public class WaterAnimation extends Animations{
 //		}
 		
 		
-		float aDif = iRadius*0.6f;
+		float aDif = iRadius*0.57f;
 		int a = Math.round(aDif);
 		int b = (int)iRadius;
 		int dx = 0;
@@ -153,7 +153,7 @@ public class WaterAnimation extends Animations{
 			float c = 0.08f - (0.04f - (0.04f/iRadius));
 			for(Triangle t : triangle){				
 				if(t != null){
-					t.addBottomLayerEffect(new ColorFlash(colorR+c, colorG+c, colorB+c, 40));
+					t.addBottomLayerEffect(new ColorFlash(colorR+c, colorG+c, colorB+c, 30));
 				}
 			}
 			
