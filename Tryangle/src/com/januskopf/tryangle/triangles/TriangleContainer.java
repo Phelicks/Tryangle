@@ -91,7 +91,7 @@ public class TriangleContainer implements Serializable{
 	private void renderTriangle(int x, int y, Triangle t){
 		float xPos = xView + x*height;
 		float yPos = yView + y*length/2;
-		float tHeight = height;
+		float tHeight = height;	//*(float)Math.random()
 		if(isTriangleLeft(x, y)){
 			tHeight = tHeight * -1;
 			xPos = xPos + height;
