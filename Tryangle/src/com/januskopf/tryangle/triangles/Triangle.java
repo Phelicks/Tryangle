@@ -53,7 +53,11 @@ public class Triangle implements Serializable{
 			backgroundEffect = effect;
 			backgroundEffect.setBackgroundColor(backgroundColorR, backgroundColorG, backgroundColorB);
 		}
-		//TODO Was wenn schon ein Effect da ist??
+	}
+	 
+	public void overrideBackgroundEffect(BackgroundEffect effect){
+		backgroundEffect = effect;
+		backgroundEffect.setBackgroundColor(backgroundColorR, backgroundColorG, backgroundColorB);
 	}
 
 	private void runEffects(){

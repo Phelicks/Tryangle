@@ -23,6 +23,9 @@ public class TriangleContainer implements Serializable{
 	private float yView = 0;
 	private float length = 0;
 	private float height = 0;
+	private float groundColorR = 0;
+	private float groundColorG = 0;
+	private float groundColorB = 0;
 	
 	private ArrayList<Animations> animations = new ArrayList<Animations>();
 	private Triangle[][] triangles;
@@ -148,6 +151,25 @@ public class TriangleContainer implements Serializable{
 	//	getter()  &  setter()	//
 	//							//
 	//////////////////////////////
+
+	public void setGroundColor(float red, float green, float blue) {
+		this.groundColorR = red;
+		this.groundColorG = green;
+		this.groundColorB = blue;
+	}
+	
+	public float getGroundColorR() {
+		return groundColorR;
+	}
+
+	public float getGroundColorG() {
+		return groundColorG;
+	}
+
+	public float getGroundColorB() {
+		return groundColorB;
+	}
+
 	
 	public Triangle getExactTriangle(int xPos, int yPos){
 		int x = (int)((xPos-xView) / height);
