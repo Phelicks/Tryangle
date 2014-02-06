@@ -22,8 +22,7 @@ public class Level1 implements Levels{
 	
 	public Level1() {
 		triangles = new TriangleContainer(xTriangles, yTriangles);
-		triangles.setBackgroundColor(0.0f, 0.39f, 0.69f);
-		fadeAnimation = new FadeAnimation(triangles, 100, true);
+		fadeAnimation = new FadeAnimation(triangles,0.0f, 0.39f, 0.69f, 100, true);
 		flashAnimation = new RandomFlashing(triangles, xTriangles, yTriangles);		
 		triangles.addAnimation(fadeAnimation);
 		
@@ -52,10 +51,6 @@ public class Level1 implements Levels{
 		if(MouseListener.isButtonClicked(0)){
 			triangles.addAnimation(new CubeAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY() - (int)(triangles.getLength()/2), 0.5f, 0.5f, 0.5f));
 //			triangles.addAnimation(new RadialAnimation(triangles, MouseListener.getMouseX(), MouseListener.getMouseY()));
-		}
-		
-		if(KeyboardListener.isKeyClicked(Keyboard.KEY_F6)){
-			triangles.setBackgroundColor((float)Math.random(), (float)Math.random(), (float)Math.random());
 		}
 		
 		triangles.tick();

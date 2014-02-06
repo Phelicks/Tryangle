@@ -23,15 +23,15 @@ public class FadeAnimation extends Animations{
 	boolean randomise;
 
 	private TriangleContainer triangles;
-	
-	public FadeAnimation(TriangleContainer triangles, int ticks, boolean randomise) {
+
+	public FadeAnimation(TriangleContainer triangles, float colorR, float colorG, float colorB, int ticks, boolean randomise) {
 		this.triangles = triangles;
 		this.xTriangles = triangles.getxTriangles();
 		this.yTriangles = triangles.getyTriangles();
 		
-		this.colorR = triangles.getBackgroundRed();
-		this.colorG = triangles.getBackgroundGreen();
-		this.colorB = triangles.getBackgroundBlue();
+		this.colorR = colorR;
+		this.colorG = colorG;
+		this.colorB = colorB;
 		
 		this.ticks = ticks;
 		
