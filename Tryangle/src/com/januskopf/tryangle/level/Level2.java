@@ -14,8 +14,8 @@ import com.januskopf.tryangle.triangles.animations.*;
 
 public class Level2 implements Levels{
 
-	private int yTriangles = 50;
-	private int xTriangles = 400;
+	private int yTriangles = 100;
+	private int xTriangles = 100;
 
 	private static ArrayList<Animations> animations = new ArrayList<Animations>();
 	private TriangleContainer triangles;
