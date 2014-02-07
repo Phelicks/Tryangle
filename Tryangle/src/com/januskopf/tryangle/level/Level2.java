@@ -22,22 +22,30 @@ public class Level2 implements Levels{
 	private Random random;
 	private ArrayList<int[]> firePos = new ArrayList<int[]>();
 	
+	private int xPos;
+	private int yPos;
+	
+	private int x;
+	private int y;
+	
 	public Level2() {
 		random = new Random();
 		triangles = new TriangleContainer(xTriangles, yTriangles);
 		Sound.getInstance();
+		xPos = MouseListener.getMouseX();
+		yPos = MouseListener.getMouseY() - (int)(triangles.getLength()/2);
 	}
 		
 	public void tick(){
 		triangles.tick();
 		this.runAnimations();
-		int x = MouseListener.getMouseX(); 		
-		int y = MouseListener.getMouseY(); 
+		xPos = MouseListener.getMouseX();
+		yPos = MouseListener.getMouseY() - (int)(triangles.getLength()/2);
 		//this.fireAnimation(x, y);
 		this.waterAnimation();
 		
 		if(MouseListener.isButtonClicked(0)){
-			int pos[] = {x, y};
+			int pos[] = {xPos, yPos};
 			firePos.add(pos);
 			Sound.getInstance().Multi2(Sound.FIRE_1);
 		}
@@ -52,6 +60,9 @@ public class Level2 implements Levels{
 		if(KeyboardListener.isKeyPressed(Keyboard.KEY_E)){
 			firePos.clear();
 		}
+		
+		x = triangles.getIndexFromPos(xPos, yPos).x;
+		y = triangles.getIndexFromPos(xPos, yPos).y;
 		
 		//this.circle();
 	}
@@ -90,10 +101,31 @@ public class Level2 implements Levels{
 			firePos.clear();
 			int x = MouseListener.getMouseX();
 			int y = MouseListener.getMouseY();
-			Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.random()/5, 0.25f, ((int)Math.hypot(Display.getHeight(), Display.getWidth()))+1);
+			//Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.random()/5, 0.25f, ((int)Math.hypot(Display.getHeight(), Display.getWidth()))+1);
+			Animations animation = new WindAnimation(triangles, x, y);
 			Level2.animations.add(animation);
 		}
-		
-
+		if (MouseListener.isButtonPressed(1) && mouseMoved()) {
+			Sound.getInstance().Multi2(Sound.WATER_1);
+			firePos.clear();
+			int x = MouseListener.getMouseX();
+			int y = MouseListener.getMouseY();
+			//Animations animation = new WaterAnimation(triangles, x, y, 0, (float)Math.random()/5, 0.25f, ((int)Math.hypot(Display.getHeight(), Display.getWidth()))+1);
+			Animations animation = new WindAnimation(triangles, x, y);
+			Level2.animations.add(animation);
+		}
 	}
+	
+	private boolean mouseMoved(){
+		if(x == triangles.getIndexFromPos(xPos, yPos).x && y == triangles.getIndexFromPos(xPos, yPos).y){
+			return false;
+		}
+		else{
+			x = triangles.getIndexFromPos(xPos, yPos).x;
+			y = triangles.getIndexFromPos(xPos, yPos).y;
+			return true;
+		}
+	}
+	
+	
 }

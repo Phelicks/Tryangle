@@ -51,7 +51,7 @@ public class CubeAnimation extends Animations{
 		this.y = triangles.getIndexFromPos(xPos, yPos).y;
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		this.setCube(x, y);
-//		System.out.println("x: " + x + "y: " + y);
+		System.out.println("Cube Werte: x: " + x + "y: " + y);
 	}
 	
 	private void setCube(int x, int y){
@@ -178,16 +178,6 @@ public class CubeAnimation extends Animations{
 		if(rB!=null)rB.updateEffects();
 	}
 	
-	public boolean delete(int xPos, int yPos){
-		int x = triangles.getIndexFromPos(xPos, yPos).x;
-		int y = triangles.getIndexFromPos(xPos, yPos).y;
-		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
-		if(this.x == x && this.y == y){
-			remove();
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public boolean isActive() {
