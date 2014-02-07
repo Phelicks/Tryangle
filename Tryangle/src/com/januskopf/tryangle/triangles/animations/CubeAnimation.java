@@ -7,7 +7,7 @@ import org.lwjgl.input.Keyboard;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;
-import com.januskopf.tryangle.triangles.effects.ColorSet;
+import com.januskopf.tryangle.triangles.effects.CubeColorSet;
 
 public class CubeAnimation extends Animations{
 	
@@ -23,18 +23,18 @@ public class CubeAnimation extends Animations{
 	//top
 	private Triangle tL;
 	private Triangle tR;
-	private ColorSet tLColor;
-	private ColorSet tRColor;
+	private CubeColorSet tLColor;
+	private CubeColorSet tRColor;
 	//left
 	private Triangle lT;
 	private Triangle lB;
-	private ColorSet lTColor;
-	private ColorSet lBColor;
+	private CubeColorSet lTColor;
+	private CubeColorSet lBColor;
 	//right
 	private Triangle rT;
 	private Triangle rB;
-	private ColorSet rTColor;
-	private ColorSet rBColor;
+	private CubeColorSet rTColor;
+	private CubeColorSet rBColor;
 	
 	private boolean isActive = true;
 	
@@ -80,16 +80,17 @@ public class CubeAnimation extends Animations{
 		}
 		
 		//top
-		tLColor = new ColorSet(colorR, colorG, colorB);
-		tRColor = new ColorSet(colorR, colorG, colorB);
+		tLColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.TOP_LEFT);
+		tRColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.TOP_RIGHT);
 		//left
-		lTColor = new ColorSet(colorR-0.1f, colorG-0.1f, colorB-0.1f);
-		lBColor = new ColorSet(colorR-0.1f, colorG-0.1f, colorB-0.1f);
+		lTColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.LEFT_TOP);
+		lBColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.LEFT_BOTTOM);
 		//right
-		rTColor = new ColorSet(colorR-0.2f, colorG-0.2f, colorB-0.2f);
-		rBColor = new ColorSet(colorR-0.2f, colorG-0.2f, colorB-0.2f);
+		rTColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.RIGHT_TOP);
+		rBColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.RIGHT_BOTTOM);
 		
-		if((tL != null && tL.getColorR() == colorR-0.1f) && (tR != null && tR.getColorR() == colorR-0.2f) || (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
+		if((tL != null && tL.getCubeSide() == CubeColorSet.LEFT_BOTTOM) && (tR != null && tR.getCubeSide() == CubeColorSet.RIGHT_BOTTOM) 
+				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
 			if(tL != null)tL.addTopLayerEffect(tLColor, true);
 			if(tR != null)tR.addTopLayerEffect(tRColor, true);			
 		}
@@ -98,7 +99,8 @@ public class CubeAnimation extends Animations{
 			if(tR != null)tR.addTopLayerEffect(tRColor, false);			
 		}
 		
-		if((lT != null && lT.getColorR() == colorR) && (lB != null && lB.getColorR() == colorR-0.2f) || (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
+		if((lT != null && lT.getCubeSide() == CubeColorSet.TOP_RIGHT) && (lB != null && lB.getCubeSide() == CubeColorSet.RIGHT_TOP) 
+				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
 			if(lT != null)lT.addTopLayerEffect(lTColor, true);
 			if(lB != null)lB.addTopLayerEffect(lBColor, true);
 		}else{			
@@ -106,7 +108,8 @@ public class CubeAnimation extends Animations{
 			if(lB != null)lB.addTopLayerEffect(lBColor, false);
 		}
 
-		if((rT != null && rT.getColorR() == colorR) && (rB != null && rB.getColorR() == colorR-0.1f) || (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
+		if((rT != null && rT.getCubeSide() == CubeColorSet.TOP_LEFT) && (rB != null && rB.getCubeSide() == CubeColorSet.LEFT_TOP) 
+				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
 			if(rT != null)rT.addTopLayerEffect(rTColor, true);
 			if(rB != null)rB.addTopLayerEffect(rBColor, true);			
 		}else{			

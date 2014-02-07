@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.januskopf.tryangle.triangles.effects.BackgroundEffect;
+import com.januskopf.tryangle.triangles.effects.CubeColorSet;
 import com.januskopf.tryangle.triangles.effects.Effect;
 
 public class Triangle implements Serializable{
@@ -143,5 +144,14 @@ public class Triangle implements Serializable{
 		}
 		else
 			return backgroundColorB;
+	}
+	
+	public byte getCubeSide(){
+		for (Effect ccs : topLayerEffects) {
+			if(ccs instanceof CubeColorSet){
+				return ((CubeColorSet)ccs).getSide();
+			}
+		}
+		return -1;
 	}
 }
