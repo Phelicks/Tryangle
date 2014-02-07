@@ -37,7 +37,7 @@ public class WindAnimation extends Animations{
 		if(iRadius <= radius)
 			iRadius += ((float)radius)/20f;
 		else{
-			iRadius = 00;
+			iRadius = 0;
 			isActive = false;
 		}
 	}
