@@ -245,11 +245,15 @@ public class Level1 implements Levels{
 //	}
 	
 	private boolean isSameCube(int x, int y){
+		Triangle tL = triangles.getTriangle(x, y);
+		Triangle lB = triangles.getTriangle(x, y+2);
+		Triangle rT = triangles.getTriangle(x+1, y+1);
+		
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
-		//Top
-		if(triangles.getTriangle(x, y).getCubeSide() == CubeColorSet.TOP_LEFT 
-			&& triangles.getTriangle(x, y+2).getCubeSide() == CubeColorSet.LEFT_BOTTOM 
-				&& triangles.getTriangle(x+1, y+1).getCubeSide() == CubeColorSet.RIGHT_TOP) return true;
+		
+		if(tL != null && tL.getCubeSide() == CubeColorSet.TOP_LEFT 
+			&& lB != null && lB.getCubeSide() == CubeColorSet.LEFT_BOTTOM 
+				&& rT != null && rT.getCubeSide() == CubeColorSet.RIGHT_TOP) return true;
 		else return false;
 		
 	}
