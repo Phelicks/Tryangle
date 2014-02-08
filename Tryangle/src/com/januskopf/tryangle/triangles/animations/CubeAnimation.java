@@ -51,7 +51,7 @@ public class CubeAnimation extends Animations{
 		this.y = triangles.getIndexFromPos(xPos, yPos).y;
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		this.setCube(x, y);
-		System.out.println("Cube Werte: x: " + x + "y: " + y);
+//		System.out.println("Cube Werte: x: " + x + "y: " + y);
 	}
 	
 	private void setCube(int x, int y){
@@ -193,5 +193,17 @@ public class CubeAnimation extends Animations{
 	
 	public int getY(){
 		return y;
+	}
+	
+	public float getColorR(){
+		return colorR;
+	}
+	
+	public float getColorG(){
+		return colorG;
+	}
+	
+	public float getColorB(){
+		return colorB;
 	}
 }

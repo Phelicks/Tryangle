@@ -101,6 +101,30 @@ public class TriangleContainer implements Serializable{
 		GL11.glEnd();
 	}
 	
+	public float[] getTriangleVertices(int x, int y){
+		float[] vertices = new float[6];
+		
+		float xPos = xView + x*height;
+		float yPos = yView + y*length/2;
+		float tHeight = height;
+		if(isTriangleLeft(x, y)){
+			tHeight = tHeight * -1;
+			xPos = xPos + height;
+		}
+		
+		//Top
+		vertices[0] = xPos;
+		vertices[1] = yPos;
+		//Bottom
+		vertices[2] = xPos;
+		vertices[3] = yPos+length;
+		//Left/Right
+		vertices[4] = xPos+tHeight;
+		vertices[5] = yPos+length/2;
+		
+		return vertices;
+	}
+	
 	private void resizeTriangles(float x1, float y1, float x2, float y2){		
 		if(triangles[0].length*height < x2-x1)
 			this.setHeight((x2-x1)/triangles[0].length);	
