@@ -185,7 +185,7 @@ public class Level1 implements Levels{
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		
 		
-		
+		if(MouseListener.isButtonPressed(0)) System.out.println("MOUSE PRESSED");
 		
 		triangles.tick();
 	}
@@ -211,7 +211,8 @@ public class Level1 implements Levels{
 			cubes.add(cube);
 			triangles.addAnimation(cube);
 			
-			triangles.addAnimation(new RadialAnimation(triangles, xPos, yPos));
+			if(MouseListener.isButtonPressed(0) && !MouseListener.isButtonClicked(0)) triangles.addAnimation(new RadialAnimation(triangles, xPos, yPos, 0.0005f));
+			else if (MouseListener.isButtonClicked(0)) triangles.addAnimation(new RadialAnimation(triangles, xPos, yPos, 0.0025f));
 	}
 	
 	private void eraseCube(){

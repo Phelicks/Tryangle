@@ -11,15 +11,18 @@ public class RadialAnimation extends Animations{
 	private int yPos;
 	private float radius;
 	private int iRadius = 50;
+	private float intensity;
 	
 	private TriangleContainer triangles;
 	
-	public RadialAnimation(TriangleContainer triangles, int xPos, int yPos) {
+	public RadialAnimation(TriangleContainer triangles, int xPos, int yPos, float intensity) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.radius = 200;
 		
 		this.triangles = triangles;
+		
+		this.intensity = intensity;
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class RadialAnimation extends Animations{
 			float a = (float)Math.sin(i)*iRadius;
 			float b = (float)Math.cos(i)*iRadius;
 			Triangle t = triangles.getExactTriangle((int)a+xPos, (int)b+yPos);
-			if(t != null)t.addBottomLayerEffect(new ColorFlash(0.008f, 0.008f, 0.008f, 10+(iRadius/5)));
+			if(t != null)t.addBottomLayerEffect(new ColorFlash(intensity, intensity, intensity, 10+(iRadius/5)));
 		}
 		if(iRadius <= radius)
 			iRadius += ((float)radius)/20f;
