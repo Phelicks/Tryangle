@@ -47,13 +47,13 @@ public class EraseAnimation extends Animations{
 		this.yPos = yPos;
 		
 		this.xPos2 = xPos;
-		this.yPos2 = yPos;
+		this.yPos2 = yPos+10;
 		
 		this.xPos3 = xPos;
 		this.yPos3 = yPos;
 		
 		this.xPos4 = xPos;
-		this.yPos4 = yPos;
+		this.yPos4 = yPos+10;
 		
 		this.startDuration = duration;
 		this.duration = duration;

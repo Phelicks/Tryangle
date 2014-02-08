@@ -55,29 +55,16 @@ public class CubeAnimation extends Animations{
 	}
 	
 	private void setCube(int x, int y){
-		if(!TriangleContainer.isTriangleLeft(x, y)){
-//			System.out.println("is right");
-			//Top
-			tL = triangles.getTriangle(x-1, y);
-			tR = triangles.getTriangle(x, y);
-			//Left
-			lT = triangles.getTriangle(x-1, y+1);
-			lB = triangles.getTriangle(x-1, y+2);
-			//Right
-			rT = triangles.getTriangle(x, y+1);
-			rB = triangles.getTriangle(x, y+2);
-		}else{
-//			System.out.println("is left");
-			//Top
-			tL = triangles.getTriangle(x, y);
-			tR = triangles.getTriangle(x+1, y);
-			//Left
-			lT = triangles.getTriangle(x, y+1);
-			lB = triangles.getTriangle(x, y+2);
-			//Right
-			rT = triangles.getTriangle(x+1, y+1);
-			rB = triangles.getTriangle(x+1, y+2);
-		}
+//		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;			
+		//Top
+		tL = triangles.getTriangle(x, y);
+		tR = triangles.getTriangle(x+1, y);
+		//Left
+		lT = triangles.getTriangle(x, y+1);
+		lB = triangles.getTriangle(x, y+2);
+		//Right
+		rT = triangles.getTriangle(x+1, y+1);
+		rB = triangles.getTriangle(x+1, y+2);
 		
 		//top
 		tLColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.TOP_LEFT);
@@ -152,7 +139,8 @@ public class CubeAnimation extends Animations{
 		if(rB!=null)rB.updateEffects();
 		
 		int x = triangles.getIndexFromPos(xPos, yPos).x;
-		int y = triangles.getIndexFromPos(xPos, yPos).y;		
+		int y = triangles.getIndexFromPos(xPos, yPos).y;
+		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		this.setCube(x, y);
 	}
 	

@@ -9,6 +9,10 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;
 import com.januskopf.tryangle.triangles.animations.*;
+import com.januskopf.tryangle.triangles.effects.ColorFlash;
+import com.januskopf.tryangle.triangles.effects.ColorSet;
+import com.januskopf.tryangle.triangles.effects.ColorTransition;
+import com.januskopf.tryangle.triangles.effects.CubeColorSet;
 
 public class Level1 implements Levels{
 	
@@ -55,7 +59,7 @@ public class Level1 implements Levels{
 		y = triangles.getIndexFromPos(xPos, yPos).y; 
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		
-		mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
+//		mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
 		mouseCubeLines = new MouseCubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
 	}
 		
@@ -72,10 +76,10 @@ public class Level1 implements Levels{
 		yPos = MouseListener.getMouseY() - (int)(triangles.getLength()/2);
 		
 		//MouseCube bewegen, wenn geloescht wird verschwindet MouseCube bis er bewegt wird
-		if(mouseCube == null && cubeMoved()){
-			mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
-		}
-		else if(mouseCube != null) this.mouseCube.moveTo(xPos, yPos);
+//		if(mouseCube == null && cubeMoved()){
+//			mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
+//		}
+//		else if(mouseCube != null) this.mouseCube.moveTo(xPos, yPos);
 		
 		mouseCubeLines.moveTo(xPos, yPos);
 		
@@ -96,7 +100,7 @@ public class Level1 implements Levels{
 	        	cubeR -= 0.1f;
 	        	cubeG -= 0.1f;
 	        	cubeB -= 0.1f;
-	        	mouseCube.changeColor(cubeR, cubeG, cubeB);
+//	        	mouseCube.changeColor(cubeR, cubeG, cubeB);
 	        	mouseCubeLines.changeColor(cubeR, cubeG, cubeB);
 	        }
 	    } else if (dWheel > 0){
@@ -105,7 +109,7 @@ public class Level1 implements Levels{
 	        	cubeR += 0.1f;
 	        	cubeG += 0.1f;
 	        	cubeB += 0.1f;
-	        	mouseCube.changeColor(cubeR, cubeG, cubeB);
+//	        	mouseCube.changeColor(cubeR, cubeG, cubeB);
 	        	mouseCubeLines.changeColor(cubeR, cubeG, cubeB);
 	        }
 	   }
@@ -169,9 +173,9 @@ public class Level1 implements Levels{
 			cubeG = (float)Math.random();
 			cubeB = (float)Math.random();
 			if(mouseCube != null) mouseCube.changeColor(cubeR, cubeG, cubeB);
-			else {
-				mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
-			}
+//			else {
+//				mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
+//			}
 			mouseCubeLines.changeColor(cubeR, cubeG, cubeB);
 			System.out.println("Color R: " + cubeR + " G: " + cubeG + " B:" + cubeB);
 		}
@@ -180,7 +184,7 @@ public class Level1 implements Levels{
 		y = triangles.getIndexFromPos(xPos, yPos).y;
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		
-		mouseCubeLines.tick();
+		
 		
 		
 		triangles.tick();
@@ -189,14 +193,18 @@ public class Level1 implements Levels{
 
 	public void render(){
 		triangles.render();
+		mouseCubeLines.render();
 	}
 	
 	private void drawCube(){
 //		System.out.println("Level Werte x: " + x + "y: " + y);
-		for(int i=0; i<cubes.size(); i++){
-			if (cubes.get(i).getX() == x && cubes.get(i).getY() == y){
-				cubes.get(i).remove();
-				cubes.remove(i);
+		if(isSameCube(x, y)){
+			for(int i = cubes.size()-1; i >= 0; i--){
+				if (cubes.get(i).getX() == x && cubes.get(i).getY() == y){
+					cubes.get(i).remove();
+					cubes.remove(i);
+					break;
+				}
 			}
 		}
 			CubeAnimation cube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
@@ -207,14 +215,43 @@ public class Level1 implements Levels{
 	}
 	
 	private void eraseCube(){
-		for(int i=0; i<cubes.size(); i++){
+		boolean cubeDeleted = false;
+		for(int i = cubes.size()-1; i >= 0; i--){
 			if (cubes.get(i).getX() == x && cubes.get(i).getY() == y){
 				triangles.addAnimation(new EraseAnimation(triangles, xPos, yPos, cubes.get(i).getColorR(), cubes.get(i).getColorG(), cubes.get(i).getColorB(), 13));
 //				triangles.addAnimation(new RadialAnimation(triangles, xPos, yPos));
 				cubes.get(i).remove();
 				cubes.remove(i);
+				cubeDeleted = true;
+				break;
 			}
 		}
+//		if(!cubeDeleted && MouseListener.isButtonClicked(1)) eraseBackground(x, y);
+	}
+	
+//	private void eraseBackground(int x, int y){
+//		ColorTransition setBlack = new ColorTransition(triangles, 0.0f, 0.0f, 0.0f, 300);
+//		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
+//		//Top
+//		triangles.getTriangle(x, y).addTopLayerEffect(setBlack, true);
+//		triangles.getTriangle(x+1, y).addTopLayerEffect(setBlack, true);
+//		//Left
+//		triangles.getTriangle(x, y+1).addTopLayerEffect(setBlack, true);
+//		triangles.getTriangle(x, y+2).addTopLayerEffect(setBlack, true);
+//		//Right
+//		triangles.getTriangle(x+1, y+1).addTopLayerEffect(setBlack, true);
+//		triangles.getTriangle(x+1, y+2).addTopLayerEffect(setBlack, true);
+//		System.out.println("ERASE BG");
+//	}
+	
+	private boolean isSameCube(int x, int y){
+		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
+		//Top
+		if(triangles.getTriangle(x, y).getCubeSide() == CubeColorSet.TOP_LEFT 
+			&& triangles.getTriangle(x, y+2).getCubeSide() == CubeColorSet.LEFT_BOTTOM 
+				&& triangles.getTriangle(x+1, y+1).getCubeSide() == CubeColorSet.RIGHT_TOP) return true;
+		else return false;
+		
 	}
 	
 	

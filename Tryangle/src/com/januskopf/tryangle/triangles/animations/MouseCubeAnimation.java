@@ -61,36 +61,19 @@ public class MouseCubeAnimation extends Animations{
 //		System.out.println("Cube Werte: x: " + x + "y: " + y);
 	}
 	
-	private void setCube(int x, int y){
-		if(!TriangleContainer.isTriangleLeft(x, y)){
-//			System.out.println("is right");
-			//Top
-			tL = triangles.getTriangle(x-1, y);
-			tR = triangles.getTriangle(x, y);
-			tLVertices = triangles.getTriangleVertices(x-1, y);
-			//Left
-			lT = triangles.getTriangle(x-1, y+1);
-			lB = triangles.getTriangle(x-1, y+2);
-			lBVertices = triangles.getTriangleVertices(x-1, y+2);
-			//Right
-			rT = triangles.getTriangle(x, y+1);
-			rB = triangles.getTriangle(x, y+2);
-			rTVertices = triangles.getTriangleVertices(x, y+1);
-		}else{
-//			System.out.println("is left");
-			//Top
-			tL = triangles.getTriangle(x, y);
-			tR = triangles.getTriangle(x+1, y);
-			tLVertices = triangles.getTriangleVertices(x, y);
-			//Left
-			lT = triangles.getTriangle(x, y+1);
-			lB = triangles.getTriangle(x, y+2);
-			lBVertices = triangles.getTriangleVertices(x, y+2);
-			//Right
-			rT = triangles.getTriangle(x+1, y+1);
-			rB = triangles.getTriangle(x+1, y+2);
-			rTVertices = triangles.getTriangleVertices(x+1, y+1);
-		}
+	private void setCube(int x, int y){		
+		//Top
+		tL = triangles.getTriangle(x, y);
+		tR = triangles.getTriangle(x+1, y);
+		tLVertices = triangles.getTriangleVertices(x, y);
+		//Left
+		lT = triangles.getTriangle(x, y+1);
+		lB = triangles.getTriangle(x, y+2);
+		lBVertices = triangles.getTriangleVertices(x, y+2);
+		//Right
+		rT = triangles.getTriangle(x+1, y+1);
+		rB = triangles.getTriangle(x+1, y+2);
+		rTVertices = triangles.getTriangleVertices(x+1, y+1);
 		
 //		//top
 //		tLColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.TOP_LEFT);
@@ -144,6 +127,17 @@ public class MouseCubeAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
+		
+		
+	}
+
+	@Override
+	protected void endAnimation() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void render(){
 		GL11.glColor3f(colorR, colorG, colorB);
 		GL11.glBegin(GL11.GL_LINES);
 			GL11.glVertex2f(tLVertices[0], tLVertices[1]);
@@ -198,13 +192,6 @@ public class MouseCubeAnimation extends Animations{
 			GL11.glVertex2f(rTVertices[0], rTVertices[1]);
 			GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
 		GL11.glEnd();
-		
-	}
-
-	@Override
-	protected void endAnimation() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void moveTo(int xPos, int yPos){
