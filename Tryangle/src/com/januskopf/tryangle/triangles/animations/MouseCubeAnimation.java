@@ -1,7 +1,5 @@
 package com.januskopf.tryangle.triangles.animations;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -23,29 +21,29 @@ public class MouseCubeAnimation extends Animations{
 	
 	//top
 	private Triangle tL;
-	private Triangle tR;
-	private CubeColorSet tLColor;
-	private CubeColorSet tRColor;
-	
+	private Triangle tR;	
 	private float[] tLVertices;
 	//left
 	private Triangle lT;
-	private Triangle lB;
-	private CubeColorSet lTColor;
-	private CubeColorSet lBColor;
-	
+	private Triangle lB;	
 	private float[] lBVertices;
 	//right
 	private Triangle rT;
-	private Triangle rB;
-	private CubeColorSet rTColor;
-	private CubeColorSet rBColor;
-	
+	private Triangle rB;	
 	private float[] rTVertices;
 	
 	private boolean isActive = true;
 	
 	private TriangleContainer triangles;
+	private boolean topLeft;
+	private boolean topRight;
+	private boolean leftTop;
+	private boolean leftBottom;
+	private boolean rightBottom;
+	private boolean rightTop;
+	private boolean centerBottom;
+	private boolean centerLeft;
+	private boolean centerRight;
 	
 	public MouseCubeAnimation(TriangleContainer triangles, int xPos, int yPos, float colorR, float colorG, float colorB){		
 		this.triangles = triangles;
@@ -58,65 +56,145 @@ public class MouseCubeAnimation extends Animations{
 		this.y = triangles.getIndexFromPos(xPos, yPos).y;
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		this.setCube(x, y);
-//		System.out.println("Cube Werte: x: " + x + "y: " + y);
 	}
 	
-	private void setCube(int x, int y){		
-		//Top
-		tL = triangles.getTriangle(x, y);
-		tR = triangles.getTriangle(x+1, y);
-		tLVertices = triangles.getTriangleVertices(x, y);
-		//Left
-		lT = triangles.getTriangle(x, y+1);
-		lB = triangles.getTriangle(x, y+2);
-		lBVertices = triangles.getTriangleVertices(x, y+2);
-		//Right
-		rT = triangles.getTriangle(x+1, y+1);
-		rB = triangles.getTriangle(x+1, y+2);
-		rTVertices = triangles.getTriangleVertices(x+1, y+1);
+	private void setCube(int x, int y){
+		if(!TriangleContainer.isTriangleLeft(x, y)){
+			//Top
+			tL = triangles.getTriangle(x-1, y);
+			tR = triangles.getTriangle(x, y);
+			tLVertices = triangles.getTriangleVertices(x-1, y);
+			//Left
+			lT = triangles.getTriangle(x-1, y+1);
+			lB = triangles.getTriangle(x-1, y+2);
+			lBVertices = triangles.getTriangleVertices(x-1, y+2);
+			//Right
+			rT = triangles.getTriangle(x, y+1);
+			rB = triangles.getTriangle(x, y+2);
+			rTVertices = triangles.getTriangleVertices(x, y+1);
+		}else{
+			//Top
+			tL = triangles.getTriangle(x, y);
+			tR = triangles.getTriangle(x+1, y);
+			tLVertices = triangles.getTriangleVertices(x, y);
+			//Left
+			lT = triangles.getTriangle(x, y+1);
+			lB = triangles.getTriangle(x, y+2);
+			lBVertices = triangles.getTriangleVertices(x, y+2);
+			//Right
+			rT = triangles.getTriangle(x+1, y+1);
+			rB = triangles.getTriangle(x+1, y+2);
+			rTVertices = triangles.getTriangleVertices(x+1, y+1);
+		}
 		
-//		//top
-//		tLColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.TOP_LEFT);
-//		tRColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.TOP_RIGHT);
-//		//left
-//		lTColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.LEFT_TOP);
-//		lBColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.LEFT_BOTTOM);
-//		//right
-//		rTColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.RIGHT_TOP);
-//		rBColor = new CubeColorSet(colorR, colorG, colorB, CubeColorSet.RIGHT_BOTTOM);
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_B)){
+			topLeft		= tL!=null && tL.getCubeSide() == -1;
+			topRight	= tR!=null && tR.getCubeSide() == -1;
+			rightTop	= rT!=null && rT.getCubeSide() == -1;
+			rightBottom	= rB!=null && rB.getCubeSide() == -1;
+			leftTop		= lT!=null && lT.getCubeSide() == -1;
+			leftBottom	= lB!=null && lB.getCubeSide() == -1;
+			
+			centerBottom  	= (leftBottom || rightBottom);
+			centerLeft  	= (leftTop    || topLeft);
+			centerRight 	= (rightTop   || topRight);	
+		}else{
+			if(tL != null && tR != null) {
+				boolean top = (tL.getCubeSide() != CubeColorSet.LEFT_BOTTOM) || (tR.getCubeSide() != CubeColorSet.RIGHT_BOTTOM);	
+				topLeft  = top;
+				topRight = top;				
+			}
+			if(lT != null && lB != null){
+				boolean left  = (lT.getCubeSide() != CubeColorSet.TOP_RIGHT)   || (lB.getCubeSide() != CubeColorSet.RIGHT_TOP);
+				leftTop    = left;
+				leftBottom = left;
+			}
+			if(rT != null && rB != null){
+				boolean right = (rT.getCubeSide() != CubeColorSet.TOP_LEFT)    || (rB.getCubeSide() != CubeColorSet.LEFT_TOP);
+				rightTop    = right;
+				rightBottom = right;
+			}
+			
+			centerBottom   = true;
+			centerLeft  = true;
+			centerRight = true;			
+		}		
+	}
+	
+	public void render() {
 		
+		if(topLeft){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(tLVertices[0], tLVertices[1]);
+				GL11.glVertex2f(tLVertices[4], tLVertices[5]);	
+			GL11.glEnd();
+		}
 		
+		if(topRight){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(rTVertices[0], rTVertices[1]);
+				GL11.glVertex2f(tLVertices[0], tLVertices[1]);	
+			GL11.glEnd();
+		}
 		
-//		//if cube beneath
-//		if((tL != null && tL.getCubeSide() == CubeColorSet.LEFT_BOTTOM) && (tR != null && tR.getCubeSide() == CubeColorSet.RIGHT_BOTTOM) 
-//				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
-//			if(tL != null)tL.addTopLayerEffect(tLColor, true);
-//			if(tR != null)tR.addTopLayerEffect(tRColor, true);			
-//		}
-//		else{
-//			if(tL != null)tL.addTopLayerEffect(tLColor, false);
-//			if(tR != null)tR.addTopLayerEffect(tRColor, false);			
-//		}
-//		
-//		//if cube top right beneath
-//		if((lT != null && lT.getCubeSide() == CubeColorSet.TOP_RIGHT) && (lB != null && lB.getCubeSide() == CubeColorSet.RIGHT_TOP) 
-//				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
-//			if(lT != null)lT.addTopLayerEffect(lTColor, true);
-//			if(lB != null)lB.addTopLayerEffect(lBColor, true);
-//		}else{			
-//			if(lT != null)lT.addTopLayerEffect(lTColor, false);
-//			if(lB != null)lB.addTopLayerEffect(lBColor, false);
-//		}
-//		
-//		//if cube top left behind
-//		if((rT != null && rT.getCubeSide() == CubeColorSet.TOP_LEFT) && (rB != null && rB.getCubeSide() == CubeColorSet.LEFT_TOP) 
-//				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
-//			if(rT != null)rT.addTopLayerEffect(rTColor, true);
-//			if(rB != null)rB.addTopLayerEffect(rBColor, true);			
-//		}else{			
-//			if(rT != null)rT.addTopLayerEffect(rTColor, false);
-//			if(rB != null)rB.addTopLayerEffect(rBColor, false);
-//		}
+		if(leftTop){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(tLVertices[4], tLVertices[5]);
+				GL11.glVertex2f(lBVertices[4], lBVertices[5]);	
+			GL11.glEnd();
+		}
+		
+		if(leftBottom){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(lBVertices[4], lBVertices[5]);
+				GL11.glVertex2f(lBVertices[2], lBVertices[3]);	
+			GL11.glEnd();
+		}
+		
+		if(rightBottom){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(lBVertices[2], lBVertices[3]);
+				GL11.glVertex2f(rTVertices[2], rTVertices[3]);	
+			GL11.glEnd();
+		}
+		
+		if(rightTop){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(rTVertices[2], rTVertices[3]);
+				GL11.glVertex2f(rTVertices[0], rTVertices[1]);	
+			GL11.glEnd();
+		}
+		
+		//Lines to center
+		if(centerLeft){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(tLVertices[4], tLVertices[5]);
+				GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
+			GL11.glEnd();
+		}
+		
+		if(centerBottom){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(lBVertices[2], lBVertices[3]);
+				GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
+			GL11.glEnd();
+		}
+		
+		if(centerRight){
+			GL11.glColor3f(colorR, colorG, colorB);
+			GL11.glBegin(GL11.GL_LINES);
+				GL11.glVertex2f(rTVertices[0], rTVertices[1]);
+				GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
+			GL11.glEnd();
+		}
 	}
 	
 	@Override
@@ -127,88 +205,13 @@ public class MouseCubeAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
-		
-		
 	}
 
 	@Override
 	protected void endAnimation() {
-		// TODO Auto-generated method stub
-		
 	}
 	
-	public void render(){
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(tLVertices[0], tLVertices[1]);
-			GL11.glVertex2f(tLVertices[4], tLVertices[5]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(tLVertices[4], tLVertices[5]);
-			GL11.glVertex2f(lBVertices[4], lBVertices[5]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(lBVertices[4], lBVertices[5]);
-			GL11.glVertex2f(lBVertices[2], lBVertices[3]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(lBVertices[2], lBVertices[3]);
-			GL11.glVertex2f(rTVertices[2], rTVertices[3]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(rTVertices[2], rTVertices[3]);
-			GL11.glVertex2f(rTVertices[0], rTVertices[1]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(rTVertices[0], rTVertices[1]);
-			GL11.glVertex2f(tLVertices[0], tLVertices[1]);	
-		GL11.glEnd();
-		
-		//Lines to center
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(tLVertices[4], tLVertices[5]);
-			GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(lBVertices[2], lBVertices[3]);
-			GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
-		GL11.glEnd();
-		
-		GL11.glColor3f(colorR, colorG, colorB);
-		GL11.glBegin(GL11.GL_LINES);
-			GL11.glVertex2f(rTVertices[0], rTVertices[1]);
-			GL11.glVertex2f(tLVertices[2], tLVertices[3]);	
-		GL11.glEnd();
-	}
-	
-	public void moveTo(int xPos, int yPos){
-//		tLColor.remove();
-//		tRColor.remove();		
-//		lTColor.remove();
-//		lBColor.remove();		
-//		rTColor.remove();
-//		rBColor.remove();
-//		
-//		if(tL!=null)tL.updateEffects();
-//		if(tR!=null)tR.updateEffects();
-//		if(lT!=null)lT.updateEffects();
-//		if(lB!=null)lB.updateEffects();
-//		if(rT!=null)rT.updateEffects();
-//		if(rB!=null)rB.updateEffects();
-		
+	public void moveTo(int xPos, int yPos){		
 		int x = triangles.getIndexFromPos(xPos, yPos).x;
 		int y = triangles.getIndexFromPos(xPos, yPos).y;
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
@@ -225,19 +228,6 @@ public class MouseCubeAnimation extends Animations{
 	
 	public void remove(){
 		isActive = false;
-//		tLColor.remove();
-//		tRColor.remove();		
-//		lTColor.remove();
-//		lBColor.remove();		
-//		rTColor.remove();
-//		rBColor.remove();
-//		
-//		if(tL!=null)tL.updateEffects();
-//		if(tR!=null)tR.updateEffects();
-//		if(lT!=null)lT.updateEffects();
-//		if(lB!=null)lB.updateEffects();
-//		if(rT!=null)rT.updateEffects();
-//		if(rB!=null)rB.updateEffects();
 	}
 	
 

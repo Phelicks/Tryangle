@@ -41,7 +41,7 @@ public class Triangle implements Serializable{
 	
 	public void addTopLayerEffect(Effect effect, boolean background){
 		int i = 0;
-		if(background && topLayerEffects.size() > 0) i = 1;
+		if(background && topLayerEffects.size() > 0) i = topLayerEffects.size();
 		topLayerEffects.add(i, effect);
 	}
 	
@@ -147,7 +147,8 @@ public class Triangle implements Serializable{
 	}
 	
 	public byte getCubeSide(){
-		for (Effect ccs : topLayerEffects) {
+		for (int i = 0; i < topLayerEffects.size(); i++) {
+			Effect ccs = topLayerEffects.get(i);
 			if(ccs instanceof CubeColorSet){
 				return ((CubeColorSet)ccs).getSide();
 			}
