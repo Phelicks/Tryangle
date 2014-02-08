@@ -67,14 +67,14 @@ public class CubeAnimation extends Animations{
 		rB = triangles.getTriangle(x+1, y+2);
 		
 		//top
-		tLColor = new CubeColorSet(tL, colorR, colorG, colorB, CubeColorSet.TOP_LEFT);
-		tRColor = new CubeColorSet(tR, colorR, colorG, colorB, CubeColorSet.TOP_RIGHT);
+		if(tL != null) tLColor = new CubeColorSet(tL, colorR, colorG, colorB, CubeColorSet.TOP_LEFT);
+		if(tR != null) tRColor = new CubeColorSet(tR, colorR, colorG, colorB, CubeColorSet.TOP_RIGHT);
 		//left
-		lTColor = new CubeColorSet(lT, colorR, colorG, colorB, CubeColorSet.LEFT_TOP);
-		lBColor = new CubeColorSet(lB, colorR, colorG, colorB, CubeColorSet.LEFT_BOTTOM);
+		if(lT != null) lTColor = new CubeColorSet(lT, colorR, colorG, colorB, CubeColorSet.LEFT_TOP);
+		if(lB != null) lBColor = new CubeColorSet(lB, colorR, colorG, colorB, CubeColorSet.LEFT_BOTTOM);
 		//right
-		rTColor = new CubeColorSet(rT, colorR, colorG, colorB, CubeColorSet.RIGHT_TOP);
-		rBColor = new CubeColorSet(rB, colorR, colorG, colorB, CubeColorSet.RIGHT_BOTTOM);
+		if(rT != null) rTColor = new CubeColorSet(rT, colorR, colorG, colorB, CubeColorSet.RIGHT_TOP);
+		if(rB != null) rBColor = new CubeColorSet(rB, colorR, colorG, colorB, CubeColorSet.RIGHT_BOTTOM);
 		
 		if((tL != null && tL.getCubeSide() == CubeColorSet.LEFT_BOTTOM) && (tR != null && tR.getCubeSide() == CubeColorSet.RIGHT_BOTTOM) 
 				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
