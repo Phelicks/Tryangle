@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.triangles.Triangle;
 import com.januskopf.tryangle.triangles.TriangleContainer;
+import com.januskopf.tryangle.triangles.effects.ColorFadeOut;
 import com.januskopf.tryangle.triangles.effects.CubeColorSet;
 
 public class MouseCubeAnimation extends Animations{
@@ -21,15 +22,21 @@ public class MouseCubeAnimation extends Animations{
 	
 	//top
 	private Triangle tL;
-	private Triangle tR;	
+	private Triangle tR;
+	private ColorFadeOut tLEffect;
+	private ColorFadeOut tREffect;
 	private float[] tLVertices;
 	//left
 	private Triangle lT;
 	private Triangle lB;	
+	private ColorFadeOut lTEffect;
+	private ColorFadeOut lBEffect;
 	private float[] lBVertices;
 	//right
 	private Triangle rT;
 	private Triangle rB;	
+	private ColorFadeOut rTEffect;
+	private ColorFadeOut rBEffect;
 	private float[] rTVertices;
 	
 	private boolean isActive = true;
@@ -54,7 +61,7 @@ public class MouseCubeAnimation extends Animations{
 		
 		this.x = triangles.getIndexFromPos(xPos, yPos).x;
 		this.y = triangles.getIndexFromPos(xPos, yPos).y;
-		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
+//		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		this.setCube(x, y);
 	}
 	
@@ -115,9 +122,9 @@ public class MouseCubeAnimation extends Animations{
 				rightBottom = right;
 			}
 			
-			centerBottom   = true;
-			centerLeft  = true;
-			centerRight = true;			
+			centerBottom  	= (leftBottom || rightBottom);
+			centerLeft  	= (leftTop    || topLeft);
+			centerRight 	= (rightTop   || topRight);		
 		}		
 	}
 	
@@ -211,11 +218,47 @@ public class MouseCubeAnimation extends Animations{
 	protected void endAnimation() {
 	}
 	
-	public void moveTo(int xPos, int yPos){		
-		int x = triangles.getIndexFromPos(xPos, yPos).x;
-		int y = triangles.getIndexFromPos(xPos, yPos).y;
-		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
-		this.setCube(x, y);
+	public void moveTo(int xPos, int yPos){
+		if(triangles.getIndexFromPos(xPos, yPos).x != this.x || triangles.getIndexFromPos(xPos, yPos).y != y){			
+			this.x = triangles.getIndexFromPos(xPos, yPos).x;
+			this.y = triangles.getIndexFromPos(xPos, yPos).y;
+//			if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
+			
+			if(tL != null)tL.removeTopLayerEffect(tLEffect);
+			if(tR != null)tR.removeTopLayerEffect(tREffect);
+			if(rT != null)rT.removeTopLayerEffect(rTEffect);
+			if(rB != null)rB.removeTopLayerEffect(rBEffect);
+			if(lT != null)lT.removeTopLayerEffect(lTEffect);
+			if(lB != null)lB.removeTopLayerEffect(lBEffect);
+			
+			this.setCube(x, y);
+			
+
+			if(tL != null && tLEffect != null && tLEffect.isRunning()){
+				tLEffect.setNewTriangle(tL);
+				tL.addTopLayerEffect(tLEffect, !topLeft);
+			}
+			if(tR != null && tREffect != null && tREffect.isRunning()){
+				tREffect.setNewTriangle(tR);
+				tR.addTopLayerEffect(tREffect, !topRight);
+			}
+			if(rT != null && rTEffect != null && rTEffect.isRunning()){
+				rTEffect.setNewTriangle(rT);
+				rT.addTopLayerEffect(rTEffect, !rightTop);
+			}
+			if(rB != null && rBEffect != null && rBEffect.isRunning()){
+				rBEffect.setNewTriangle(rB);
+				rB.addTopLayerEffect(rBEffect, !rightBottom);
+			}
+			if(lT != null && lTEffect != null && lTEffect.isRunning()){
+				lTEffect.setNewTriangle(lT);
+				lT.addTopLayerEffect(lTEffect, !leftTop);
+			}
+			if(lB != null && lBEffect != null && lBEffect.isRunning()){
+				lBEffect.setNewTriangle(lB);
+				lB.addTopLayerEffect(lBEffect, !leftBottom);
+			}
+		}
 	}
 	
 	
@@ -223,6 +266,27 @@ public class MouseCubeAnimation extends Animations{
 		this.colorR = colorR+0.1f;
 		this.colorG = colorG+0.1f;
 		this.colorB = colorB+0.1f;
+		
+		if(tL != null)tL.removeTopLayerEffect(tLEffect);
+		if(tR != null)tR.removeTopLayerEffect(tREffect);
+		if(rT != null)rT.removeTopLayerEffect(rTEffect);
+		if(rB != null)rB.removeTopLayerEffect(rBEffect);
+		if(lT != null)lT.removeTopLayerEffect(lTEffect);
+		if(lB != null)lB.removeTopLayerEffect(lBEffect);
+		
+		tLEffect = new ColorFadeOut(tL, colorR, colorG, colorB, 30, 60);
+		tREffect = new ColorFadeOut(tR, colorR, colorG, colorB, 30, 60);
+		rTEffect = new ColorFadeOut(rT, colorR-0.2f, colorG-0.2f, colorB-0.2f, 30, 60);
+		rBEffect = new ColorFadeOut(rB, colorR-0.2f, colorG-0.2f, colorB-0.2f, 30, 60);
+		lTEffect = new ColorFadeOut(lT, colorR-0.1f, colorG-0.1f, colorB-0.1f, 30, 60);
+		lBEffect = new ColorFadeOut(lB, colorR-0.1f, colorG-0.1f, colorB-0.1f, 30, 60);
+		
+		tL.addTopLayerEffect(tLEffect, !topLeft);
+		tR.addTopLayerEffect(tREffect, !topRight);
+		rT.addTopLayerEffect(rTEffect, !rightTop);
+		rB.addTopLayerEffect(rBEffect, !rightBottom);
+		lT.addTopLayerEffect(lTEffect, !leftTop);
+		lB.addTopLayerEffect(lBEffect, !leftBottom);
 	}
 	
 	

@@ -41,8 +41,13 @@ public class Triangle implements Serializable{
 	
 	public void addTopLayerEffect(Effect effect, boolean background){
 		int i = 0;
-		if(background && topLayerEffects.size() > 0) i = topLayerEffects.size();
+		if(background && topLayerEffects.size() > 0) i = 1;
 		topLayerEffects.add(i, effect);
+	}
+	
+	public void removeTopLayerEffect(Effect effect){
+		if(topLayerEffects.contains(effect))
+			topLayerEffects.remove(effect);
 	}
 	
 	public void addBottomLayerEffect(Effect effect){

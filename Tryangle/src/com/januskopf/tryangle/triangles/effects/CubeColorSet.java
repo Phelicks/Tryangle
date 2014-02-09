@@ -96,7 +96,7 @@ public class CubeColorSet extends Effect{
 
 	@Override
 	protected boolean isActive() {
-		return isActive;
+		return !remove;//isActive;
 	}
 
 	@Override
