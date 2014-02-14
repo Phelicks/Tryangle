@@ -20,6 +20,7 @@ import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.level.Level1;
 import com.januskopf.tryangle.level.Level2;
 import com.januskopf.tryangle.level.Level3;
+import com.januskopf.tryangle.level.Level4;
 import com.januskopf.tryangle.level.Levels;
 
 public class LevelSelection {
@@ -28,7 +29,7 @@ public class LevelSelection {
 	private boolean loadLevel;
 	private int backgroundTex;
 	private int connectTex;
-	private int[] buttonTex = new int[4];
+	private int[] buttonTex = new int[5];
 	
 	private static Levels currentLevel;
 	private Random random;
@@ -47,8 +48,9 @@ public class LevelSelection {
 		backgroundTex = this.loadTexture("/introBackground.png");
 		buttonTex[0] = this.loadTexture("/button1.png");
 		buttonTex[1] = this.loadTexture("/button2.png");
-		buttonTex[2] = this.loadTexture("/button3.png");
-		buttonTex[3] = this.loadTexture("/close.png");
+		buttonTex[2] = this.loadTexture("/button4.png");
+		buttonTex[3] = this.loadTexture("/button3.png");
+		buttonTex[4] = this.loadTexture("/close.png");
 		this.init();
 	}
 	
@@ -63,11 +65,12 @@ public class LevelSelection {
 		
 		hasBTriangle = new boolean[(Display.getWidth()+bRaster)/bRaster][(Display.getHeight()+bRaster)/bRaster];
 		
-		buttons = new Rectangle[4];
-		buttons[0] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+130, 240, 40);
-		buttons[1] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+200, 240, 40);
-		buttons[2] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+270, 240, 40);
-		buttons[3] = new Rectangle(Display.getWidth() -75, 25, 30, 30);
+		buttons = new Rectangle[5];
+		buttons[0] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+ 70, 240, 40);
+		buttons[1] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+140, 240, 40);
+		buttons[2] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+210, 240, 40);
+		buttons[3] = new Rectangle(Display.getWidth()/2 -120, Display.getHeight()/2+280, 240, 40);
+		buttons[4] = new Rectangle(Display.getWidth() -75, 25, 30, 30);
 	}
 	
 	public void tick(){
@@ -347,7 +350,7 @@ public class LevelSelection {
 			}
 			else if(buttons[2].contains(x, y)){
 				try {
-					currentLevel = new Level3();
+					currentLevel = new Level4();
 					loadLevel = true;
 					for(int i=0; i < bTriangles.size(); i++){
 						bTriangles.get(i).setFastEnd();
@@ -357,6 +360,13 @@ public class LevelSelection {
 				}
 			}
 			else if(buttons[3].contains(x, y)){
+				for(int i=0; i < bTriangles.size(); i++){
+					bTriangles.get(i).setFastEnd();
+				}
+				currentLevel = new Level3();
+				loadLevel = true;
+			}
+			else if(buttons[4].contains(x, y)){
 				Tryangle.stop();
 			}			
 		}

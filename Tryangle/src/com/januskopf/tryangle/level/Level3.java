@@ -84,7 +84,7 @@ public class Level3 extends Level1 implements Levels{
 				e.printStackTrace();
 				serverName = "localhost";			
 			}
-			
+						
 			try {
 				System.out.println("Connecting to " + serverName + " on port "+ port);
 				socket = new Socket(serverName, port);

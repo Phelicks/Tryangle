@@ -77,29 +77,6 @@ public class TriangleContainer{
 		}
 	}
 	
-	public float[] getTriangleVertices(int x, int y){
-		float[] vertices = new float[6];
-		
-		float xPos = xView + x*height;
-		float yPos = yView + y*length/2;
-		float tHeight = height;
-		if(isTriangleLeft(x, y)){
-			tHeight = tHeight * -1;
-			xPos = xPos + height;
-		}
-		
-		//Top
-		vertices[0] = xPos;
-		vertices[1] = yPos;
-		//Bottom
-		vertices[2] = xPos;
-		vertices[3] = yPos+length;
-		//Left/Right
-		vertices[4] = xPos+tHeight;
-		vertices[5] = yPos+length/2;
-		
-		return vertices;
-	}
 	
 	private void resizeTriangles(float x1, float y1, float x2, float y2){		
 		if(triangles[0].length*height < x2-x1)
@@ -201,6 +178,30 @@ public class TriangleContainer{
 		
 		return new Point(x, y-o);
 	}
+	
+	public float[] getTriangleVertices(int x, int y){
+		float[] vertices = new float[6];
+		
+		float xPos = xView + x*height;
+		float yPos = yView + y*length/2;
+		float tHeight = height;
+		if(isTriangleLeft(x, y)){
+			tHeight = tHeight * -1;
+			xPos = xPos + height;
+		}
+		
+		//Top
+		vertices[0] = xPos;
+		vertices[1] = yPos;
+		//Bottom
+		vertices[2] = xPos;
+		vertices[3] = yPos+length;
+		//Left/Right
+		vertices[4] = xPos+tHeight;
+		vertices[5] = yPos+length/2;
+		
+		return vertices;
+	}
 		
 	public Triangle getTriangle(int x, int y){
 		if((y >= 0 && y < triangles.length) && (x >= 0 && x < triangles[y].length)){
@@ -222,8 +223,8 @@ public class TriangleContainer{
 	public float getLength() {
 		return this.length;
 	}
-
-	public float getHeight() {
+	
+	public float getHeight(){
 		return this.height;
 	}
 	

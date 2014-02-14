@@ -157,10 +157,10 @@ public class Level1 implements Levels{
 		mouseX = MouseListener.getMouseX();
 		mouseY = MouseListener.getMouseY() - (int)(triangles.getLength()/2);
 
-		if(mouseY > Display.getHeight() - 30)triangles.moveVertical(-2f);
-		if(mouseY < 0)triangles.moveVertical(2f);
-		if(mouseX > Display.getWidth() - 5)triangles.moveHorizontal(-2f);
-		if(mouseX < 5)triangles.moveHorizontal(2f);
+		if(mouseY > Display.getHeight() - 30)triangles.moveVertical(-1f);
+		if(mouseY < 0)triangles.moveVertical(1f);
+		if(mouseX > Display.getWidth() - 5)triangles.moveHorizontal(-1f);
+		if(mouseX < 5)triangles.moveHorizontal(1f);
 		
 		// Change color with mouse wheel
 		int dWheel = MouseListener.getMouseWheel();

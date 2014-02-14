@@ -2,7 +2,7 @@ package com.januskopf.tryangle.triangles.effects;
 
 import com.januskopf.tryangle.triangles.Triangle;
 
-public class CubeColorSet extends Effect{
+public class TriangleColorSet extends Effect{
 
 	private float startColorR;
 	private float startColorG;
@@ -20,7 +20,7 @@ public class CubeColorSet extends Effect{
 	private float newColorG;
 	private float newColorB;
 	
-	private int ticks = 10;
+	private int ticks = 1;
 	private int tickCount;
 	
 	private byte side;
@@ -28,14 +28,14 @@ public class CubeColorSet extends Effect{
 	boolean isActive = true;
 	private boolean remove;
 	
-	public static final byte TOP_LEFT     = 0;
+	public static final byte BRIGHT     = 0;
 	public static final byte TOP_RIGHT    = 1;
-	public static final byte RIGHT_TOP    = 2;
+	public static final byte DARKEST    = 2;
 	public static final byte RIGHT_BOTTOM = 3;
-	public static final byte LEFT_BOTTOM  = 4;
+	public static final byte DARK  = 4;
 	public static final byte LEFT_TOP 	  = 5;
 	
-	public CubeColorSet(Triangle triangle, float r, float g, float b, byte side){
+	public TriangleColorSet(Triangle triangle, float r, float g, float b, byte side){
 		float br = 0;
 		if(side == 2 || side == 3) br = 0.2f;
 		if(side == 4 || side == 5) br = 0.1f;
