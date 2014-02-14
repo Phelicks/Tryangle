@@ -17,6 +17,7 @@ import com.januskopf.tryangle.triangles.animations.MouseCubeAnimation;
 import com.januskopf.tryangle.triangles.animations.RadialAnimation;
 import com.januskopf.tryangle.triangles.animations.RandomFlashing;
 import com.januskopf.tryangle.triangles.animations.SwipeAnimation;
+import com.januskopf.tryangle.triangles.animations.TriangleAnimation;
 import com.januskopf.tryangle.triangles.effects.CubeColorSet;
 
 public class Level1 implements Levels{
@@ -30,6 +31,7 @@ public class Level1 implements Levels{
 	private Animations flashAnimation;
 	private BackgroundChangeAnimation backgroundAnimation;
 	private MouseCubeAnimation mouseCubeLines;
+	private TriangleAnimation mouseTriangle;
 	
 	private float cubeR = 0.98f;
 	private float cubeG = 0.53f;
@@ -38,6 +40,8 @@ public class Level1 implements Levels{
 //	private float cubeR = 0.88f;
 //	private float cubeG = 0.94f;
 //	private float cubeB = 0.94f;
+	
+	//Color R: 0.261082 G: 0.9461754 B:0.044710618 //tolles grün
 	
 	
 	private int x;
@@ -68,6 +72,7 @@ public class Level1 implements Levels{
 		
 //		mouseCube = new CubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
 		mouseCubeLines = new MouseCubeAnimation(triangles, xPos, yPos, cubeR, cubeG, cubeB);
+//		mouseTriangle = new TriangleAnimation(triangles, xPos, yPos + (int)(triangles.getLength()/2), cubeR, cubeG, cubeB);
 	}
 		
 	public void tick(){
@@ -89,10 +94,14 @@ public class Level1 implements Levels{
 //		else if(mouseCube != null) this.mouseCube.moveTo(xPos, yPos);
 		
 //		if(mouseCube != null && cubeMoved()){
-////			mouseCube.moveTo(xPos, yPos);
+////		mouseCube.moveTo(xPos, yPos);
 //			mouseCube.remove();
 //			mouseCube = null;
 //		}
+		
+		if(mouseTriangle != null && cubeMoved()){
+			mouseTriangle.moveTo(xPos, yPos + (int)(triangles.getLength()/2));
+		}
 		
 		
 		if(ticks > 0){
@@ -287,6 +296,7 @@ public class Level1 implements Levels{
 		cubeR = cR;
 		cubeG = cG;
 		cubeB = cB;
-		mouseCubeLines.changeColor(cR, cG, cB);		
+		mouseCubeLines.changeColor(cR, cG, cB);	
+//		mouseTriangle.changeColor(cR, cG, cB);
 	}
 }	
