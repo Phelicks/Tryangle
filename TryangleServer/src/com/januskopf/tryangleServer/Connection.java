@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
-import com.januskopf.tryangle.entity.Cube;
-import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
 import com.januskopf.tryangle.net.NetCube;
 
 public class Connection extends Thread{
@@ -19,22 +16,18 @@ public class Connection extends Thread{
 	private Server server;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-	
-	private static VerticeContainer verticeContainer;
-	private static TriangleContainer triangles;
-	private static CubeContainer cubes;
+	private ArrayList<NetCube> cubes;
 	
 	public Connection(Server server, Socket client){
 		this.server = server;
 		this.client = client;
-		
-		verticeContainer = GameObjects.getVerticeContainer();
-		triangles = GameObjects.getTriangleContainer();
-		cubes = GameObjects.getCubeContainer();
-		
+
+		this.cubes = GameObjects.getCubes();
+				
 		try {
-			in = new ObjectInputStream(client.getInputStream());
+//			GZIPInputStream gzipIn = new GZIPInputStream(client.getInputStream());
 			out = new ObjectOutputStream(client.getOutputStream());
+			in = new ObjectInputStream(client.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,9 +40,10 @@ public class Connection extends Thread{
 		System.out.println("Verbindung geöffnet");
 		
 		try {
-			out.writeObject(verticeContainer);
-			out.writeObject(triangles);
+			out.writeObject(new Integer(GameObjects.getXt()));
+			out.writeObject(new Integer(GameObjects.getYt()));
 			out.writeObject(cubes);
+			out.flush();
 		}catch (IOException e2) {
 			e2.printStackTrace();
 			isActive = false;
@@ -57,21 +51,34 @@ public class Connection extends Thread{
 		}
 		
 		//Receive Cubes
+		System.out.println("while");
 		while (isActive) {			
-			NetCube cubeData = null;
 			if (!client.isClosed()) {
 				try {
-					cubeData = (NetCube) in.readObject();
-					Cube cube = new Cube(verticeContainer, triangles, cubeData.getVertex(), cubeData.getColorR(), cubeData.getColorG(), cubeData.getColorB());
-					cubes.addCube(cube);
-					server.broadcast(cubeData);
+					NetCube cubeData = (NetCube) in.readObject();
 					System.out.println("CubeData empfangen, " + client.getInetAddress());
+					int xCube = cubeData.getX();
+					int yCube = cubeData.getY();
+										
+					if(cubeData.getStatus() == NetCube.REMOVE_CUBE){
+						System.out.println("Del cube: " + cubeData.getX() + ", " + cubeData.getY());
+						for (int i = 0; i < cubes.size(); i++) {
+							if(xCube == cubeData.getX() && yCube == cubeData.getY()){
+								cubes.remove(i);
+							}
+						}
+						server.broadcast(cubeData);
+					}
+					else{
+						System.out.println("Set cube: " + cubeData.getX() + ", " + cubeData.getY());
+						cubes.add(cubeData);
+						server.broadcast(cubeData);
+					}
 				}catch(ClassNotFoundException e){
 					System.out.println("Class not found.");
 					isActive = false;
 				}catch(IOException e){
 					System.out.println("Konnte Cube nicht empfangen.");
-					//e.printStackTrace();
 					isActive = false;
 				}
 			}
@@ -93,6 +100,7 @@ public class Connection extends Thread{
 	public void sendCubeData(NetCube cubeData){
 		try {
 			out.writeObject(cubeData);
+			out.flush();
 		} catch (IOException e) {
 			System.out.println("Konnte Cube nicht senden: " + client.getLocalAddress());
 			e.printStackTrace();

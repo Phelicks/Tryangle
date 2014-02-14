@@ -27,6 +27,7 @@ public class LevelSelection {
 	private boolean isLevelSelect;
 	private boolean loadLevel;
 	private int backgroundTex;
+	private int connectTex;
 	private int[] buttonTex = new int[4];
 	
 	private static Levels currentLevel;
@@ -42,6 +43,7 @@ public class LevelSelection {
 	public LevelSelection(){
 		currentLevel  = new Level1();
 		random = new Random();
+		connectTex = this.loadTexture("/connecting.png");
 		backgroundTex = this.loadTexture("/introBackground.png");
 		buttonTex[0] = this.loadTexture("/button1.png");
 		buttonTex[1] = this.loadTexture("/button2.png");
@@ -114,6 +116,7 @@ public class LevelSelection {
 		else{
 			currentLevel.tick();
 			if(KeyboardListener.isKeyClicked(Keyboard.KEY_ESCAPE)){
+				currentLevel.stop();
 				this.init();
 			}
 		}

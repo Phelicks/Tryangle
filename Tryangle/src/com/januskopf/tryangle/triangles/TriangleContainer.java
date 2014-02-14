@@ -1,24 +1,17 @@
 package com.januskopf.tryangle.triangles;
 
 import java.awt.Point;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 
 import com.januskopf.tryangle.Tryangle;
-import com.januskopf.tryangle.input.KeyboardListener;
+import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.triangles.animations.Animations;
-import com.januskopf.tryangle.triangles.animations.SwipeAnimation;
+import com.januskopf.tryangle.triangles.animations.BackgroundChangeAnimation;
 
 
-public class TriangleContainer implements Serializable{
-	
-	private static final long serialVersionUID = -5993312098303853315L;
-		
+public class TriangleContainer{		
 	private float xView = 0;
 	private float yView = 0;
 	private float length = 0;
@@ -66,7 +59,7 @@ public class TriangleContainer implements Serializable{
 	public void render(){
 		for(int y = 0; y < triangles.length; y++){
 			for(int x = 0; x < triangles[y].length; x++){
-				renderTriangle(x, y, triangles[y][x]);
+				TriangleRenderer.renderTriangle(triangles[y][x], x, y, xView, yView, height, length);
 			}
 		}
 	}
@@ -82,23 +75,6 @@ public class TriangleContainer implements Serializable{
 				triangles[y][x] = new Triangle();
 			}
 		}
-	}
-	
-	private void renderTriangle(int x, int y, Triangle t){
-		float xPos = xView + x*height;
-		float yPos = yView + y*length/2;
-		float tHeight = height;
-		if(isTriangleLeft(x, y)){
-			tHeight = tHeight * -1;
-			xPos = xPos + height;
-		}
-		
-		GL11.glColor3f(t.getColorR(), t.getColorG(), t.getColorB());
-		GL11.glBegin(GL11.GL_TRIANGLES);
-			GL11.glVertex2f(xPos , yPos);//Top
-			GL11.glVertex2f(xPos, yPos+length);//Bottom
-			GL11.glVertex2f(xPos + tHeight, yPos+length/2);//Left/Right
-		GL11.glEnd();
 	}
 	
 	public float[] getTriangleVertices(int x, int y){
@@ -172,10 +148,11 @@ public class TriangleContainer implements Serializable{
 	//							//
 	//////////////////////////////
 
-	public void setGroundColor(float red, float green, float blue) {
-		this.groundColorR = red;
-		this.groundColorG = green;
-		this.groundColorB = blue;
+	public void setGroundColor(BackgroundChangeAnimation back) {
+		animations.add(back);
+		this.groundColorR = back.getColorR();
+		this.groundColorG = back.getColorG();
+		this.groundColorB = back.getColorB();
 	}
 	
 	public float getGroundColorR() {
@@ -245,12 +222,30 @@ public class TriangleContainer implements Serializable{
 	public float getLength() {
 		return this.length;
 	}
+
+	public float getHeight() {
+		return this.height;
+	}
+	
+	public float getxView(){
+		return xView;
+	}
+	
+	public float getyView(){
+		return yView;
+	}
 	
 	public void setLength(float length){
 		if(Math.round(triangles.length *(length/2)-(length/2)) >= Display.getHeight() &&
 				Math.round(triangles[0].length*((float)Math.sqrt(3)*(length/2))) >= Display.getWidth()){
+			float oldLength = this.length;
+			float oldHeight = this.height;
 			this.length = length;
 			this.height = ((float)Math.sqrt(3)*(length/2));
+			int mX = getIndexFromPos(MouseListener.getMouseX(), MouseListener.getMouseY()).x;
+			int mY = getIndexFromPos(MouseListener.getMouseX(), MouseListener.getMouseY()).y;
+			moveHorizontal(mX*(oldLength-length));
+			moveVertical(mY/2*(oldHeight-height));
 		}
 		this.checkBorder(0, 0, Display.getWidth(), Display.getHeight());
 	}

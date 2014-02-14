@@ -14,8 +14,6 @@ public class MouseListener {
 	
 	public void tick(){
 		
-		//System.out.println(Mouse.getDX() + ", " + Mouse.getEventDY());
-
         MouseListener.mouseX = Mouse.getX();
         MouseListener.mouseY = Display.getHeight() - Mouse.getY();
         MouseListener.mouseWheel = Mouse.getDWheel();

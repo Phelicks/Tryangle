@@ -70,6 +70,10 @@ public class Level2 implements Levels{
 	public void render(){
 		triangles.render();
 	}
+	
+	public void stop(){
+		
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 

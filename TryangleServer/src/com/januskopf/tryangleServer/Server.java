@@ -1,16 +1,18 @@
 package com.januskopf.tryangleServer;
 
-import java.net.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.*;
 
 import com.januskopf.tryangle.net.NetCube;
 
 
 public class Server extends Thread {
-	private final static String IP_ADDRESS = "localhost";
-	private final static int PORT = 6066;
+	private final static String IP_ADDRESS = "109.73.50.251";
+	private final static int PORT = 7493;
 	
 	private static GameObjects gameObjects;
 	private ServerSocket serverSocket;
@@ -28,12 +30,9 @@ public class Server extends Thread {
 
 	public Server(int port) throws IOException {
 		Server.gameObjects = new GameObjects();
-		Scanner keyboard = new Scanner(System.in);
-		
 		String ip = IP_ADDRESS;
 		System.out.print("IP: ");
-		ip = keyboard.nextLine();
-		keyboard.close();
+		
 		this.serverSocket = new ServerSocket(port, 0, InetAddress.getByName(ip));
 		//serverSocket.setSoTimeout(10000);
 	}
@@ -45,9 +44,7 @@ public class Server extends Thread {
 				System.out.println("Waiting for client on " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort() + "...");
 				Socket client = serverSocket.accept();
 				Connection con = new Connection(this, client);
-				connections.add(con);
-				
-								
+				connections.add(con);								
 			} catch (SocketTimeoutException s) {
 				System.out.println("Socket timed out!");
 			} catch (IOException e) {

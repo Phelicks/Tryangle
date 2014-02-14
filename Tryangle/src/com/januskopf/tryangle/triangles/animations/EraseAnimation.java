@@ -39,6 +39,8 @@ public class EraseAnimation extends Animations{
 	private Triangle lastTriangle2;
 	private Triangle lastTriangle3;
 	private Triangle lastTriangle4;
+	private float tLength;
+	private float tHeight;
 	
 	public EraseAnimation(TriangleContainer triangles, int xPos, int yPos, float cR, float cG, float cB, int duration) {
 		random = new Random();
@@ -61,12 +63,14 @@ public class EraseAnimation extends Animations{
 		this.cR = cR;
 		this.cG = cG;
 		this.cB = cB;
+
+		this.tLength = triangles.getLength();
+		this.tHeight = triangles.getHeight();
 		
 		this.ticks = 7;
-		this.randY = 4;
-		this.randX = 5;
-		this.randDif = 2;
-		
+		this.randY = (int)tLength/7;
+		this.randX = (int)tHeight/5;
+		this.randDif = 2;		
 	}
 
 	@Override
@@ -77,6 +81,10 @@ public class EraseAnimation extends Animations{
 
 	@Override
 	protected void runAnimation() {
+
+		tLength = triangles.getLength();
+		tHeight = triangles.getHeight();
+				
 		float p = 0.0f;
 		
 		Triangle t = triangles.getExactTriangle(xPos, yPos);
@@ -95,17 +103,17 @@ public class EraseAnimation extends Animations{
 		if(t4 != null && t4 != lastTriangle4)t4.addBottomLayerEffect(new ColorFlash(cR-p, cG-p, cB-p, ticks));
 		lastTriangle4 = t4;
 		
-		yPos -= 1 +random.nextInt(randY);
-		xPos += 1 +random.nextInt(randX);
+		yPos -= tLength/30 +random.nextInt(randY);
+		xPos += tHeight/25 +random.nextInt(randX);
 		
-		yPos2 += 3 + random.nextInt(randY);
-		xPos2 += 1 + random.nextInt(randX);
+		yPos2 += tLength/10 + random.nextInt(randY);
+		xPos2 += tHeight/25 + random.nextInt(randX);
 		
-		yPos3 -= 1 + random.nextInt(randY);
-		xPos3 -= 1 +random.nextInt(randX);
+		yPos3 -= tLength/30 + random.nextInt(randY);
+		xPos3 -= tHeight/25 +random.nextInt(randX);
 		
-		yPos4 += 3 +random.nextInt(randY);
-		xPos4 -= 1 +random.nextInt(randX);
+		yPos4 += tLength/10 +random.nextInt(randY);
+		xPos4 -= tHeight/25 +random.nextInt(randX);
 		
 		duration--;
 		if(duration < 1 || yPos < 0)

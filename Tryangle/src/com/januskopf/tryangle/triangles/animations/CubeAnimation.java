@@ -39,23 +39,21 @@ public class CubeAnimation extends Animations{
 	private boolean isActive = true;
 	
 	private TriangleContainer triangles;
-	
-	public CubeAnimation(TriangleContainer triangles, int xPos, int yPos, float colorR, float colorG, float colorB){		
+
+	public CubeAnimation(TriangleContainer triangles, int x, int y, float colorR, float colorG, float colorB, boolean setBehinde){		
 		this.triangles = triangles;
 		
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
-		
-		this.x = triangles.getIndexFromPos(xPos, yPos).x;
-		this.y = triangles.getIndexFromPos(xPos, yPos).y;
+
 		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
-		this.setCube(x, y);
-//		System.out.println("Cube Werte: x: " + x + "y: " + y);
+		this.x = x;
+		this.y = y;
+		this.setCube(x, y, setBehinde);
 	}
 	
-	private void setCube(int x, int y){
-//		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;			
+	private void setCube(int x, int y, boolean setBehinde){
 		//Top
 		tL = triangles.getTriangle(x, y);
 		tR = triangles.getTriangle(x+1, y);
@@ -77,7 +75,7 @@ public class CubeAnimation extends Animations{
 		if(rB != null) rBColor = new CubeColorSet(rB, colorR, colorG, colorB, CubeColorSet.RIGHT_BOTTOM);
 		
 		if((tL != null && tL.getCubeSide() == CubeColorSet.LEFT_BOTTOM) && (tR != null && tR.getCubeSide() == CubeColorSet.RIGHT_BOTTOM) 
-				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
+				|| setBehinde){
 			if(tL != null)tL.addTopLayerEffect(tLColor, true);
 			if(tR != null)tR.addTopLayerEffect(tRColor, true);			
 		}
@@ -87,7 +85,7 @@ public class CubeAnimation extends Animations{
 		}
 		
 		if((lT != null && lT.getCubeSide() == CubeColorSet.TOP_RIGHT) && (lB != null && lB.getCubeSide() == CubeColorSet.RIGHT_TOP) 
-				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
+				|| setBehinde){
 			if(lT != null)lT.addTopLayerEffect(lTColor, true);
 			if(lB != null)lB.addTopLayerEffect(lBColor, true);
 		}else{			
@@ -96,7 +94,7 @@ public class CubeAnimation extends Animations{
 		}
 
 		if((rT != null && rT.getCubeSide() == CubeColorSet.TOP_LEFT) && (rB != null && rB.getCubeSide() == CubeColorSet.LEFT_TOP) 
-				|| (KeyboardListener.isKeyPressed(Keyboard.KEY_B))){
+				|| setBehinde){
 			if(rT != null)rT.addTopLayerEffect(rTColor, true);
 			if(rB != null)rB.addTopLayerEffect(rBColor, true);			
 		}else{			
@@ -123,28 +121,6 @@ public class CubeAnimation extends Animations{
 		
 	}
 	
-	public void moveTo(int xPos, int yPos){
-		tLColor.remove();
-		tRColor.remove();		
-		lTColor.remove();
-		lBColor.remove();		
-		rTColor.remove();
-		rBColor.remove();
-		
-		if(tL!=null)tL.updateEffects();
-		if(tR!=null)tR.updateEffects();
-		if(lT!=null)lT.updateEffects();
-		if(lB!=null)lB.updateEffects();
-		if(rT!=null)rT.updateEffects();
-		if(rB!=null)rB.updateEffects();
-		
-		int x = triangles.getIndexFromPos(xPos, yPos).x;
-		int y = triangles.getIndexFromPos(xPos, yPos).y;
-		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
-		this.setCube(x, y);
-	}
-	
-	
 	public void changeColor(float colorR, float colorG, float colorB){
 		this.colorR = colorR;
 		this.colorG = colorG;
@@ -154,12 +130,12 @@ public class CubeAnimation extends Animations{
 	
 	public void remove(){
 		isActive = false;
-		tLColor.remove();
-		tRColor.remove();		
-		lTColor.remove();
-		lBColor.remove();		
-		rTColor.remove();
-		rBColor.remove();
+		if(tLColor!=null)tLColor.remove();
+		if(tRColor!=null)tRColor.remove();		
+		if(lTColor!=null)lTColor.remove();
+		if(lBColor!=null)lBColor.remove();		
+		if(rTColor!=null)rTColor.remove();
+		if(rBColor!=null)rBColor.remove();
 		
 		if(tL!=null)tL.updateEffects();
 		if(tR!=null)tR.updateEffects();

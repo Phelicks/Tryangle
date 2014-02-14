@@ -98,6 +98,15 @@ public class Tryangle implements Runnable{
 	}
  
 	public void render(){
+		
+		GL11.glColor3f(0, 0, 0);
+		GL11.glBegin(GL11.GL_QUADS);
+			GL11.glVertex2f(0, 0);
+			GL11.glVertex2f(Display.getWidth(), 0);
+			GL11.glVertex2f(Display.getWidth(), Display.getHeight());
+			GL11.glVertex2f(0, Display.getHeight());
+		GL11.glEnd();
+		
 		levelSelect.render();
 	}
 	

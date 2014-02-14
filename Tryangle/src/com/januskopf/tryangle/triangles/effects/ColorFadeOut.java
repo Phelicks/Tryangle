@@ -19,11 +19,13 @@ public class ColorFadeOut extends Effect{
 	private int tickCount;
 	private int ticks;
 	private int wait;
+	private Triangle triangle;
 	
 	public ColorFadeOut(Triangle triangle, float flashColorR, float flashColorG, float flashColorB, int wait, int ticks){		
 		this.ticks = ticks;
 		this.tickCount = ticks;
 		this.wait = wait;
+		this.triangle = triangle;
 		
 		this.backgroundColorR = triangle.getColorR();
 		this.backgroundColorG = triangle.getColorG();
@@ -39,6 +41,8 @@ public class ColorFadeOut extends Effect{
 	}
 	
 	public void setNewTriangle(Triangle triangle){
+		this.triangle = triangle;
+		
 		this.backgroundColorR = triangle.getColorR();
 		this.backgroundColorG = triangle.getColorG();
 		this.backgroundColorB = triangle.getColorB();
@@ -59,7 +63,7 @@ public class ColorFadeOut extends Effect{
 		
 		if(wait > 0){
 			wait--;
-		}else{
+		}else{			
 			this.setColorR -= stepColorR;
 			this.setColorG -= stepColorG;
 			this.setColorB -= stepColorB;		

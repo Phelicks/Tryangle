@@ -20,7 +20,7 @@ public class CubeColorSet extends Effect{
 	private float newColorG;
 	private float newColorB;
 	
-	private int ticks = 18;
+	private int ticks = 10;
 	private int tickCount;
 	
 	private byte side;

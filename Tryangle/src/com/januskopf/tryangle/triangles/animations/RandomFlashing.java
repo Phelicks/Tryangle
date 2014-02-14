@@ -10,10 +10,10 @@ public class RandomFlashing extends Animations{
 	
 	private boolean isActive = true;
 
-	private int xTriangles;
-	private int yTriangles;
+	protected int xTriangles;
+	protected int yTriangles;
 	
-	private Random random;
+	protected Random random;
 	private TriangleContainer triangles;
 	
 	public RandomFlashing(TriangleContainer triangles, int xTriangles, int yTriangles) {

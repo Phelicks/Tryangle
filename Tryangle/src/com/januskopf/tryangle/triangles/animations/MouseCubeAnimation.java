@@ -20,6 +20,9 @@ public class MouseCubeAnimation extends Animations{
 	private int x;
 	private int y;
 	
+	private float tLength;
+	private float tHeight;
+	
 	//top
 	private Triangle tL;
 	private Triangle tR;
@@ -61,6 +64,10 @@ public class MouseCubeAnimation extends Animations{
 		
 		this.x = triangles.getIndexFromPos(xPos, yPos).x;
 		this.y = triangles.getIndexFromPos(xPos, yPos).y;
+		
+		this.tLength = triangles.getLength();
+		this.tHeight = triangles.getHeight();
+		
 //		if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 		this.setCube(x, y);
 	}
@@ -204,25 +211,12 @@ public class MouseCubeAnimation extends Animations{
 		}
 	}
 	
-	@Override
-	protected void startAnimation() {
-		runAnimation();
-		
-	}
-
-	@Override
-	protected void runAnimation() {
-	}
-
-	@Override
-	protected void endAnimation() {
-	}
-	
 	public void moveTo(int xPos, int yPos){
-		if(triangles.getIndexFromPos(xPos, yPos).x != this.x || triangles.getIndexFromPos(xPos, yPos).y != y){			
+		if(triangles.getIndexFromPos(xPos, yPos).x != this.x || triangles.getIndexFromPos(xPos, yPos).y != y
+				|| triangles.getLength() != tLength || triangles.getHeight() != tHeight){			
 			this.x = triangles.getIndexFromPos(xPos, yPos).x;
 			this.y = triangles.getIndexFromPos(xPos, yPos).y;
-//			if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
+			if(!TriangleContainer.isTriangleLeft(x, y)) x -= 1;
 			
 			if(tL != null)tL.removeTopLayerEffect(tLEffect);
 			if(tR != null)tR.removeTopLayerEffect(tREffect);
@@ -259,34 +253,43 @@ public class MouseCubeAnimation extends Animations{
 				lB.addTopLayerEffect(lBEffect, !leftBottom);
 			}
 		}
-	}
-	
+	}	
 	
 	public void changeColor(float colorR, float colorG, float colorB){
 		this.colorR = colorR+0.1f;
 		this.colorG = colorG+0.1f;
 		this.colorB = colorB+0.1f;
 		
-		if(tL != null)tL.removeTopLayerEffect(tLEffect);
-		if(tR != null)tR.removeTopLayerEffect(tREffect);
-		if(rT != null)rT.removeTopLayerEffect(rTEffect);
-		if(rB != null)rB.removeTopLayerEffect(rBEffect);
-		if(lT != null)lT.removeTopLayerEffect(lTEffect);
-		if(lB != null)lB.removeTopLayerEffect(lBEffect);
-		
-		tLEffect = new ColorFadeOut(tL, colorR, colorG, colorB, 30, 60);
-		tREffect = new ColorFadeOut(tR, colorR, colorG, colorB, 30, 60);
-		rTEffect = new ColorFadeOut(rT, colorR-0.2f, colorG-0.2f, colorB-0.2f, 30, 60);
-		rBEffect = new ColorFadeOut(rB, colorR-0.2f, colorG-0.2f, colorB-0.2f, 30, 60);
-		lTEffect = new ColorFadeOut(lT, colorR-0.1f, colorG-0.1f, colorB-0.1f, 30, 60);
-		lBEffect = new ColorFadeOut(lB, colorR-0.1f, colorG-0.1f, colorB-0.1f, 30, 60);
-		
-		tL.addTopLayerEffect(tLEffect, !topLeft);
-		tR.addTopLayerEffect(tREffect, !topRight);
-		rT.addTopLayerEffect(rTEffect, !rightTop);
-		rB.addTopLayerEffect(rBEffect, !rightBottom);
-		lT.addTopLayerEffect(lTEffect, !leftTop);
-		lB.addTopLayerEffect(lBEffect, !leftBottom);
+		if(tL != null){
+			tL.removeTopLayerEffect(tLEffect);
+			tLEffect = new ColorFadeOut(tL, colorR, 	 colorG, 	  colorB, 40, 40);
+			tL.addTopLayerEffect(tLEffect, !topLeft);
+		}
+		if(tR != null){
+			tR.removeTopLayerEffect(tREffect);
+			tREffect = new ColorFadeOut(tR, colorR, 	 colorG, 	  colorB, 40, 40);
+			tR.addTopLayerEffect(tREffect, !topRight);
+		}
+		if(rT != null){
+			rT.removeTopLayerEffect(rTEffect);
+			rTEffect = new ColorFadeOut(rT, colorR-0.2f, colorG-0.2f, colorB-0.2f, 40, 40);
+			rT.addTopLayerEffect(rTEffect, !rightTop);
+		}
+		if(rB != null){
+			rB.removeTopLayerEffect(rBEffect);
+			rBEffect = new ColorFadeOut(rB, colorR-0.2f, colorG-0.2f, colorB-0.2f, 40, 40);
+			rB.addTopLayerEffect(rBEffect, !rightBottom);
+		}
+		if(lT != null){
+			lT.removeTopLayerEffect(lTEffect);
+			lTEffect = new ColorFadeOut(lT, colorR-0.1f, colorG-0.1f, colorB-0.1f, 40, 40);
+			lT.addTopLayerEffect(lTEffect, !leftTop);
+		}
+		if(lB != null){
+			lB.removeTopLayerEffect(lBEffect);
+			lBEffect = new ColorFadeOut(lB, colorR-0.1f, colorG-0.1f, colorB-0.1f, 40, 40);
+			lB.addTopLayerEffect(lBEffect, !leftBottom);
+		}		
 	}
 	
 	
@@ -319,4 +322,14 @@ public class MouseCubeAnimation extends Animations{
 	public float getColorB(){
 		return colorB;
 	}
+	
+	// Needs to be ticked to work :
+	@Override
+	protected void startAnimation() {}
+
+	@Override
+	protected void runAnimation() {}
+
+	@Override
+	protected void endAnimation() {}
 }

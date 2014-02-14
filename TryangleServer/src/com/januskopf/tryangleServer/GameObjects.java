@@ -1,52 +1,34 @@
 package com.januskopf.tryangleServer;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-import com.januskopf.tryangle.level.grid.VerticeContainer;
-import com.januskopf.tryangle.level.shapeContainer.CubeContainer;
-import com.januskopf.tryangle.level.shapeContainer.TriangleContainer;
+import com.januskopf.tryangle.net.NetCube;
+
 
 public class GameObjects{
-
-	private float width;
-	private float heigth;
 	
-	private int yTriangles;
-	private float triangleLength;
-	private int xTriangles;
-
-	private static VerticeContainer verticeContainer;
-	private static TriangleContainer triangles;
-	private static CubeContainer cubes;
+	private final static int xT = 200;
+	private final static int yT = 200;
+	
+	private static ArrayList<NetCube> cubes;
 
 	public GameObjects(){
-		Scanner keyboard = new Scanner(System.in);
-		this.width = 800f;
-		this.heigth = 1500f;
-		
-		System.out.print("Width (px): ");
-		this.width = keyboard.nextFloat();
-		System.out.print("Heigth (px): ");		
-		this.heigth = keyboard.nextFloat();
-		
-		this.yTriangles = 100;
-		this.triangleLength = heigth/((float)yTriangles-2)*2.1f;
-		this.xTriangles = (int)(width/((float)Math.sqrt(3)*(triangleLength/2)))+2;
-		
-		verticeContainer = new VerticeContainer(xTriangles, yTriangles, triangleLength);
-		triangles = new TriangleContainer(verticeContainer, xTriangles, yTriangles, triangleLength);
-		cubes = new CubeContainer(verticeContainer, triangles);
+		cubes = new ArrayList<NetCube>();
 	}
-	
-	public static VerticeContainer getVerticeContainer(){
-		return verticeContainer;
-	}
-	
-	public static TriangleContainer getTriangleContainer(){
-		return triangles;
-	}
-	
-	public static CubeContainer getCubeContainer(){
+
+	public static ArrayList<NetCube> getCubes() {
 		return cubes;
-	}	
+	}
+	
+	public static boolean isTriangleLeft(int x, int y){
+		return ((x%2==0 && y%2==0) || (x%2!=0 && y%2!=0));
+	}
+
+	public static int getXt() {
+		return xT;
+	}
+
+	public static int getYt() {
+		return yT;
+	}
 }
