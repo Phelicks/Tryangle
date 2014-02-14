@@ -141,7 +141,7 @@ public class Level4 implements Levels{
 			}
 		}
 		
-		if(KeyboardListener.isKeyClicked(Keyboard.KEY_C)){
+		if(KeyboardListener.isKeyClicked(Keyboard.KEY_RIGHT)){
 			colorR = (float)Math.random();
 			colorG = (float)Math.random();
 			colorB = (float)Math.random();

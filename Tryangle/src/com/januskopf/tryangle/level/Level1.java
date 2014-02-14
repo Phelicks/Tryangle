@@ -134,14 +134,30 @@ public class Level1 implements Levels{
 			}
 		}
 		
-		if(KeyboardListener.isKeyClicked(Keyboard.KEY_C)){
+		if(KeyboardListener.isKeyClicked(Keyboard.KEY_RIGHT)){
 			cubeR = (float)Math.random();
 			cubeG = (float)Math.random();
 			cubeB = (float)Math.random();
 			changeColor(cubeR, cubeG, cubeB);
 			System.out.println("Color R: " + cubeR + " G: " + cubeG + " B:" + cubeB);
 		}
-		
+
+		if(KeyboardListener.isKeyClicked(Keyboard.KEY_DOWN)){
+	        if(cubeR > 0.1f && cubeG > 0.1f && cubeB > 0.1f){
+	        	cubeR -= 0.1f;
+	        	cubeG -= 0.1f;
+	        	cubeB -= 0.1f;
+	        	changeColor(cubeR, cubeG, cubeB);
+	        }
+		}
+		else if(KeyboardListener.isKeyClicked(Keyboard.KEY_UP)){
+	        if(cubeR < 0.9f && cubeG < 0.9f && cubeB < 0.9f){
+	        	cubeR += 0.1f;
+	        	cubeG += 0.1f;
+	        	cubeB += 0.1f;
+	        	changeColor(cubeR, cubeG, cubeB);
+	        }
+		}
 	}
 
 
@@ -163,23 +179,12 @@ public class Level1 implements Levels{
 		if(mouseX < 5)triangles.moveHorizontal(1f);
 		
 		// Change color with mouse wheel
+		
 		int dWheel = MouseListener.getMouseWheel();
 	    if (dWheel < 0) {
 			triangles.addLength(-1f);
-//	        if(cubeR > 0.1f && cubeG > 0.1f && cubeB > 0.1f){
-//	        	cubeR -= 0.1f;
-//	        	cubeG -= 0.1f;
-//	        	cubeB -= 0.1f;
-//	        	changeColor(cubeR, cubeG, cubeB);
-//	        }
 	    } else if (dWheel > 0){
 	    	triangles.addLength(1f);
-//	        if(cubeR < 0.9f && cubeG < 0.9f && cubeB < 0.9f){
-//	        	cubeR += 0.1f;
-//	        	cubeG += 0.1f;
-//	        	cubeB += 0.1f;
-//	        	changeColor(cubeR, cubeG, cubeB);
-//	        }
 	    }
 	    this.cubeAction();
 	}
@@ -224,7 +229,7 @@ public class Level1 implements Levels{
 	}
 	
 	protected void setCube(){
-		CubeAnimation cube = new CubeAnimation(triangles, triangleX, triangleY, cubeR, cubeG, cubeB, KeyboardListener.isKeyPressed(Keyboard.KEY_B));
+		CubeAnimation cube = new CubeAnimation(triangles, triangleX, triangleY, cubeR, cubeG, cubeB, KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT));
 		cubes.add(cube);
 		triangles.addAnimation(cube);		
 	}

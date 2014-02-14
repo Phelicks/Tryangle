@@ -51,7 +51,6 @@ public class Connection extends Thread{
 		}
 		
 		//Receive Cubes
-		System.out.println("while");
 		while (isActive) {			
 			if (!client.isClosed()) {
 				try {

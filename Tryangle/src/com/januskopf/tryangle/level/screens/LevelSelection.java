@@ -25,7 +25,7 @@ import com.januskopf.tryangle.level.Levels;
 
 public class LevelSelection {
 
-	private boolean isLevelSelect;
+	private static boolean isLevelSelect;
 	private boolean loadLevel;
 	private int backgroundTex;
 	private int connectTex;
@@ -54,7 +54,7 @@ public class LevelSelection {
 		this.init();
 	}
 	
-	private void init(){
+	public void init(){
 		isLevelSelect = true;
 		loadLevel = false;
 		bTActive = true;
@@ -375,11 +375,6 @@ public class LevelSelection {
 	public static Levels getCurrentLevel(){
 		return currentLevel;
 	}
-	
-	public void goToLevelSelect(){
-		this.isLevelSelect = true;
-	}
-	
 }
 
 

@@ -101,7 +101,7 @@ public class MouseCubeAnimation extends Animations{
 			rTVertices = triangles.getTriangleVertices(x+1, y+1);
 		}
 		
-		if(KeyboardListener.isKeyPressed(Keyboard.KEY_B)){
+		if(KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT)){
 			topLeft		= tL!=null && tL.getCubeSide() == -1;
 			topRight	= tR!=null && tR.getCubeSide() == -1;
 			rightTop	= rT!=null && rT.getCubeSide() == -1;

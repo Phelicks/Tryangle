@@ -14,7 +14,7 @@ import com.januskopf.tryangle.sound.Sound;
 public class Tryangle implements Runnable{
 	
 	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	public final static boolean FULLSCREEN = false;
+	public final static boolean FULLSCREEN = true;
 	public final static int FPS = 60;
 	private int width = 1280; 
 	private int height = 720;
@@ -22,14 +22,14 @@ public class Tryangle implements Runnable{
 	private int screenHeight = (int) screenSize.getHeight();
 	private static boolean running;
 	private static boolean isResized;
-	private LevelSelection levelSelect;
+	private static LevelSelection levelSelect;
 	private KeyboardListener keyboard;
 	private MouseListener mouse;
 	public final Sound sound = Sound.getInstance();
 	
-	private int frame = 0;
-	private int fps = 0;
-	private long fpsCounter = System.currentTimeMillis();
+//	private int frame = 0;
+//	private int fps = 0;
+//	private long fpsCounter = System.currentTimeMillis();
 	
 	public static void main(String[] args)	{
 		Tryangle t = new Tryangle();
@@ -47,7 +47,7 @@ public class Tryangle implements Runnable{
 	}
 	
 	public void run(){
-		this.setDisplayMode(width, height, FULLSCREEN);
+		this.setDisplayMode(screenWidth, screenHeight, true);
 		this.initDisplay();
 		this.initOpenGL();	
 		this.initSound();
@@ -79,11 +79,12 @@ public class Tryangle implements Runnable{
 				stop();
 				System.out.println("closing...");
 			}
-			this.frameCounter();			
+//			this.frameCounter();			
 			this.render();
 			this.tick();
 			
-			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps);			
+			Display.setTitle("Tryangle");
+//			Display.setTitle("Tryangle - Memory: " + (Runtime.getRuntime().totalMemory()/1024/1024) + "MB" + " - FPS: " + fps);			
 			Display.sync(FPS);
 			Display.update();
 		}
@@ -185,7 +186,6 @@ public class Tryangle implements Runnable{
 			Display.setFullscreen(FULLSCREEN);
 			Display.create(p);
 		} catch (LWJGLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
@@ -210,17 +210,20 @@ public class Tryangle implements Runnable{
 		Sound.setVolume(Sound.SOUNDTRACK,0.8f);		
 	}
 	
-	private void frameCounter(){
-		this.frame++;
-		if((this.fpsCounter+1000) <= System.currentTimeMillis()){
-			this.fps = this.frame;
-			this.frame = 0;
-			this.fpsCounter = System.currentTimeMillis(); 
-		}
-	}
+//	private void frameCounter(){
+//		this.frame++;
+//		if((this.fpsCounter+1000) <= System.currentTimeMillis()){
+////			this.fps = this.frame;
+//			this.frame = 0;
+//			this.fpsCounter = System.currentTimeMillis(); 
+//		}
+//	}
 	
 	public static boolean isResized(){
 		return isResized;
 	}
 	
+	public static LevelSelection getLevelSelect() {
+		return levelSelect;
+	}	
 }

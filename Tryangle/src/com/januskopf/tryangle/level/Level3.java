@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
+import com.januskopf.tryangle.Tryangle;
 import com.januskopf.tryangle.input.KeyboardListener;
 import com.januskopf.tryangle.input.MouseListener;
 import com.januskopf.tryangle.net.NetCube;
@@ -83,7 +84,7 @@ public class Level3 extends Level1 implements Levels{
 			} catch (IOException e){
 				e.printStackTrace();
 				serverName = "localhost";			
-			}
+			}		
 						
 			try {
 				System.out.println("Connecting to " + serverName + " on port "+ port);
@@ -93,6 +94,7 @@ public class Level3 extends Level1 implements Levels{
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Konnte keine Verbindung aufbauen.");
+				Tryangle.getLevelSelect().init();
 			}
 			
 			try {
@@ -177,7 +179,7 @@ public class Level3 extends Level1 implements Levels{
 	protected void setCube() {
 		try {
 			byte cubeStatus = NetCube.SET_CUBE;
-			if(KeyboardListener.isKeyPressed(Keyboard.KEY_B))cubeStatus = NetCube.SET_CUBE_BEHIND;
+			if(KeyboardListener.isKeyPressed(Keyboard.KEY_LEFT))cubeStatus = NetCube.SET_CUBE_BEHIND;
 			out.writeObject(new NetCube(cubeStatus, triangleX, triangleY, cubeR, cubeG, cubeB));
 			out.flush();
 		} catch (IOException e) {
